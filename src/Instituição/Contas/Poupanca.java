@@ -14,7 +14,7 @@ public class Poupanca extends Conta {
     super(Nome, CPF, Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Agencia,
         Abertura_de_Conta);
     this.rendimento = rendimento;
-//TODO Auto-generated constructor stub
+
 }
     public float getRendimento() {
         return rendimento;
