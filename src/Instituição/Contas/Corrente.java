@@ -1,6 +1,6 @@
 package Instituição.Contas;
 //import Personas.Data;
-import java.util.Date;
+
 
 import Personas.Data;
 
@@ -13,12 +13,12 @@ public class Corrente extends Conta {
         return limCheque;
     }
 
-    public Corrente(String Nome, int CPF, int Num_Conta, int Senha_Conta, float saldo, int StatusDaConta,
-    boolean conjunta, Personas.Clientes.Clientes Cliente_primario, Personas.Clientes.Clientes[] Clientes,
-    Instituição.Agencia Agencia, Data Abertura_de_Conta, Data Ultima_Movimentacao, float limite, float taxAdmin) {
-    super(Nome, CPF, Num_Conta, Senha_Conta, saldo, StatusDaConta, conjunta, Cliente_primario, Clientes, Agencia,
-        Abertura_de_Conta, Ultima_Movimentacao);
-        this.limCheque = 0;
+    public Corrente(String Nome, int CPF, int Num_Conta, int Senha_Conta, float saldo, 
+    boolean conjunta, Personas.Clientes.Clientes Cliente_primario,
+    Instituição.Agencia Agencia, Data Abertura_de_Conta, float limite, float taxAdmin) {
+    super(Nome, CPF, Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Agencia,
+        Abertura_de_Conta);
+        this.limCheque = 1000; //Limite padrão de conta corrente
         this.taxAdmin = 0;
 
 }
