@@ -9,6 +9,11 @@ public class Corrente extends Conta {
     // limite do cheque especial e valor da taxa administrativa.
     private float limCheque;
     private float taxAdmin;
+    
+    public void TesteGit(){
+        System.out.println("Me Deleta");
+    }
+    
     public float getLimCheque() {
         return limCheque;
     }
