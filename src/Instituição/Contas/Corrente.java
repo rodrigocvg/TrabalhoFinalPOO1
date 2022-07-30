@@ -14,19 +14,20 @@ public class Corrente extends Conta {
         System.out.println("Me Deleta");
     }
     
-    public float getLimCheque() {
-        return limCheque;
-    }
+    
 
     public Corrente(String Nome, int CPF, int Num_Conta, int Senha_Conta, float saldo, 
     boolean conjunta, Personas.Clientes.Clientes Cliente_primario,
-    Instituição.Agencia Agencia, Data Abertura_de_Conta, float limite, float taxAdmin) {
+    Instituição.Agencia Agencia, Data Abertura_de_Conta, float limite, float taxAdmin){
     super(Nome, CPF, Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Agencia,
         Abertura_de_Conta);
-        this.limCheque = 1000; //Limite padrão de conta corrente
-        this.taxAdmin = 0;
-
-}
+        this.limCheque = 0; //Limite padrão de conta corrente
+        this.taxAdmin = 30f;
+        }   
+        
+    public float getLimCheque() {
+        return limCheque;
+    }
 
     public void setLimCheque(float limCheque) {
         this.limCheque = limCheque;

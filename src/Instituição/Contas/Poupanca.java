@@ -5,8 +5,9 @@ import Personas.Data;
 public class Poupanca extends Conta {
    
 
-    // rendimento do mês atual.
+    // rendimento do mês atual. 
     private float rendimento;
+    
     
     public void TesteGit(){
         System.out.println("Me Deleta");
@@ -16,9 +17,32 @@ public class Poupanca extends Conta {
     Instituição.Agencia Agencia, Data Abertura_de_Conta,float rendimento) {
     super(Nome, CPF, Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Agencia,
         Abertura_de_Conta);
-    this.rendimento = rendimento;
-//TODO Auto-generated constructor stub
+    this.rendimento = saldo * 0.5f;
+
 }
+    @Override
+    public void depositar(float valor,int senha){
+        if(this.Senha_Conta == senha){
+        this.saldo += valor;
+        this.rendimento = saldo* 0.5f;
+        }
+    }
+
+    @Override
+    public void sacar(float valor,int senha){
+        if(this.Senha_Conta == senha){
+        this.saldo -= valor;
+        this.rendimento = saldo*0.5f;
+        }
+
+    }
+    @Override
+    public void transferir(Conta c, float valor, int senha) {
+        super.transferir(c, valor, senha);
+        this.rendimento = saldo*0.5f;
+    }
+
+
     public float getRendimento() {
         return rendimento;
     }
