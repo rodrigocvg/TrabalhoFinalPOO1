@@ -36,7 +36,7 @@ public abstract class Conta
     
 
 
-    public String getNome() {
+    public String getNome(){
         return this.Nome;
     }
 
