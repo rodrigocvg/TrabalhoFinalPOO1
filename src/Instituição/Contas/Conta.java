@@ -70,7 +70,13 @@ public abstract class Conta
 
     }
     
-
+    public boolean ValidaSenha(int Senha)
+    {
+        boolean validacao = false; // senha incorreta
+        if (this.Senha_Conta == Senha) // se a senha tiver certa altera valor do boleano
+            validacao=true;
+        return validacao; // retorna resultado.
+    }
 
     public String getNome(){
         return this.Nome;
