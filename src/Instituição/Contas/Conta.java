@@ -33,6 +33,42 @@ public abstract class Conta
         this.Agencia = Agencia;
         this.Abertura_de_Conta = Abertura_de_Conta;
     }
+
+    public void verifica(){
+        if(this.conjunta){
+
+        }
+    }
+
+    public void depositar(float valor, int senha){
+        if(this.Senha_Conta == senha){
+            this.saldo += valor;
+        }
+        else{ //TRATAR ERRO DEPOIS
+            System.out.println("Senha incorreta");
+        }
+    }
+
+    public void sacar(float valor,int senha){
+        if(this.Senha_Conta == senha){
+        this.saldo -= valor;
+        }
+        else{ //TRATAR ERRO DEPOIS
+            System.out.println("Senha incorreta");
+        }
+
+    }
+
+    public void transferir(Conta c,float valor,int senha){
+        if(this.Senha_Conta == senha){
+        c.setSaldo(c.getSaldo()+valor);
+        this.saldo -= valor;
+        }
+        else{ //TRATAR ERRO DEPOIS
+            System.out.println("Senha incorreta");
+        }
+
+    }
     
 
 
