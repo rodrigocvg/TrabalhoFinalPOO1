@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+import Personas.Endereco;
+import Personas.Pessoa;
+import Personas.Clientes.Clientes;
+
 public class BancoDosCria {
     public static void main(String[] args) {
         int opcao = 999;
@@ -28,7 +32,7 @@ public class BancoDosCria {
                     Acessar_Conta(scan);
                     break;
                 case 2: // Abrir uma conta
-                    Criar_Conta();
+                    Criar_Conta(scan);
                     break;
                 case 3: // Acesso Funcionario
                     Acesso_Funcionario();
@@ -118,9 +122,61 @@ public class BancoDosCria {
 
     }
 
-    public static void Criar_Conta()
+    public static void Criar_Conta(Scanner scan) // provavelmente sera necessario colocar essa funcao
+                                                //dentro do acesso do funcioanrio para dar sentido a ele.
     {
-        // funções para criar conta
+        int opcao =1;
+        while(opcao!=0)
+        {
+            boolean cpf_encontrado = false;
+            System.out.println("Vamos cadastrar sua conta meu cria");
+            System.out.print("Digite seu CPF: ");
+            int cpf = scan.nextInt();
+            //validar cpf
+            //buscar nos clientes se possui algum ja cadastrado com esse cpf
+            //caso encontrado
+            if(cpf_encontrado) // quando cpf tiver cadastrado como cliente ja
+            {
+                System.out.println("CPF ja cadastrado com os seguintes dados: ");
+                //printar nome data nascimento e endereco.
+                System.out.println("Caso os dados estiverem incorretos va ate uma agencia mais proxima para realizar atualização");
+                System.out.println("Deseja continuar a cadastrar sua conta com os dados informados?");
+            }
+            Pessoa Cliente_Novo = new Clientes();
+            if(!cpf_encontrado) // caso cpf ainda não cadastrado
+            {
+                System.out.print("Digite seu nome completo: ");
+                Cliente_Novo.setNome(scan.nextLine());
+                System.out.print("Cria se nasceu que dia? ");
+                int dia_nascimento = scan.nextInt();
+                System.out.print("No mes de Numero? ");
+                int mes = scan.nextInt();
+                System.out.print("E qual ano era?");
+                int ano = scan.nextInt();
+                Cliente_Novo.setData_de_Nascimento(dia_nascimento,mes,ano);
+                System.out.print("Voce e de qual Genero? ");
+                Cliente_Novo.setSexo(scan.nextLine());
+                System.out.print("Qual seu estado civil? ");
+                Cliente_Novo.setEstado_Civil(scan.nextLine());
+                System.out.print("Preciso do seu endereço começando pela rua: ");
+                String Rua = scan.nextLine();
+                System.out.print("Numero: ");
+                int numero = scan.nextInt();
+                System.out.print("Cidade: ");
+                String Cidade = scan.nextLine();
+                System.out.print("Estado: ");
+                String Estado = scan.nextLine();
+                System.out.print("Pais: ");
+                String Pais = scan.nextLine();
+                System.out.print("Complemento: ");
+                String End_Complemento = scan.nextLine();
+                System.out.print("CEP: ");
+                int CEP = scan.nextInt();
+                Endereco End_Novo_Cliente = new Endereco(Rua, numero, Cidade, Estado, Pais, End_Complemento, CEP);
+                Cliente_Novo.setEndereco(End_Novo_Cliente);               
+
+            }
+        }
     }
 
     public static void Acesso_Funcionario()

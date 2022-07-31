@@ -1,0 +1,65 @@
+Main
+    BancoDosCria
+        Main
+            menu
+        AcessarConta(Scanner)
+            localizar e manipular conta
+        CadastrarConta(Scanner)
+            cadastrar conta e validar a mesma
+        AcessarFuncionario(Scanner)
+            acessar funcoes de funcionario
+                mudar limite de cliente
+                transformar conta normal em conjugada
+                trnasferir titularidade de conta
+
+Instituição
+    Agencia
+        atributos
+            Numero da Agencia
+            Nome da Agencia
+            Gerente da Agencia
+            Endereço da Agencia
+        metodos
+            get e set
+                Num_Agencia
+                Nome_Agencia
+                Gerente_Agencia
+                Endereço_Agencia
+            LocalizaAgencia(Cidade,Estado) = se for a cidade e estado imprime localizacao
+    Contas
+        Conta
+            atibrutos
+                Nome;
+                CPF;
+                Num_Conta;
+                Senha_Conta;
+                saldo;
+                StatusDaConta;
+                conjunta;
+                Clientes[] ;
+                Agencia Agencia;
+                Data Abertura_de_Conta;
+                Data Ultima_Movimentacao;
+
+            metodos 
+                get e set:
+                Depositar
+                Sacar
+                transferir
+                adicionartitular
+                Vazios a serem reemplmentados dentro de cada tipo de conta 
+                    corrente
+                        set e get limiteChequeEspecial
+                        set, get e cobrar taxa adminstrativa
+                    poupança
+                        set e get taxa de rendimento
+                        aplicar rendimento
+                    salario
+                        limite de saque
+                        limite de transferencia
+
+        corrente
+            atributos
+                    
+
+        
