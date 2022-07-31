@@ -39,8 +39,8 @@ public abstract class Pessoa {
         return this.Data_de_Nascimento;
     }
 
-    public void setData_de_Nascimento(Data Data_de_Nascimento) {
-        this.Data_de_Nascimento = Data_de_Nascimento;
+    public void setData_de_Nascimento(int dia, int mes, int ano) {
+        this.Data_de_Nascimento = new Data(dia, mes, ano);
     }
 
     public Endereco getEndereco() {
