@@ -2,22 +2,14 @@ package Instituição.Contas;
 //import Personas.Data;
 
 
-import java.io.Serializable;
-
 import Personas.Data;
 
-public class Corrente extends Conta implements Serializable{
+public class Corrente extends Conta {
    
     // limite do cheque especial e valor da taxa administrativa.
     private float limCheque;
     private float taxAdmin;
     
-    public void TesteGit(){
-        System.out.println("Me Deleta");
-    }
-    
-    
-
     public Corrente(String Nome, int CPF, int Num_Conta, int Senha_Conta, float saldo, 
     boolean conjunta, Personas.Clientes.Clientes Cliente_primario,
     Instituição.Agencia Agencia, Data Abertura_de_Conta, float limite, float taxAdmin){
