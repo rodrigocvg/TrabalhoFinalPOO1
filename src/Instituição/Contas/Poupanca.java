@@ -22,7 +22,7 @@ public class Poupanca extends Conta {
 }
     @Override
     public void depositar(float valor,int senha){
-        if(this.Senha_Conta == senha){
+        if(this.verificaSenha(senha)){
         this.saldo += valor;
         this.rendimento = saldo* 0.5f;
         }
@@ -30,7 +30,7 @@ public class Poupanca extends Conta {
 
     @Override
     public void sacar(float valor,int senha){
-        if(this.Senha_Conta == senha){
+        if(this.verificaSenha(senha)){
         this.saldo -= valor;
         this.rendimento = saldo*0.5f;
         }
