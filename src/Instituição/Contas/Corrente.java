@@ -2,9 +2,12 @@ package Instituição.Contas;
 //import Personas.Data;
 
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 import Personas.Data;
 
-public class Corrente extends Conta {
+public class Corrente extends Conta{
    
     // limite do cheque especial e valor da taxa administrativa.
     private float limCheque;
@@ -18,6 +21,8 @@ public class Corrente extends Conta {
         this.limCheque = 0; //Limite padrão de conta corrente
         this.taxAdmin = 30f;
         }
+
+    
         
         
 
@@ -58,6 +63,11 @@ public class Corrente extends Conta {
     public void setTaxAdmin(float taxAdmin) {
         this.taxAdmin = taxAdmin;
     }
+
+
+
+
+
 
 
 
