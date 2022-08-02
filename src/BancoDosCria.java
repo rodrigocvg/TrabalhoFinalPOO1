@@ -4,11 +4,18 @@ import Personas.Endereco;
 import Personas.Pessoa;
 import Personas.Clientes.Clientes;
 
+
 public class BancoDosCria {
     public static void main(String[] args) {
         int opcao = 999;
         Scanner scan = new Scanner(System.in);
         String NomeBanco = "Banco Dos Crias";
+
+        //criar lista de agencias.
+
+        //inicializar agencias e contas lendo arquivos presalvos. para primeiro acesso sera necessario cadastrar manual. 
+        
+        //Pensando em usar Scanner para ler um arquivo e criar essa parte do primeiro acesso.
 
 
         System.out.println("Seja Bem ao "+ NomeBanco);
@@ -131,8 +138,12 @@ public class BancoDosCria {
             boolean cpf_encontrado = false;
             System.out.println("Vamos cadastrar sua conta meu cria");
             System.out.print("Digite seu CPF: ");
-            int cpf = scan.nextInt();
-            //validar cpf
+            String cpf = scan.nextLine();
+            boolean cpfvalido = ValidaCPF.isCPF(cpf);
+
+            if(cpfvalido)
+                break;
+
             //buscar nos clientes se possui algum ja cadastrado com esse cpf
             //caso encontrado
             if(cpf_encontrado) // quando cpf tiver cadastrado como cliente ja
@@ -182,5 +193,7 @@ public class BancoDosCria {
     public static void Acesso_Funcionario()
     {
         // funcoes para funcionarios
+        //oque um funcionario vai fazer?? Alterar limite, adicionar titular, desativar conta, 
+        System.out.println();
     }
 }
