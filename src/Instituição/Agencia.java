@@ -1,16 +1,20 @@
 package Instituição;
+import java.util.ArrayList;
+
 import Personas.Endereco;
 import Personas.Funcionarios.Gerente;
+import Personas.Clientes.Clientes;
 
 public class Agencia {
     private int Num_Agencia;
     private String Nome_Agencia;
     private Gerente Gerente;
     private Endereco endereco_agencia;
-    //lista de clientes dessa Agencias criando os metodos de acesso
+    private ArrayList<Clientes> clientes; //lista de clientes dessa Agencias criando os metodos de acesso
+    
     //testeeeee
 
-
+    
     public Agencia(int Num_Agencia, String Nome_Agencia, Gerente Gerente, Endereco endereco_agencia) {
         this.Num_Agencia = Num_Agencia;
         this.Nome_Agencia = Nome_Agencia;
