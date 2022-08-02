@@ -7,6 +7,7 @@ public class Agencia {
     private String Nome_Agencia;
     private Gerente Gerente;
     private Endereco endereco_agencia;
+    //lista de clientes dessa Agencias criando os metodos de acesso
 
 
     public Agencia(int Num_Agencia, String Nome_Agencia, Gerente Gerente, Endereco endereco_agencia) {
