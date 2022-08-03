@@ -1,4 +1,6 @@
-public abstract class Pessoa {
+import java.io.Serializable;
+
+public abstract class Pessoa implements Serializable{
     private String Nome;
     private int CPF;
     private Data Data_de_Nascimento;
