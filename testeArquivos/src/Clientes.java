@@ -32,41 +32,7 @@ public class Clientes extends Pessoa implements Serializable{
         this.NumAgencia = NumAgencia;
     }
 
-    /* Pode ser que funcione, por enquanto não ta */
-    public void escrita(){
-        File arq = null;
-        ObjectOutputStream obj = null;
-        try {
-            arq = new File("e:/POO1/Trabalho/Clientes/testeArquivo.txt");
-            obj = new ObjectOutputStream(new FileOutputStream(arq,true));
-            obj.writeObject(obj);
-            obj.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public ArrayList<Clientes> ler(){
-        FileInputStream arquivo = null;
-        ArrayList<Clientes> clientes = new ArrayList<Clientes>();
-        Clientes cliente = null;
-        ObjectInputStream obj = null;
-        try {
-            arquivo = new FileInputStream("e:/POO1/Trabalho/src/Clientes/testeArquivo.txt");
-            obj = new ObjectInputStream(arquivo);
-            do {
-                cliente = (Clientes) obj.readObject();
-                if (cliente != null)
-                    clientes.add(cliente);
-           } while (cliente != null);
-            arquivo.close();
-            obj.close();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } 
-        return clientes;
-    }
+   
 
     public void leitura(){
 
