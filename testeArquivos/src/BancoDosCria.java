@@ -1,6 +1,15 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,16 +19,24 @@ import java.util.Scanner;
 
 public class BancoDosCria {
 
+    public static ArrayList<Object> clientes = new ArrayList<>();
+    public static int i;
+
+   
     
-    
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         
+        
+       
+
+
+
         int opcao = 999;
         Scanner scan = new Scanner(System.in);
         String NomeBanco = "Banco Dos Crias";
         Clientes Vclientes[] = new Clientes[30];
         
-
+        Empacotamento.lerArquivoBinario("clientes.dat");
         //criar lista de agencias.
 
         //inicializar agencias e contas lendo arquivos presalvos. para primeiro acesso sera necessario cadastrar manual. 
@@ -55,6 +72,8 @@ public class BancoDosCria {
                 case 2: // Abrir uma conta
                     try {
                         Criar_Conta(scan);
+                        gravarArquivo();
+                       
                     } catch (IOException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -73,9 +92,42 @@ public class BancoDosCria {
 
     }
 
+    public static void gravarArquivo() throws IOException{
+       
+        
+        Empacotamento.gravarArquivoBinario(clientes, "clientes.dat"); 
+                
+                FileWriter arq = new FileWriter("export.txt");
+                PrintWriter gravarArq = new PrintWriter(arq);
+                int j = 1;
+                int n = clientes.size();
+          
+                for (Object item2: clientes) {
+                  System.out.printf("Exportando %do. registro de %d: %s\n",
+                    j++, n, ((Clientes)item2).getNome());
+                    
+                  gravarArq.printf("Nome|%s : CPF|%s\n",
+                    ((Clientes)item2).getNome(),
+                    ((Clientes)item2).getCPF());
+                }
+          
+                gravarArq.close();
+
+                
+          
+                System.out.printf("\nExportação realizada com sucesso.\n");    
+                
+    }
+
     //Menu para quem ja e cliente
     public static void Acessar_Conta(Scanner scan) throws IOException
     {
+
+        
+
+
+
+
         int opcao =1;
         boolean conta_encontrada = false; //pode ser temporario o uso desse booleano ou 
                                             //definitivo vamos descobri com o tempo
@@ -150,14 +202,24 @@ public class BancoDosCria {
 
     public static void Criar_Conta(Scanner scan) throws IOException{ // provavelmente sera necessario colocar essa funcao
                                                 //dentro do acesso do funcioanrio para dar sentido a ele.
-    
-        ArrayList<Object> clientes = new ArrayList<>();
+        
+
+                                                
+        File f = new File("E:\\POO1\\Trabalho\\testeArquivos\\src\\i");
+        FileReader flr = new FileReader(f);
+        BufferedReader br = new BufferedReader(flr);
+        String linha = br.readLine();
+        i = Integer.parseInt(linha);
+        br.close();
+       
+        System.out.println(i);
+        OutputStream os = new FileOutputStream("i.txt");
         int opcao =1;
-        int i=0;
+        
             Pessoa Cliente_Novo[] = new Clientes[30];
             boolean cpf_encontrado = false;
             System.out.println("Vamos cadastrar sua conta meu cria");
-            System.out.print("Digite seu CPF: ");
+            System.out.println("Digite seu CPF: ");
             int cpf = scan.nextInt();
             String cpf2 = Integer.toString(cpf);
             boolean cpfvalido = ValidaCPF.isCPF(cpf2);
@@ -213,26 +275,12 @@ public class BancoDosCria {
                 Cliente_Novo[i].setEndereco(End_Novo_Cliente); 
                 clientes.add((Clientes)Cliente_Novo[i]);   
                 i++;
-                Empacotamento.gravarArquivoBinario(clientes, "clientes.dat"); 
-                Empacotamento.lerArquivoBinario("clientes.dat");
+
+                Writer wr = new OutputStreamWriter(os);
+                BufferedWriter br1 = new BufferedWriter(wr);
+                br1.write(i);
+                br1.close();
                 
-                FileWriter arq = new FileWriter("export.txt");
-                PrintWriter gravarArq = new PrintWriter(arq);
-                int j = 1;
-                int n = clientes.size();
-          
-                for (Object item2: clientes) {
-                  System.out.printf("Exportando %do. registro de %d: %s\n",
-                    j++, n, ((Clientes)item2).getNome());
-                    
-                  gravarArq.printf("Nome|%s : CPF|%s\n",
-                    ((Clientes)item2).getNome(),
-                    ((Clientes)item2).getCPF());
-                }
-          
-                gravarArq.close();
-          
-                System.out.printf("\nExportação realizada com sucesso.\n");    
                 
             }
         
