@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 
+import Personas.Data;
+import Personas.Endereco;
+import Personas.Clientes.Clientes;
+
+
 public class GerenArquivos {
 
 
@@ -22,8 +27,9 @@ public class GerenArquivos {
             while (( linha = br. readLine ()) != null ) 
             {
                 campos = linha.split(";");
-                clientes.add(new Clientes(campos [1],Integer.parseInt(campos [0])));
-            }
+                clientes.add(new Clientes(campos[0],Integer.parseInt(campos [1]),new Data(Integer.parseInt(campos[2]),Integer.parseInt(campos[3]),Integer.parseInt(campos[4])),
+                            new Endereco(campos[5],Integer.parseInt(campos [6]),campos[7],campos[8],campos[9],campos[10],Integer.parseInt(campos[11])),campos[12],campos[13],campos[14],Integer.parseInt(campos[15])));
+            }   
             br. close ();
         }
         catch ( IOException erro ) 
@@ -33,8 +39,7 @@ public class GerenArquivos {
         return clientes;
     }
 
-
-    public static void CadastrarClientes ( String Nome ,int CPF ,LinkedList<Clientes> clientes) 
+    public static void SalvarArquivo (LinkedList<Clientes> clientes) 
     {
         try {
             FileWriter arq = new FileWriter ( BaseDados+"clientes.txt" );
@@ -50,7 +55,33 @@ public class GerenArquivos {
             {
                 primeiroClientes = true;
             }
-            
+            out.close ();
+        } 
+        catch ( IOException erro )
+        {
+        System .out. println (" Erro na escrita dos dados ");
+        }
+    }
+
+
+    public static void CadastrarClientes ( String Nome ,int CPF ,Data Data_de_Nascimento, Endereco Endereco, String Sexo, String Estado_Civil,
+    String Escolaridade, int NumAgencia,LinkedList<Clientes> clientes) 
+    {
+        try {
+            FileWriter arq = new FileWriter ( BaseDados+"clientes.txt" );
+            PrintWriter out = new PrintWriter (arq);
+            boolean primeiroClientes = false;
+            try{
+                for (int i = 0; i < clientes.size() ; i++) {
+                String linha = clientes.get(i).SaidaArquivo();
+                out.println( linha );
+                }
+            }
+            catch(NullPointerException e)
+            {
+                primeiroClientes = true;
+            }
+            /*
             Boolean CheckID = true;
             
             int id=100;
@@ -70,8 +101,8 @@ public class GerenArquivos {
                     }
                     else CheckID= true;
                 }
-            }
-            String linha = Nome + ";" + CPF ;
+            } */
+            String linha = Nome + ";" + CPF + ";" + Data_de_Nascimento.getDia() + ";" + Data_de_Nascimento.getMes()+ ";" + Data_de_Nascimento.getAno() + ";" + Endereco.getEnd_Rua() + ";" + Endereco.getEnd_Num() + ";"+ Endereco.getEnd_Cidade() + ";" + Endereco.getEnd_Estado() + ";" + Endereco.getEnd_Pais() + ";" +  Endereco.getEnd_Complemento() + ";" + Endereco.getEnd_Cep() + ";" + Sexo + ";" + Estado_Civil + ";" + Escolaridade + ";" + NumAgencia;
             System.out.println("clientes cadastrado: "+ Nome);
             out.println( linha );
             out.close ();
