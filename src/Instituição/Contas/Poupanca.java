@@ -10,7 +10,7 @@ public class Poupanca extends Conta {
     
     
     
-    public Poupanca(int Num_Conta, int Senha_Conta, float saldo, boolean StatusDaConta,
+    public Poupanca(int Num_Conta, int Senha_Conta, float saldo,
     boolean conjunta, Personas.Clientes.Clientes Cliente_primario,
     Instituição.Agencia Agencia, Data Abertura_de_Conta,float rendimento) {
     super(Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Agencia,

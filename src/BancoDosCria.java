@@ -14,6 +14,10 @@ import Personas.Clientes.*;
 
 public class BancoDosCria {
     public static void main(String[] args) throws IOException {
+
+
+        // TESTE CLIENTES //
+
         LinkedList<Clientes> clientes = new LinkedList<>();
         clientes = GerenArquivos.Carregar_clientes();
         
@@ -41,7 +45,7 @@ public class BancoDosCria {
         int Num_Agencia = sc.nextInt();
 
         
-        
+        //TESTE CONTA CORRENTE //
         
         GerenArquivos.CadastrarClientes(nome, CPF, new Data(dia, mes, ano),new Endereco(End_Rua, End_Num, End_Cidade, End_Estado, End_Pais, End_Complemento, End_Cep),Sexo,Estado_Civil,Escolaridade, Num_Agencia,clientes);
         
@@ -51,13 +55,15 @@ public class BancoDosCria {
         int j = sc.nextInt();
         clientes.get(j).setEscolaridade("animal");
         clientes.get(j).setCPF(0000000);
-        //chamar função salvar arquivo
         GerenArquivos.SalvarArquivoClientes(clientes);
 
 
-        LinkedList<Conta> contas = new LinkedList<Conta>();
 
-        contas = GerenArquivos.Carregar_contaCorrente();
+        //TESTE CONTAS Corrente   //
+
+        LinkedList<Conta> contasC = new LinkedList<Conta>();
+
+        contasC = GerenArquivos.Carregar_contaCorrente();
         int numConta = sc.nextInt();
         int senhaConta= sc.nextInt();
         float saldo = sc.nextInt();
@@ -70,10 +76,34 @@ public class BancoDosCria {
         int anoC = sc.nextInt();
 
 
-        GerenArquivos.CadastrarContaCorrente(numConta, senhaConta, saldo, conjunta, clientes.get(id), agTeste, new Data(diaC, mesC, anoC), 0, 30, contas);
-        contas = GerenArquivos.Carregar_contaCorrente();
+        GerenArquivos.CadastrarContaCorrente(numConta, senhaConta, saldo, conjunta, clientes.get(id), agTeste, new Data(diaC, mesC, anoC), 0, 30, contasC);
+        contasC = GerenArquivos.Carregar_contaCorrente();
         
         
+
+        //TESTE CONTAS Poupanca //
+
+
+        LinkedList<Conta> contasP = new LinkedList<Conta>();
+
+        contasP = GerenArquivos.Carregar_contaPoupanca();
+        int numContaP = sc.nextInt();
+        int senhaContaP = sc.nextInt();
+        float saldoP = sc.nextInt();
+        boolean conjuntaP = sc.nextBoolean();
+        System.out.println("Digite o id do cliente que será proprietário dessa conta:");
+        int idP = sc.nextInt();
+        Agencia agTesteP = new Agencia("Agencia 2", 034);
+        int diaP = sc.nextInt();
+        int mesP = sc.nextInt();
+        int anoP = sc.nextInt();
+        float rendimento = 0;
+
+
+        GerenArquivos.CadastrarContaPoupanca(numContaP, senhaContaP, saldoP, conjuntaP, clientes.get(idP), agTesteP, new Data(diaP, mesP, anoP), rendimento, contasC);
+        contasP = GerenArquivos.Carregar_contaPoupanca();
+
+
 
         /*for(int i =0;i<clientes.size();i++){
             if(clientes.get(i).getNome().equals("israel")){
