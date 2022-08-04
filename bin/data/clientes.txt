@@ -1,0 +1,2 @@
+rodrigo;0;30;6;2003;jose;600;uberlandia;mg;brasil;302;38408140;masc;solteiro;animal;238293232
+israel;0;32;32;32323;rua;4384;cidade;estado;pais;comple;493443;sexo;estado;animal;45935684

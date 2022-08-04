@@ -16,7 +16,7 @@ public abstract class Conta
     protected boolean StatusDaConta;
     protected boolean conjunta;
     protected Clientes Cliente_primario; //?
-    protected Clientes[] Clientes;
+    protected Clientes[] Clientes; //1 ou 2
     protected Agencia Agencia;
     protected Data Abertura_de_Conta;
     protected Data Ultima_Movimentacao;

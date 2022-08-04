@@ -13,7 +13,7 @@ import Personas.Clientes.Clientes;
 public class GerenArquivos {
 
 
-    private static final String BaseDados ="E:\\POO1\\Trabalho\\testeArquivos\\";
+    private static final String BaseDados ="E:\\POO1\\Trabalho\\src\\data\\";
 
     public static LinkedList<Clientes> Carregar_clientes ()
     {
@@ -64,7 +64,7 @@ public class GerenArquivos {
     }
 
 
-    public static void CadastrarClientes ( String Nome ,int CPF ,Data Data_de_Nascimento, Endereco Endereco, String Sexo, String Estado_Civil,
+    public static void CadastrarClientes (String Nome ,int CPF ,Data Data_de_Nascimento, Endereco Endereco, String Sexo, String Estado_Civil,
     String Escolaridade, int NumAgencia,LinkedList<Clientes> clientes) 
     {
         try {
@@ -81,27 +81,6 @@ public class GerenArquivos {
             {
                 primeiroClientes = true;
             }
-            /*
-            Boolean CheckID = true;
-            
-            int id=100;
-            if(!primeiroClientes)
-            {
-                for(int i = 100; i< 130; i++)
-                {
-                    for(Clientes j : clientes)
-                    {
-                        if(j.getID()==i)
-                            CheckID= false;
-                    }
-                    if (CheckID)
-                    {
-                        id=i;
-                        break;
-                    }
-                    else CheckID= true;
-                }
-            } */
             String linha = Nome + ";" + CPF + ";" + Data_de_Nascimento.getDia() + ";" + Data_de_Nascimento.getMes()+ ";" + Data_de_Nascimento.getAno() + ";" + Endereco.getEnd_Rua() + ";" + Endereco.getEnd_Num() + ";"+ Endereco.getEnd_Cidade() + ";" + Endereco.getEnd_Estado() + ";" + Endereco.getEnd_Pais() + ";" +  Endereco.getEnd_Complemento() + ";" + Endereco.getEnd_Cep() + ";" + Sexo + ";" + Estado_Civil + ";" + Escolaridade + ";" + NumAgencia;
             System.out.println("clientes cadastrado: "+ Nome);
             out.println( linha );

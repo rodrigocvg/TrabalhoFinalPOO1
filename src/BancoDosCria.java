@@ -1,19 +1,10 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.util.ArrayList;
+
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import Personas.Data;
+import Personas.Endereco;
 import Personas.Clientes.*;
 
 
@@ -26,7 +17,7 @@ public class BancoDosCria {
         
         
         Scanner sc = new Scanner(System.in);
-        /* 
+        
         String nome = sc.next();
         int CPF = sc.nextInt();
         int dia = sc.nextInt();
@@ -47,10 +38,10 @@ public class BancoDosCria {
         String Escolaridade = sc.next();
         int Num_Agencia = sc.nextInt();
 
-        */
         
         
-        //GerenArquivos.CadastrarClientes(nome, CPF, new Data(dia, mes, ano),new Endereco(End_Rua, End_Num, End_Cidade, End_Estado, End_Pais, End_Complemento, End_Cep),Sexo,Estado_Civil,Escolaridade, Num_Agencia,clientes);
+        
+        GerenArquivos.CadastrarClientes(nome, CPF, new Data(dia, mes, ano),new Endereco(End_Rua, End_Num, End_Cidade, End_Estado, End_Pais, End_Complemento, End_Cep),Sexo,Estado_Civil,Escolaridade, Num_Agencia,clientes);
         
         clientes = GerenArquivos.Carregar_clientes();
         

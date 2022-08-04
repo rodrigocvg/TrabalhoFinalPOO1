@@ -77,6 +77,13 @@ public class Endereco {
         this.End_Cep = End_Cep;
     }
 
+    @Override
+    public String toString() {
+        return End_Rua + ";" + End_Num + ";" + End_Cidade
+                + ";" + End_Estado + ";" + End_Pais + ";" + End_Complemento + ";"
+                +End_Cep ;
+    }
+
 
     
 }
