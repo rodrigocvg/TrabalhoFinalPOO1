@@ -19,6 +19,43 @@ import java.util.Scanner;
 
 public class BancoDosCria {
 
+    public ArrayList<Clientes> clientes = new ArrayList<>();
+    
+    
+    
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        String nome = sc.next();
+        int CPF = sc.nextInt();
+        Clientes[] Vclientes = new Clientes[30];
+        Vclientes[0] = new Clientes(nome, CPF);
+
+        FileWriter arq = new FileWriter("E:\\POO1\\Trabalho\\testeArquivos\\src\\file1");
+        PrintWriter gravarArq = new PrintWriter(arq);
+
+        gravarArq.printf("Nome: " + nome + "\nCPF: " + CPF + "\n");
+        
+
+        /* OutputStream os = new FileOutputStream("E:\\POO1\\Trabalho\\testeArquivos\\src\\file1"); // nome do arquivo que será escrito
+        Writer wr = new OutputStreamWriter(os); // criação de um escritor
+        BufferedWriter br = new BufferedWriter(wr); // adiciono a um escritor de buffer
+        
+        br.write(nome + " " + CPF);
+        br.newLine();
+        br.newLine();
+        //br.write("Vamos escrever outra linha aqui embaixo hahaha!!!");
+        br.close();
+        */
+    }
+
+
+
+
+
+
+
+
+/*
     public static ArrayList<Object> clientes = new ArrayList<>();
     public static int i;
 
@@ -142,6 +179,7 @@ public class BancoDosCria {
             int Senha = scan.nextInt();
 
             //*************Me Deleta *****************/
+            /*
             //so para tirar erro de variavel não existe, apagar as proximas 4 linha.
             System.out.println("Os dados digitados foram:");
             System.out.println("Agencia: " + Num_Agencia);
@@ -152,6 +190,7 @@ public class BancoDosCria {
             //Aqui vai econtrar ou não a conta informada sera necessario fazer tratamento de erros.
             
             //Se for encontrado conta_encontrada = true;
+            /*
             while(conta_encontrada && opcao!=0)
             {
                 System.out.println("Seja Bem vindo Cliente.getnome()");
@@ -292,7 +331,7 @@ public class BancoDosCria {
         //oque um funcionario vai fazer?? Alterar limite, adicionar titular, desativar conta, 
         System.out.println();
     }
-}/* import java.io.FileWriter;
+} import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -344,6 +383,6 @@ public class App {
       System.out.printf("\nExportação realizada com sucesso.\n");
       }
     }
+    */
     
 }
-*/
