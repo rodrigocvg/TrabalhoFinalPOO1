@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 
+import Instituição.Agencia;
+import Instituição.Contas.Conta;
+import Instituição.Contas.Corrente;
 import Personas.Data;
 import Personas.Endereco;
 import Personas.Clientes.Clientes;
@@ -14,6 +17,14 @@ public class GerenArquivos {
 
 
     private static final String BaseDados ="E:\\POO1\\Trabalho\\src\\data\\";
+
+
+     // ------------------------------------------------------   //
+    // ------------------------------------------------------   //
+    //              ARQUIVO PARA CLIENTES                 //
+    // ------------------------------------------------------   //
+    // ------------------------------------------------------   //
+
 
     public static LinkedList<Clientes> Carregar_clientes ()
     {
@@ -39,7 +50,7 @@ public class GerenArquivos {
         return clientes;
     }
 
-    public static void SalvarArquivo (LinkedList<Clientes> clientes) 
+    public static void SalvarArquivoClientes (LinkedList<Clientes> clientes) 
     {
         try {
             FileWriter arq = new FileWriter ( BaseDados+"clientes.txt" );
@@ -91,5 +102,104 @@ public class GerenArquivos {
         System .out. println (" Erro na escrita dos dados ");
         }
     } 
+
+    // ------------------------------------------------------   //
+    // ------------------------------------------------------   //
+    //              ARQUIVO PARA CONTA CORRENTE                 //
+    // ------------------------------------------------------   //
+    // ------------------------------------------------------   //
+
+    public static LinkedList<Conta> Carregar_contaCorrente()
+    {
+        LinkedList<Conta> contas = new LinkedList<>();
+        try {
+
+            FileReader ent = new FileReader ( BaseDados+"contas.txt" );
+            BufferedReader br = new BufferedReader (ent);
+            String linha ;
+            String [] campos = null ;
+            while (( linha = br. readLine ()) != null ) 
+            {
+                campos = linha.split(";");
+                contas.add(new Corrente(Integer.parseInt(campos[0]),Integer.parseInt(campos[1]),Float.parseFloat(campos[2]),Boolean.parseBoolean(campos[3]), new Clientes(campos[4],Integer.parseInt(campos[5])),
+                                   new Agencia(campos[6], Integer.parseInt(campos[7])), new Data(Integer.parseInt(campos[8]), Integer.parseInt(campos[9]), Integer.parseInt(campos[10])), Float.parseFloat(campos[11]), Float.parseFloat(campos[12])));
+            }   
+            br. close ();
+        }
+        catch ( IOException erro ) 
+        {
+            System .out. println (" Erro na leitura dos dados ");
+        }
+        return contas;
+    }
+
+
+    public static void SalvarArquivoCorrente (LinkedList<Corrente> contas) 
+    {
+        try {
+            FileWriter arq = new FileWriter ( BaseDados+"contas.txt" );
+            PrintWriter out = new PrintWriter (arq);
+            boolean primeiroClientes = false;
+            try{
+                for (int i = 0; i < contas.size() ; i++) {
+                String linha = contas.get(i).SaidaArquivo();
+                out.println( linha );
+                }
+            }
+            catch(NullPointerException e)
+            {
+                primeiroClientes = true;
+            }
+            out.close ();
+        } 
+        catch ( IOException erro )
+        {
+        System .out. println (" Erro na escrita dos dados ");
+        }
+    }
+
+
+    public static void CadastrarContaCorrente (int Num_Conta, int Senha_Conta, float saldo, 
+    boolean conjunta, Personas.Clientes.Clientes Cliente_primario,
+    Instituição.Agencia Agencia, Data Abertura_de_Conta, float limite, float taxAdmin, LinkedList<Conta> contas) 
+    {
+        try {
+            FileWriter arq = new FileWriter ( BaseDados+"contas.txt" );
+            PrintWriter out = new PrintWriter (arq);
+            boolean primeiroConta = false;
+            try{
+                for (int i = 0; i < contas.size() ; i++) {
+                String linha = contas.get(i).SaidaArquivo();
+                out.println( linha );
+                }
+            }
+            catch(NullPointerException e)
+            {
+                primeiroConta = true;
+            }
+            String linha = Num_Conta + ";" + Senha_Conta + ";"  + saldo + ";" + conjunta+ ";" + Cliente_primario.getNome() + ";"+ Cliente_primario.getCPF() + ";" + 
+                            Agencia.getNome_Agencia() + ";" + Agencia.getNum_Agencia() + ";" +  Abertura_de_Conta.getDia() + ";" + Abertura_de_Conta.getMes()+ ";" + 
+                            Abertura_de_Conta.getAno() + ";" + limite + ";" + taxAdmin;
+            System.out.println("Conta cadastrada: "+ Num_Conta);
+            out.println( linha );
+            out.close ();
+        } 
+        catch ( IOException erro )
+        {
+        System .out. println (" Erro na escrita dos dados ");
+        }
+        
+    } 
+
+
+
+
+
+
+
+
+
+
+    
 
 }

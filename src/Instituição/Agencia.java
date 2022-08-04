@@ -16,6 +16,11 @@ public class Agencia {
     //testeeeee
 
     
+    public Agencia(String nome_Agencia,int num_Agencia) {
+        Num_Agencia = num_Agencia;
+        Nome_Agencia = nome_Agencia;
+    }
+
     public Agencia(int Num_Agencia, String Nome_Agencia, Gerente Gerente, Endereco endereco_agencia) {
         this.Num_Agencia = Num_Agencia;
         this.Nome_Agencia = Nome_Agencia;

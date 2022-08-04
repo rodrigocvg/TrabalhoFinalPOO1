@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import Instituição.Agencia;
+import Instituição.Contas.Conta;
 import Personas.Data;
 import Personas.Endereco;
 import Personas.Clientes.*;
@@ -50,16 +52,34 @@ public class BancoDosCria {
         clientes.get(j).setEscolaridade("animal");
         clientes.get(j).setCPF(0000000);
         //chamar função salvar arquivo
-        GerenArquivos.SalvarArquivo(clientes);
+        GerenArquivos.SalvarArquivoClientes(clientes);
 
+
+        LinkedList<Conta> contas = new LinkedList<Conta>();
+
+        contas = GerenArquivos.Carregar_contaCorrente();
+        int numConta = sc.nextInt();
+        int senhaConta= sc.nextInt();
+        float saldo = sc.nextInt();
+        boolean conjunta = sc.nextBoolean();
+        System.out.println("Digite o id do cliente que será proprietário dessa conta:");
+        int id = sc.nextInt();
+        Agencia agTeste = new Agencia("Agencia 1", 032);
+        int diaC = sc.nextInt();
+        int mesC = sc.nextInt();
+        int anoC = sc.nextInt();
+
+
+        GerenArquivos.CadastrarContaCorrente(numConta, senhaConta, saldo, conjunta, clientes.get(id), agTeste, new Data(diaC, mesC, anoC), 0, 30, contas);
+        contas = GerenArquivos.Carregar_contaCorrente();
         
         
 
-        for(int i =0;i<clientes.size();i++){
+        /*for(int i =0;i<clientes.size();i++){
             if(clientes.get(i).getNome().equals("israel")){
                 System.out.println("Achei");
             }
-        }
+        } */
        
         
         

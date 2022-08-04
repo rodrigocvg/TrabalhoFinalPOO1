@@ -8,32 +8,38 @@ import Personas.Clientes.Clientes;
 //
 public abstract class Conta
 {
-    protected String Nome;
-    protected int CPF;
+    //protected String Nome;
+    //protected int CPF;
     protected int Num_Conta;
     protected int Senha_Conta;
     protected float saldo;
     protected boolean StatusDaConta;
     protected boolean conjunta;
     protected Clientes Cliente_primario; //?
-    protected Clientes[] Clientes; //1 ou 2
+    protected Clientes Cliente_secundario;
     protected Agencia Agencia;
     protected Data Abertura_de_Conta;
     protected Data Ultima_Movimentacao;
 
 
-
-    public Conta(String Nome, int CPF, int Num_Conta, int Senha_Conta, float saldo, boolean conjunta, Clientes Cliente_primario, Agencia Agencia, Data Abertura_de_Conta) {
-        this.Nome = Nome;
-        this.CPF = CPF;
+    //Construtor Conta Unica
+    public Conta(int Num_Conta, int Senha_Conta, float saldo, boolean conjunta, Clientes Cliente_primario, Agencia Agencia, Data Abertura_de_Conta) {
+        //this.Nome = Nome;
+        //this.CPF = CPF;
         this.Num_Conta = Num_Conta;
         this.Senha_Conta = Senha_Conta;
         this.saldo = saldo;
         this.StatusDaConta = true;
         this.conjunta = conjunta;
         this.Cliente_primario = Cliente_primario;
+        this.Cliente_secundario = null;
         this.Agencia = Agencia;
         this.Abertura_de_Conta = Abertura_de_Conta;
+    }
+
+    public String SaidaArquivo(){
+        return this.Num_Conta + ";" +  this.Senha_Conta + ";" + this.saldo + ";" + this.conjunta + ";" + this.Cliente_primario.getNome() + ";" + this.Cliente_primario.getCPF() + ";" + 
+                this.Agencia.getNome_Agencia() + ";" + this.Agencia.getNum_Agencia() + ";" + this.Abertura_de_Conta.getDia() + ";" + this.Abertura_de_Conta.getMes() + ";" + this.Abertura_de_Conta.getAno();
     }
 
     public void verifica(){
@@ -117,21 +123,7 @@ public abstract class Conta
     //    return validacao; // retorna resultado.
     //}
 
-    public String getNome(){
-        return this.Nome;
-    }
-
-    public void setNome(String Nome) {
-        this.Nome = Nome;
-    }
-
-    public int getCPF() {
-        return this.CPF;
-    }
-
-    public void setCPF(int CPF) {
-        this.CPF = CPF;
-    }
+    
 
     public int getNum_Conta() {
         return this.Num_Conta;
@@ -185,13 +177,6 @@ public abstract class Conta
         this.Cliente_primario = Cliente_primario;
     }
 
-    public Clientes[] getClientes() {
-        return this.Clientes;
-    }
-
-    public void setClientes(Clientes[] Clientes) {
-        this.Clientes = Clientes;
-    }
 
     public Agencia getAgencia() {
         return this.Agencia;
