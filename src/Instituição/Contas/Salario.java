@@ -19,7 +19,6 @@ public class Salario extends Conta {
 
     @Override
     public String SaidaArquivo() {
-        // TODO Auto-generated method stub
         return super.SaidaArquivo() + ";" + this.Limite_saque + ";" + this.Limite_transferencia;
     }
 

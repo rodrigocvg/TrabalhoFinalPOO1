@@ -13,8 +13,7 @@ public class BancoDosCria {
         Scanner scan = new Scanner(System.in);
         String NomeBanco = "Banco Dos Crias";
         Banco BancoDosCria = new Banco();
-
-        // Carrega os clientes salvos em Arquivo
+        
         System.out.println("Seja Bem ao "+ NomeBanco);
         //menu
         while(opcao!=0)

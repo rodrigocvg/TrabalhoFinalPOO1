@@ -69,6 +69,18 @@ public abstract class Pessoa {
 
 
 
+    
+    public String DadosPessoa() {
+        String Data = this.Nome + ";" +
+                this.CPF + ";" +
+                this.Data_de_Nascimento.DadosData() + ";" +
+                this.Endereco.DadosEndereco() + ";" +
+                this.Sexo + ";" +
+                this.Estado_Civil;
+        
+        return Data;
+    }
+
 
     
 }

@@ -3,6 +3,7 @@ package Personas;
 public class Endereco {
     private String End_Rua;
     private int End_Num;
+    private String End_Bairro;
     private String End_Cidade;
     private String End_Estado;
     private String End_Pais;
@@ -10,7 +11,7 @@ public class Endereco {
     private int End_Cep;
 
 
-    public Endereco(String End_Rua, int End_Num, String End_Cidade, String End_Estado, String End_Pais, String End_Complemento, int End_Cep) {
+    public Endereco(String End_Rua, int End_Num, String End_Bairro,String End_Cidade, String End_Estado, String End_Pais, String End_Complemento, int End_Cep) {
         this.End_Rua = End_Rua;
         this.End_Num = End_Num;
         this.End_Cidade = End_Cidade;
@@ -18,6 +19,7 @@ public class Endereco {
         this.End_Pais = End_Pais;
         this.End_Complemento = End_Complemento;
         this.End_Cep = End_Cep;
+        this.End_Bairro = End_Bairro;
     }
 
 
@@ -77,11 +79,21 @@ public class Endereco {
         this.End_Cep = End_Cep;
     }
 
-    @Override
-    public String toString() {
-        return End_Rua + ";" + End_Num + ";" + End_Cidade
+
+    public String getEnd_Bairro() {
+        return this.End_Bairro;
+    }
+
+    public void setEnd_Bairro(String End_Bairro) {
+        this.End_Bairro = End_Bairro;
+    }
+
+    
+    public String DadosEndereco() {
+        String Data = End_Rua + ";" + End_Num + ";"+ End_Bairro+ ";" + End_Cidade
                 + ";" + End_Estado + ";" + End_Pais + ";" + End_Complemento + ";"
                 +End_Cep ;
+        return Data;
     }
 
 

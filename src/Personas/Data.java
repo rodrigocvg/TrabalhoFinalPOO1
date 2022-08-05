@@ -37,13 +37,10 @@ public class Data {
     }
 
 
-    @Override
-    public String toString() {
-        return "{" +
-            " Dia='" + getDia() + "'" +
-            ", Mes='" + getMes() + "'" +
-            ", Ano='" + getAno() + "'" +
-            "}";
+    public String DadosData() {
+        String Data = Dia+ ";" + Mes + ";"+Ano+";";
+        
+        return Data;
     }
 
     
