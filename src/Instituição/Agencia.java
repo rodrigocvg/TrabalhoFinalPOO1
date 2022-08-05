@@ -1,16 +1,17 @@
 package Instituição;
-import java.util.ArrayList;
-
+import java.util.LinkedList;
 import Instituição.Contas.Conta;
 import Personas.Endereco;
-import Personas.Funcionarios.Gerente;
+import Personas.Funcionarios.*;
+import GerenciadorArquivos.GerenArquivos;
 
 public class Agencia {
     private int Num_Agencia;
     private String Nome_Agencia;
     private Gerente Gerente;
     private Endereco endereco_agencia;
-    private ArrayList<Conta> contas; //lista de clientes dessa Agencias criando os metodos de acesso
+    private LinkedList<Conta> contas; //lista de clientes dessa Agencias criando os metodos de acesso
+    private LinkedList<Funcionario> Funcionarios;
     
     //testeeeee
 
@@ -18,6 +19,8 @@ public class Agencia {
     public Agencia(String nome_Agencia,int num_Agencia) {
         Num_Agencia = num_Agencia;
         Nome_Agencia = nome_Agencia;
+        contas = new LinkedList<>();
+        Funcionarios = new LinkedList<>();
     }
 
     public Agencia(int Num_Agencia, String Nome_Agencia, Gerente Gerente, Endereco endereco_agencia) {
@@ -27,6 +30,8 @@ public class Agencia {
         Gerente.setAgencia(this.Num_Agencia);
         Gerente.setEsta_Em_uma_Agencia(true);
         this.endereco_agencia = endereco_agencia;
+        contas = new LinkedList<>();
+        Funcionarios = new LinkedList<>();
     }
 
     public int getNum_Agencia() {
@@ -48,6 +53,15 @@ public class Agencia {
     public Gerente getGerente() {
         return this.Gerente;
     }
+
+    public LinkedList<Funcionario> getFuncionarios() {
+        return this.Funcionarios;
+    }
+
+    public void setFuncionarios(LinkedList<Funcionario> Funcionarios) {
+        this.Funcionarios = Funcionarios;
+    }
+
 
     public void setGerente(Gerente Gerente) {
         this.Gerente.setAgencia(0);
@@ -78,7 +92,46 @@ public class Agencia {
         }
     }
 
+    public void LocalizaAgencia(String Bairro, String Cidade, String Estado)
+    {
+        if(this.endereco_agencia.getEnd_Bairro()==Bairro && this.endereco_agencia.getEnd_Cidade().equals(Cidade) && this.endereco_agencia.getEnd_Estado().equals(Estado))
+        {
+            ImprimeNome_e_Localizacao();
+        }
+    }
 
+    public void LocalizaAgencia(String Estado)
+    {
+        if(this.endereco_agencia.getEnd_Estado().equals(Estado))
+        {
+            ImprimeNome_e_Localizacao();
+        }
+    }
+
+
+    public LinkedList<Conta> getContas() {
+        return this.contas;
+    }
+
+    public void setContas(LinkedList<Conta> contas) {
+        this.contas = contas;
+    }
+
+    public String DadosAgencia()
+    {
+        String Data = this.Nome_Agencia +";"+
+                        this.Num_Agencia +";"+
+                        endereco_agencia.DadosEndereco();
+        return Data;
+    }
+
+    public void CarregarArquivos()
+    {
+        this.contas=GerenArquivos.Carregar_contas(this.Num_Agencia);
+        this.Funcionarios=GerenArquivos.Carregar_Funcioanrios(this.Num_Agencia);
+    }
+
+    
 
     
 }

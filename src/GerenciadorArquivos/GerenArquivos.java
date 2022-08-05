@@ -377,8 +377,8 @@ public class GerenArquivos {
                 while (( linha = br. readLine ()) != null ) 
                 {
                     campos = linha.split(";");
-                    Agencia Nova = new Agencia(campos[0], campos[[1]]);
-                    Endereco End = new Endereco(campos[2], Integer.parseInt([campos[3]]), campos[4], campos[5], campos[6], campos[7], campos[8], Integer.parseInt([campos[9]]));
+                    Agencia Nova = new Agencia(campos[0], Integer.parseInt(campos[1]));
+                    Endereco End = new Endereco(campos[2], Integer.parseInt(campos[3]), campos[4], campos[5], campos[6], campos[7], campos[8], Integer.parseInt(campos[9]));
                     Nova.setEndereco_agencia(End);
                     Agencia.add(Nova);
                 }   

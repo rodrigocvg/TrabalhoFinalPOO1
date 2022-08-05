@@ -4,14 +4,14 @@ import Personas.Endereco;
 
 public class Gerente extends Funcionario {
     private Boolean Formacao_Basica_EmGerencia;
-    private int[] Data_Ingresso_Como_Gerente =  new int [3];
+    private Data Data_Ingresso_Como_Gerente;
     private int Num_Agencia;
     private boolean Esta_Em_uma_Agencia;
 
 
     public Gerente(String Nome, int CPF, Data Data_de_Nascimento, Endereco Endereco, String Sexo, String Estado_Civil,
     int Numero_Carteira_de_trabalho, float salario, Data Data_de_Ingresso, int RG_Num, String RG_UF,
-    Boolean Formacao_Basica_EmGerencia, int[] Data_Ingresso_Como_Gerente) 
+    Boolean Formacao_Basica_EmGerencia, Data Data_Ingresso_Como_Gerente) 
     {
         super(Nome, CPF, Data_de_Nascimento, Endereco, Sexo, Estado_Civil, Numero_Carteira_de_trabalho, "Gerente", salario, Data_de_Ingresso, RG_Num, RG_UF); 
         this.Formacao_Basica_EmGerencia = Formacao_Basica_EmGerencia;
@@ -31,11 +31,11 @@ public class Gerente extends Funcionario {
         this.Formacao_Basica_EmGerencia = Formacao_Basica_EmGerencia;
     }
 
-    public int[] getData_Ingresso_Como_Gerente() {
+    public Data getData_Ingresso_Como_Gerente() {
         return this.Data_Ingresso_Como_Gerente;
     }
 
-    public void setData_Ingresso_Como_Gerente(int[] Data_Ingresso_Como_Gerente) {
+    public void setData_Ingresso_Como_Gerente(Data Data_Ingresso_Como_Gerente) {
         this.Data_Ingresso_Como_Gerente = Data_Ingresso_Como_Gerente;
     }
 
@@ -54,5 +54,15 @@ public class Gerente extends Funcionario {
     public void setEsta_Em_uma_Agencia(boolean Esta_Em_uma_Agencia) {
         this.Esta_Em_uma_Agencia = Esta_Em_uma_Agencia;
     }
+
+    @Override
+    public String DadosGerente() {
+        String Data = DadosFuncionario() + ";" +  Formacao_Basica_EmGerencia +";"+
+                                                    Data_Ingresso_Como_Gerente.DadosData() +";"+
+                                                    Num_Agencia +";"+
+                                                    Esta_Em_uma_Agencia +";";
+        return Data;
+    }
+
 
 }
