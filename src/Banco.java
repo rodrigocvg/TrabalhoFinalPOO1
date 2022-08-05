@@ -1,9 +1,13 @@
 import java.util.InputMismatchException;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.Scanner;
 
 import GerenciadorArquivos.GerenArquivos;
 import Instituição.Agencia;
+import Instituição.Contas.Conta;
+import Instituição.Contas.Poupanca;
+import Personas.Data;
 import Personas.Endereco;
 import Personas.Pessoa;
 import Personas.Clientes.Clientes;
@@ -12,6 +16,7 @@ public class Banco {
 
     private LinkedList<Agencia> Agencias; 
     private LinkedList<Clientes> Clientes;
+    private LinkedList<Conta> Contas;
     private String[] Adim = {"Admin","admin"}; //Usuario e Senha Administrador
     
 
@@ -258,6 +263,64 @@ public class Banco {
     public void Cadastrar_Conta(Scanner scan)
     {
         //digtar cpf
+        System.out.println("Digite seu CPF");
+        int CPF = scan.nextInt();
+        for(int i =0;i<Clientes.size();i++){
+            if(CPF == Clientes.get(i).getCPF()){
+                System.out.println("Cliente já cadastrado!");
+                System.out.println("Vamos cadastrar sua conta:");
+                int op;
+                String ag;
+                while(true){
+                System.out.println("Digite a agência que deseja: ");
+                System.out.println("1- Agência de Uberlândia");
+                System.out.println("2- Agência de Uberaba");
+                op = scan.nextInt();
+                
+                if(op == 1){
+                    ag = "Uberlandia";
+                    break;
+                }
+                else if (op == 2){
+                    ag = "Uberaba";
+                    break;
+                }
+                else{
+                    System.out.println("Opção não disponível, digite novamente");
+                }
+            }
+                int Num_Agencia;
+                if(ag == "Uberlandia") Num_Agencia = 1;
+                else{
+                    Num_Agencia = 2;
+                }
+                Random gerador = new Random();
+                int numConta = gerador.nextInt(200000);
+                System.out.println("Digite a senha: ");
+                int senha = scan.nextInt();
+                System.out.println("Escolha uma opção: ");
+                System.out.println("1-Conta normal");
+                System.out.println("2-Conta conjunta");
+                boolean conjunta;
+                int op1 = scan.nextInt();
+                if(op1 == 1) conjunta = false;
+                else conjunta = true;
+                
+
+                System.out.println("Digite o tipo da conta: ");
+                System.out.printf("1-Poupança\n2-Corrente\n3-Salario");
+                int op3 = scan.nextInt();
+                switch(op1){
+                    case 1:
+                    Contas.add(new Poupanca(numConta,senha,0,conjunta,Clientes.get(i),new Agencia(ag, Num_Agencia),new Data(30, 2, 2022),0));
+                    case 2:
+                    //Contas.add new Corrente
+                    case 3:
+                    //Contas.add Salario
+                }
+                
+            }
+        }
         
     }
     public void Cadastrar_Cliente(Scanner scan)
