@@ -10,7 +10,7 @@ public class Agencia {
     private String Nome_Agencia;
     private Gerente Gerente;
     private Endereco endereco_agencia;
-    private ArrayList<Clientes> clientes; //lista de clientes dessa Agencias criando os metodos de acesso
+    //private ArrayList<Clientes> clientes; //lista de clientes dessa Agencias criando os metodos de acesso
     
     //testeeeee
 
