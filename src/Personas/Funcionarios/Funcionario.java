@@ -76,4 +76,23 @@ public class Funcionario extends Pessoa {
         this.Data_de_Ingresso = Data_de_Ingresso;
     }
 
+
+    public String DadosFuncionario() {
+        
+        String Data = DadosPessoa() + ";" + Numero_Carteira_de_trabalho +";"+
+                                        Cargo_na_empresa +";"+
+                                        salario +";"+
+                                        Data_de_Ingresso.DadosData() +";"+
+                                        RG_Num +";"+
+                                        RG_UF +";";
+        
+        return Data;
+    }
+
+    public String DadosGerente()
+    {
+        throw new IllegalAccessError("Acesso Negado");
+    }
+
+
 }

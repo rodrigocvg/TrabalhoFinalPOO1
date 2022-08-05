@@ -2,24 +2,23 @@ import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import GerenciadorArquivos.GerenArquivos;
 import Instituição.Agencia;
 import Personas.Endereco;
 import Personas.Pessoa;
 import Personas.Clientes.Clientes;
-import Personas.Funcionarios.Funcionario;
 
 public class Banco {
 
     private LinkedList<Agencia> Agencias; 
     private LinkedList<Clientes> Clientes;
-    private LinkedList<Funcionario> funcionarios;
     private String[] Adim = {"Admin","admin"}; //Usuario e Senha Administrador
     
 
     public Banco() {
         this.Agencias =  new LinkedList<>();
         this.Clientes = new LinkedList<>();
-        this.funcionarios = new LinkedList<>();
+        CarregarBanco();
     }
 
 /***************************Getters e Setters**********************************************
@@ -40,29 +39,23 @@ public class Banco {
         this.Clientes = Clientes;
     }
 
-    public LinkedList<Funcionario> getFuncionarios() {
-        return this.funcionarios;
-    }
 
-    public void setFuncionarios(LinkedList<Funcionario> funcionarios) {
-        this.funcionarios = funcionarios;
-    }
 /***************Fim Getters e Setters********************************************************
  * ******************************************************************************************/
 
     public void Encontrar_Agencias_Proximas(Scanner Scan)
     {
         int opcao = 1;
-        String Pais;
+        String Estado;
         String Cidade;
         String Bairro;
 
         while(opcao!=0)
         {
             System.out.println("Deseja buscar por: ");
-            System.out.println("01 - Pais");
-            System.out.println("02 Cidade e Pais");
-            System.out.println("03 Bairro, Cidade e Pais");
+            System.out.println("01 - Estado");
+            System.out.println("02 Cidade e Estado");
+            System.out.println("03 Bairro, Cidade e Estado");
             System.out.println("00 Voltar ao menu anterior");
             try
             {
@@ -79,27 +72,27 @@ public class Banco {
                 case 0:
                     break;
                 case 1: 
-                    System.out.println("Qual o Pais?");
-                    Pais = Scan.nextLine();
-                    Encontrar_Agencias_Proximas(Pais);
+                    System.out.println("Qual o Estado?");
+                    Estado = Scan.nextLine();
+                    Encontrar_Agencias_Proximas(Estado);
                     opcao=0;
                     break;
                 case 2: 
-                    System.out.println("Qual o Pais?");
-                    Pais = Scan.nextLine();
+                    System.out.println("Qual o Estado?");
+                    Estado = Scan.nextLine();
                     System.out.println("Qual a Cidade?");
                     Cidade = Scan.nextLine();
-                    Encontrar_Agencias_Proximas(Cidade,Pais);
+                    Encontrar_Agencias_Proximas(Cidade,Estado);
                     opcao=0;
                     break;
                 case 3: 
-                    System.out.println("Qual o Pais?");
-                    Pais = Scan.nextLine();
+                    System.out.println("Qual o Estado?");
+                    Estado = Scan.nextLine();
                     System.out.println("Qual a Cidade?");
                     Cidade = Scan.nextLine();
                     System.out.println("Qual Bairro?");
                     Bairro=Scan.nextLine();
-                    Encontrar_Agencias_Proximas(Bairro,Cidade,Pais);
+                    Encontrar_Agencias_Proximas(Bairro,Cidade,Estado);
                     opcao=0;
                     break;
                 default:
@@ -112,17 +105,26 @@ public class Banco {
 
     }
     
-    private void Encontrar_Agencias_Proximas(String Bairro, String Cidade, String Pais)
+    private void Encontrar_Agencias_Proximas(String Bairro, String Cidade, String Estado)
     {
-
+        for(int i= 0; i< Agencias.size();i++)
+        {
+            Agencias.get(i).LocalizaAgencia(Bairro, Cidade, Estado);;
+        }
     }
-    private void Encontrar_Agencias_Proximas(String Cidade, String Pais)
+    private void Encontrar_Agencias_Proximas(String Cidade, String Estado)
     {
-        
+        for(int i= 0; i< Agencias.size();i++)
+        {
+            Agencias.get(i).LocalizaAgencia(Cidade, Estado);
+        }
     }
-    private void Encontrar_Agencias_Proximas(String Pais)
+    private void Encontrar_Agencias_Proximas(String Estado)
     {
-        
+        for(int i= 0; i< Agencias.size();i++)
+        {
+            Agencias.get(i).LocalizaAgencia(Estado);
+        }
     }
     
     public void Acessar_Conta(Scanner scan)
@@ -293,6 +295,8 @@ public class Banco {
                 String Rua = scan.next();
                 System.out.print("Numero: ");
                 int numero = scan.nextInt();
+                System.out.print("Bairro: ");
+                String Bairro = scan.nextLine();
                 System.out.print("Cidade: ");
                 String Cidade = scan.next();
                 System.out.print("Estado: ");
@@ -303,7 +307,7 @@ public class Banco {
                 String End_Complemento = scan.next();
                 System.out.print("CEP: ");
                 int CEP = scan.nextInt();
-                Endereco End_Novo_Cliente = new Endereco(Rua, numero, Cidade, Estado, Pais, End_Complemento, CEP);
+                Endereco End_Novo_Cliente = new Endereco(Rua, numero, Bairro,Cidade, Estado, Pais, End_Complemento, CEP);
                 Cliente_Novo.setEndereco(End_Novo_Cliente);               
 
             }
@@ -321,6 +325,15 @@ public class Banco {
     private void Promover_A_Gerente(Scanner scan)
     {
 
+    }
+
+    public void CarregarBanco()
+    {
+        this.Agencias=GerenArquivos.Carregar_Agencias();
+        for(int i =0; i<Agencias.size();i++)
+        {
+            Agencias.get(i).CarregarArquivos();
+        }
     }
 
 }

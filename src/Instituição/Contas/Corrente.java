@@ -2,6 +2,7 @@ package Instituição.Contas;
 //import Personas.Data;
 
 import Personas.Data;
+import Personas.Clientes.*;
 
 public class Corrente extends Conta{
    
@@ -12,7 +13,7 @@ public class Corrente extends Conta{
 
     //Construtor conta única
     public Corrente(int Num_Conta, int Senha_Conta, float saldo, 
-    boolean conjunta, Personas.Clientes.Clientes Cliente_primario,
+    boolean conjunta, Clientes Cliente_primario,
     Instituição.Agencia Agencia, Data Abertura_de_Conta, float limite, float taxAdmin){
     super(Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Agencia,
         Abertura_de_Conta);
@@ -22,7 +23,6 @@ public class Corrente extends Conta{
 
         @Override
         public String SaidaArquivo() {
-            // TODO Auto-generated method stub
             return super.SaidaArquivo() + ";" + this.limCheque + ";" + this.taxAdmin;
         }
        

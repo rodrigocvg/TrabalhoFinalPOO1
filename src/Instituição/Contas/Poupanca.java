@@ -22,7 +22,6 @@ public class Poupanca extends Conta {
 
 @Override
     public String SaidaArquivo() {
-        // TODO Auto-generated method stub
         return super.SaidaArquivo() + ";" + this.rendimento;
     }
     @Override
