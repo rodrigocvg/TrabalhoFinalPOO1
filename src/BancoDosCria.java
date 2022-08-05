@@ -13,7 +13,7 @@ public class BancoDosCria {
         Scanner scan = new Scanner(System.in);
         String NomeBanco = "Banco Dos Crias";
         Banco BancoDosCria = new Banco();
-        
+
         System.out.println("Seja Bem ao "+ NomeBanco);
         //menu
         while(opcao!=0)
@@ -21,7 +21,7 @@ public class BancoDosCria {
             System.out.println("Primeiro me diz voce quer: ");
             System.out.println("01 -> Acessar Minha Conta");
             System.out.println("02 -> Abrir uma Conta");
-            System.out.println("03 -> Sou Funcionario (Acesso Funcionario, Cadastrar Funcionario, Promover a Gerente, Cadastrar Agencia");
+            System.out.println("03 -> Area do Funcionario (Acesso Funcionario, Cadastrar Funcionario, Promover a Gerente, Cadastrar Agencia");
             System.out.println("04 -> Encontrar Agencia mais proxima");
             System.out.println("00 -> Sair do Sistema");    
             

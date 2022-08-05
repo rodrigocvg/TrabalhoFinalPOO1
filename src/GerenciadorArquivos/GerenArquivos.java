@@ -364,7 +364,7 @@ public class GerenArquivos {
 
             
     }
-
+        
         public static LinkedList<Agencia> Carregar_Agencias()
         {
             LinkedList<Agencia> Agencia = new LinkedList<>();
@@ -459,7 +459,7 @@ public class GerenArquivos {
             }
         }
 
-        public static void SalvarArquivoFuncionarios (LinkedList<Agencia> Agencia) 
+        public static void SalvarArquivoAgencia (LinkedList<Agencia> Agencia) 
         {
 
             try {
