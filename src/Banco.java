@@ -257,7 +257,8 @@ public class Banco {
 
     public void Cadastrar_Conta(Scanner scan)
     {
-
+        //digtar cpf
+        
     }
     public void Cadastrar_Cliente(Scanner scan)
     {
@@ -309,7 +310,7 @@ public class Banco {
                 int CEP = scan.nextInt();
                 Endereco End_Novo_Cliente = new Endereco(Rua, numero, Bairro,Cidade, Estado, Pais, End_Complemento, CEP);
                 Cliente_Novo.setEndereco(End_Novo_Cliente);               
-
+                this.Clientes.add((Clientes) Cliente_Novo);
             }
         }
     }
@@ -333,6 +334,16 @@ public class Banco {
         for(int i =0; i<Agencias.size();i++)
         {
             Agencias.get(i).CarregarArquivos();
+        }
+    }
+
+    public void SalvarBanco()
+    {
+        GerenArquivos.SalvarArquivoClientes(Clientes);
+        GerenArquivos.SalvarArquivoAgencia(Agencias);
+        for(int i =0;i<Agencias.size();i++)
+        {
+            //Agencias.get(i).SalvarContas();
         }
     }
 
