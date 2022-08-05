@@ -1,5 +1,6 @@
 import java.util.Scanner;
-import Personas.Endereco;
+
+import GerenciadorArquivos.GerenArquivos;
 import Personas.Pessoa;
 import Personas.Clientes.Clientes;
 
@@ -14,8 +15,6 @@ public class BancoDosCria {
         Banco BancoDosCria = new Banco();
 
         // Carrega os clientes salvos em Arquivo
-        BancoDosCria.setClientes(GerenArquivos.Carregar_clientes());
-
         System.out.println("Seja Bem ao "+ NomeBanco);
         //menu
         while(opcao!=0)
@@ -116,8 +115,8 @@ public class BancoDosCria {
                 String End_Complemento = scan.next();
                 System.out.print("CEP: ");
                 int CEP = scan.nextInt();
-                Endereco End_Novo_Cliente = new Endereco(Rua, numero, Cidade, Estado, Pais, End_Complemento, CEP);
-                Cliente_Novo.setEndereco(End_Novo_Cliente);               
+                //Endereco End_Novo_Cliente = new Endereco(Rua, numero, Cidade, Estado, Pais, End_Complemento, CEP);
+                //Cliente_Novo.setEndereco(End_Novo_Cliente);               
 
             }
         }
