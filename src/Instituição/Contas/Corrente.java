@@ -1,10 +1,6 @@
 package Instituição.Contas;
 //import Personas.Data;
 
-
-import java.io.FileWriter;
-import java.io.PrintWriter;
-
 import Personas.Data;
 
 public class Corrente extends Conta{

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import Instituição.Contas.Conta;
 import Personas.Endereco;
 import Personas.Funcionarios.Gerente;
-import Personas.Clientes.Clientes;
 
 public class Agencia {
     private int Num_Agencia;
