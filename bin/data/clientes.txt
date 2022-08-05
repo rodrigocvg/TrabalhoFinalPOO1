@@ -1,0 +1,6 @@
+rodrigo;0;30;6;2003;jose;600;uberlandia;mg;brasil;302;38408140;masc;solteiro;animal;238293232
+israel;0;32;32;32323;rua;4384;cidade;estado;pais;comple;493443;sexo;estado;animal;45935684
+maria;2384953;23;2;2002;rua;300;cidade;estado;pais;compl;3939933;femi;estado;escolaridade;3232
+1;0;1;1;1;1;1;1;1;1;1;1;1;1;animal;1
+2;0;2;2;2;2;2;2;2;2;2;2;2;2;animal;2
+junin;2023023032;30;6;2003;rua;222;cidade;estado;pais;compl;4354;sexo;estd;escol;3454
