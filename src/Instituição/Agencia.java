@@ -2,6 +2,7 @@ package Instituição;
 import java.util.LinkedList;
 import Instituição.Contas.Conta;
 import Personas.Endereco;
+import Personas.Clientes.Clientes;
 import Personas.Funcionarios.*;
 import GerenciadorArquivos.GerenArquivos;
 
@@ -125,9 +126,9 @@ public class Agencia {
         return Data;
     }
 
-    public void CarregarArquivos()
+    public void CarregarArquivos(LinkedList<Clientes> Clientes)
     {
-        this.contas=GerenArquivos.Carregar_contas(this.Num_Agencia);
+        this.contas=GerenArquivos.Carregar_contas(this.Num_Agencia, Clientes);
         this.Funcionarios=GerenArquivos.Carregar_Funcioanrios(this.Num_Agencia);
     }
 

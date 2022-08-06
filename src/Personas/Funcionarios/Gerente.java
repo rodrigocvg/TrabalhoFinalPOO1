@@ -9,7 +9,7 @@ public class Gerente extends Funcionario {
     private boolean Esta_Em_uma_Agencia;
 
 
-    public Gerente(String Nome, int CPF, Data Data_de_Nascimento, Endereco Endereco, String Sexo, String Estado_Civil,
+    public Gerente(String Nome, String CPF, Data Data_de_Nascimento, Endereco Endereco, String Sexo, String Estado_Civil,
     int Numero_Carteira_de_trabalho, float salario, Data Data_de_Ingresso, int RG_Num, String RG_UF,
     Boolean Formacao_Basica_EmGerencia, Data Data_Ingresso_Como_Gerente) 
     {

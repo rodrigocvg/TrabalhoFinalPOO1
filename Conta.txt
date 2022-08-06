@@ -1,0 +1,19 @@
+    Num_Conta
+    Senha_Conta
+    saldo
+    StatusDaConta
+    conjunta
+    Cliente_primario 
+    Cliente_secundario
+    Num_Agencia
+    DIa --- Abertura_de_Conta
+    Mes
+    Ano
+    Dia ----Ultima_Movimentacao
+    Mes
+    Ano             Corrente    Poupanca      salario
+                    limCheque   rendimento    Limite_saque
+                    taxAdmin                  Limite_transferencia  
+
+
+    

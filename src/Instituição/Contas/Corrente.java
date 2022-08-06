@@ -14,8 +14,8 @@ public class Corrente extends Conta{
     //Construtor conta única
     public Corrente(int Num_Conta, int Senha_Conta, float saldo, 
     boolean conjunta, Clientes Cliente_primario,
-    Instituição.Agencia Agencia, Data Abertura_de_Conta, float limite, float taxAdmin){
-    super(Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Agencia,
+    int Num_Agencia, Data Abertura_de_Conta, float limite, float taxAdmin){
+    super(Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Num_Agencia,
         Abertura_de_Conta);
         this.limCheque = 0; //Limite padrão de conta corrente
         this.taxAdmin = 30f;
@@ -23,7 +23,7 @@ public class Corrente extends Conta{
 
         @Override
         public String SaidaArquivo() {
-            return super.SaidaArquivo() + ";" + this.limCheque + ";" + this.taxAdmin;
+            return  "Corrente;"+super.SaidaArquivo() + ";" + this.limCheque + ";" + this.taxAdmin ;
         }
        
         

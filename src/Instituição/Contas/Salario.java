@@ -1,7 +1,6 @@
 package Instituição.Contas;
 import Personas.Clientes.Clientes;
 import Personas.Data;
-import Instituição.Agencia;
 
 public class Salario extends Conta {
     // limite para saque e limite para transferência.
@@ -9,17 +8,17 @@ public class Salario extends Conta {
     private float Limite_transferencia;
 
 
-    public Salario(String Nome, int CPF, int Num_Conta, int Senha_Conta, float saldo, boolean conjunta, Clientes Cliente_primario, Agencia Agencia, Data Abertura_de_Conta,
+    public Salario(int Num_Conta, int Senha_Conta, float saldo, boolean conjunta, Clientes Cliente_primario, int Num_Agencia, Data Abertura_de_Conta,
         float Limite_saque, float Limite_transferencia) 
     {
-        super(Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Agencia, Abertura_de_Conta);
+        super(Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Num_Agencia, Abertura_de_Conta);
         this.Limite_saque = Limite_saque;
         this.Limite_transferencia = Limite_transferencia;
     }
 
     @Override
     public String SaidaArquivo() {
-        return super.SaidaArquivo() + ";" + this.Limite_saque + ";" + this.Limite_transferencia;
+        return "Salario;" + super.SaidaArquivo() + ";" + this.Limite_saque + ";" + this.Limite_transferencia;
     }
 
 

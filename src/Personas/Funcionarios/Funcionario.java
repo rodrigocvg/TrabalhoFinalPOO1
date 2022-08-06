@@ -14,7 +14,7 @@ public class Funcionario extends Pessoa {
 
 
 
-    public Funcionario(String Nome, int CPF, Data Data_de_Nascimento, Endereco Endereco, String Sexo, String Estado_Civil,
+    public Funcionario(String Nome, String CPF, Data Data_de_Nascimento, Endereco Endereco, String Sexo, String Estado_Civil,
         int Numero_Carteira_de_trabalho, String Cargo_na_empresa, float salario, Data Data_de_Ingresso, int RG_Num, String RG_UF) 
         
     {

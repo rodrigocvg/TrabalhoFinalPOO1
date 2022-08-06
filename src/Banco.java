@@ -258,71 +258,111 @@ public class Banco {
     public void Cadastrar_Conta(Scanner scan)
     {
         //digtar cpf
+        Cadastrar_Cliente(scan);
+        //apenas teste
         
     }
+    
     public void Cadastrar_Cliente(Scanner scan)
     {
-        int opcao =1;
+        
+        int opcao =3;
+        scan.nextLine();
         while(opcao!=0)
         {
-            boolean cpf_encontrado = false;
-            System.out.println("Vamos fazer seu cadastro meu cria");
-            System.out.print("Digite seu CPF: ");
-            String cpf = scan.next();
-            boolean cpfvalido = ValidaCPF.isCPF(cpf);
+            try{
+                System.out.println("Vamos fazer seu cadastro meu cria");
+                System.out.print("Digite seu CPF: ");
+                String cpf = scan.nextLine();
+                boolean cpfvalido = ValidaCPF.isCPF(cpf);
 
-            if(!cpfvalido)
-                break;
+                if(!cpfvalido)
+                    {
+                        opcao--;
+                        System.out.println("Cpf invalido, voce tem mais " + opcao + " Tentativas");
+                        break;
+                    }
+                
+                else
+                {
 
-            Pessoa Cliente_Novo = new Clientes();
+                    Pessoa Cliente_Novo = new Clientes();
+                    //buscar nos clientes se possui algum ja cadastrado com esse cpf
+                    for(int i = 0; i<Clientes.size();i++)
+                    {
+                        if(Clientes.get(i).getCPF().equals(cpf))
+                        {
+                            throw new IllegalArgumentException("CPF ja cadastrado! ");
+                        }
+                    }
 
-            
-            if(!cpf_encontrado) // caso cpf ainda não cadastrado
+                    // caso cpf ainda não cadastrado
+                    
+                    
+                    System.out.print("Digite seu nome completo: ");
+                    Cliente_Novo.setNome(scan.nextLine());
+                    System.out.print("Voce e de qual Genero? ");
+                    Cliente_Novo.setSexo(scan.nextLine());
+                    System.out.print("Qual seu estado civil? ");
+                    Cliente_Novo.setEstado_Civil(scan.nextLine());
+                    System.out.print("Preciso do seu endereço começando pela rua: ");
+                    String Rua = scan.next();
+                    System.out.print("Bairro: ");
+                    String Bairro = scan.nextLine();
+                    System.out.print("Cidade: ");
+                    String Cidade = scan.next();
+                    System.out.print("Estado: ");
+                    String Estado = scan.next();
+                    System.out.print("Pais: ");
+                    String Pais = scan.next();
+                    System.out.print("Complemento: ");
+                    String End_Complemento = scan.next();
+                    scan.nextLine();
+                    System.out.print("Numero: ");
+                    int numero = scan.nextInt();
+                    System.out.print("CEP: ");
+                    int CEP = scan.nextInt();
+                    System.out.print("Cria se nasceu que dia? ");
+                    int dia_nascimento = scan.nextInt();
+                    System.out.print("No mes de Numero? ");
+                    int mes = scan.nextInt();
+                    System.out.print("E qual ano era?");
+                    int ano = scan.nextInt();
+                    Cliente_Novo.setCPF(cpf);
+                    Cliente_Novo.setData_de_Nascimento(dia_nascimento,mes,ano);
+                    Endereco End_Novo_Cliente = new Endereco(Rua, numero, Bairro,Cidade, Estado, Pais, End_Complemento, CEP);
+                    Cliente_Novo.setEndereco(End_Novo_Cliente);               
+                    this.Clientes.add((Clientes) Cliente_Novo);
+                }
+                
+            }catch(NumberFormatException e)
             {
-                System.out.print("Digite seu nome completo: ");
-                Cliente_Novo.setNome(scan.next());
-                System.out.print("Cria se nasceu que dia? ");
-                int dia_nascimento = scan.nextInt();
-                System.out.print("No mes de Numero? ");
-                int mes = scan.nextInt();
-                System.out.print("E qual ano era?");
-                int ano = scan.nextInt();
-                Cliente_Novo.setData_de_Nascimento(dia_nascimento,mes,ano);
-                System.out.print("Voce e de qual Genero? ");
-                Cliente_Novo.setSexo(scan.next());
-                System.out.print("Qual seu estado civil? ");
-                Cliente_Novo.setEstado_Civil(scan.next());
-                System.out.print("Preciso do seu endereço começando pela rua: ");
-                String Rua = scan.next();
-                System.out.print("Numero: ");
-                int numero = scan.nextInt();
-                System.out.print("Bairro: ");
-                String Bairro = scan.nextLine();
-                System.out.print("Cidade: ");
-                String Cidade = scan.next();
-                System.out.print("Estado: ");
-                String Estado = scan.next();
-                System.out.print("Pais: ");
-                String Pais = scan.next();
-                System.out.print("Complemento: ");
-                String End_Complemento = scan.next();
-                System.out.print("CEP: ");
-                int CEP = scan.nextInt();
-                Endereco End_Novo_Cliente = new Endereco(Rua, numero, Bairro,Cidade, Estado, Pais, End_Complemento, CEP);
-                Cliente_Novo.setEndereco(End_Novo_Cliente);               
-                this.Clientes.add((Clientes) Cliente_Novo);
+                opcao--;
+                System.out.println(e + "voce tem mais " + opcao+" Tentativas");
             }
+            catch(InputMismatchException e)
+            {
+                opcao--;
+                System.out.println("Digite valores validos " + opcao+" Tentativas");
+                continue;
+            }
+            opcao=0;
         }
+        
+        GerenArquivos.SalvarArquivoClientes(Clientes);
     }
+    
     
     private void Cadastrar_Agencia(Scanner scan)
     {
         //somente Administrador pode cadatrar Agencia. Esta declarado nos atributos dessa classe.
     }
+    
     private void Cadastrar_funcionario(Scanner scan)
     {
 
     }
+  
     private void Promover_A_Gerente(Scanner scan)
     {
 
@@ -331,9 +371,10 @@ public class Banco {
     public void CarregarBanco()
     {
         this.Agencias=GerenArquivos.Carregar_Agencias();
+        //this.Clientes=GerenArquivos.clien
         for(int i =0; i<Agencias.size();i++)
         {
-            Agencias.get(i).CarregarArquivos();
+            Agencias.get(i).CarregarArquivos(Clientes);
         }
     }
 

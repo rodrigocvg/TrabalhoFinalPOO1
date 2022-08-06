@@ -10,6 +10,7 @@ import Instituição.Agencia;
 import Instituição.Contas.Conta;
 import Instituição.Contas.Corrente;
 import Instituição.Contas.Poupanca;
+import Instituição.Contas.Salario;
 import Personas.Data;
 import Personas.Endereco;
 import Personas.Clientes.Clientes;
@@ -20,7 +21,7 @@ import Personas.Funcionarios.Gerente;
 public class GerenArquivos {
 
 
-    private static final String BaseDados ="E:\\POO1\\Trabalho\\src\\data\\";
+    private static final String BaseDados ="C:\\Users\\israe\\Meu Drive\\Trello\\Estudos Dev\\POO\\Trabalho Poo\\TrabalhoFinalPOO1\\src\\data\\";
 
 
      // ------------------------------------------------------   //
@@ -30,7 +31,7 @@ public class GerenArquivos {
     // ------------------------------------------------------   //
 
 
-    public static LinkedList<Clientes> Carregar_clientes ()
+   /*public static LinkedList<Clientes> Carregar_clientes ()
     {
         LinkedList<Clientes> clientes = new LinkedList<>();
         try {
@@ -53,12 +54,12 @@ public class GerenArquivos {
             System .out. println (" Erro na leitura dos dados ");
         }
         return clientes;
-    }
+    }*/
 
     public static void SalvarArquivoClientes (LinkedList<Clientes> clientes) 
     {
         try {
-            FileWriter arq = new FileWriter ( BaseDados+"clientes.txt" );
+            FileWriter arq = new FileWriter ( BaseDados+"clientes.csv" );
             PrintWriter out = new PrintWriter (arq);
             try{
                 for (int i = 0; i < clientes.size() ; i++) {
@@ -78,8 +79,7 @@ public class GerenArquivos {
     }
 
 
-    public static void CadastrarClientes (String Nome ,int CPF ,Data Data_de_Nascimento, Endereco Endereco, String Sexo, String Estado_Civil,
-    String Escolaridade, int NumAgencia,LinkedList<Clientes> clientes) 
+    public static void CadastrarClientes (Clientes Novo,LinkedList<Clientes> clientes) 
     {
         try {
             FileWriter arq = new FileWriter ( BaseDados+"clientes.txt" );
@@ -93,8 +93,8 @@ public class GerenArquivos {
             catch(NullPointerException e)
             {
             }
-            String linha = Nome + ";" + CPF + ";" + Data_de_Nascimento.getDia() + ";" + Data_de_Nascimento.getMes()+ ";" + Data_de_Nascimento.getAno() + ";" + Endereco.getEnd_Rua() + ";" + Endereco.getEnd_Num() + ";"+ Endereco.getEnd_Cidade() + ";" + Endereco.getEnd_Estado() + ";" + Endereco.getEnd_Pais() + ";" +  Endereco.getEnd_Complemento() + ";" + Endereco.getEnd_Cep() + ";" + Sexo + ";" + Estado_Civil + ";" + Escolaridade + ";" + NumAgencia;
-            System.out.println("clientes cadastrado: "+ Nome);
+            String linha = Novo.SaidaArquivo();
+            System.out.println("clientes cadastrado: ");
             out.println( linha );
             out.close ();
         } 
@@ -104,13 +104,41 @@ public class GerenArquivos {
         }
     } 
 
+    public static LinkedList<Clientes> CarregarClientes () 
+    {   
+        LinkedList<Clientes> Clientes = new LinkedList<>();
+        try {
+    
+            FileReader ent = new FileReader ( BaseDados+"Agencia.csv" );
+            BufferedReader br = new BufferedReader (ent);
+            String linha ;
+            String [] campos = null ;
+            while (( linha = br. readLine ()) != null )
+            {
+                campos = linha.split(";");
+                Data DataNasc = new Data(Integer.parseInt(campos[2]), Integer.parseInt(campos[3]), Integer.parseInt(campos[4]));
+                Endereco EndCliente = new Endereco(campos[5], Integer.parseInt(campos[6]), campos[7], campos[8], campos[9], campos[10], campos[11], Integer.parseInt(campos[12]));
+                Clientes.add(new Clientes(campos[0], campos[1], DataNasc, EndCliente, campos[13], campos[14], campos[15]));
+            
+                
+            }
+            br.close();
+        } 
+        catch ( IOException erro )
+        {
+        System .out. println (" Erro na escrita dos dados ");
+        }
+
+        return Clientes;
+    } 
+
     // ------------------------------------------------------   //
     // ------------------------------------------------------   //
     //              ARQUIVO PARA CONTA CORRENTE                 //
     // ------------------------------------------------------   //
     // ------------------------------------------------------   //
 
-    public static LinkedList<Conta> Carregar_contaCorrente()
+   /* public static LinkedList<Conta> Carregar_contaCorrente()
     {
         LinkedList<Conta> contas = new LinkedList<>();
         try {
@@ -132,7 +160,7 @@ public class GerenArquivos {
             System .out. println (" Erro na leitura dos dados ");
         }
         return contas;
-    }
+    }*/
 
 
     public static void SalvarArquivoCorrente (LinkedList<Corrente> contas) 
@@ -194,7 +222,7 @@ public class GerenArquivos {
     // ------------------------------------------------------   //
     // ------------------------------------------------------   //
 
-    public static LinkedList<Conta> Carregar_contaPoupanca()
+    /*public static LinkedList<Conta> Carregar_contaPoupanca()
     {
         LinkedList<Conta> contas = new LinkedList<>();
         try {
@@ -216,7 +244,7 @@ public class GerenArquivos {
             System .out. println (" Erro na leitura dos dados ");
         }
         return contas;
-    }
+    }*/
 
     public static void SalvarArquivoPoupanca (LinkedList<Corrente> contas) 
     {
@@ -283,7 +311,7 @@ public class GerenArquivos {
          * 
     */
 
-        public static LinkedList<Conta> Carregar_contas(int NumAgencia)
+        public static LinkedList<Conta> Carregar_contas(int NumAgencia, LinkedList<Clientes> Clientes)
         {
             String NumeroAgencia = String.valueOf(NumAgencia);
             LinkedList<Conta> contas = new LinkedList<>();
@@ -296,8 +324,64 @@ public class GerenArquivos {
                 while (( linha = br. readLine ()) != null ) 
                 {
                     campos = linha.split(";");
-                    contas.add(new Poupanca(Integer.parseInt(campos[0]),Integer.parseInt(campos[1]),Float.parseFloat(campos[2]),Boolean.parseBoolean(campos[3]), new Clientes(campos[4],Integer.parseInt(campos[5])),
-                                       new Agencia(campos[6], Integer.parseInt(campos[7])), new Data(Integer.parseInt(campos[8]), Integer.parseInt(campos[9]), Integer.parseInt(campos[10])), Float.parseFloat(campos[11])));
+                    Data AberturaConta = new Data(Integer.parseInt(campos[8]),Integer.parseInt(campos[9]),Integer.parseInt(campos[10]));
+                    Data UltimaMovimentacao = new Data(Integer.parseInt(campos[11]),Integer.parseInt(campos[12]),Integer.parseInt(campos[13]));
+                    Clientes Primario = new Clientes();
+                    Clientes Secundario = new Clientes();
+                    boolean CPF_Encontrado = false;
+
+                    for(int i =0 ; i < Clientes.size(); i++)
+                    {
+                        Clientes Percorre  = Clientes.get(i);
+                        if(Percorre.getCPF().equals(campos[6]))
+                        {   
+                            Primario = Percorre;
+                            CPF_Encontrado = true;
+                        }
+                        else if(Percorre.getCPF().equals(campos[7]))
+                        {
+                            Secundario = Percorre;
+                        }
+                        
+                    }
+
+                    if (!CPF_Encontrado)
+                            throw new IllegalArgumentException("Cliente não encontrado");
+
+                    Conta Nova;
+                    switch(campos[0])
+                    {
+                        case "Corrente":
+                             Nova = new Corrente(Integer.parseInt(campos[1]), Integer.parseInt(campos[2]), Float.parseFloat(campos[3]), Boolean.parseBoolean(campos[5]), Primario,Integer.parseInt(campos[8]), AberturaConta, Float.parseFloat(campos[15]), Float.parseFloat(campos[16]));
+                            if(Boolean.parseBoolean(campos[5]))
+                            {
+                                Nova.setCliente_secundario(Secundario);
+                            }
+                            Nova.setUltima_Movimentacao(UltimaMovimentacao);
+                            contas.add(Nova);
+                            break;
+                        case "Poupanca":
+                             Nova = new Poupanca(Integer.parseInt(campos[1]), Integer.parseInt(campos[2]), Float.parseFloat(campos[3]), Boolean.parseBoolean(campos[5]), Primario,Integer.parseInt(campos[8]), AberturaConta, Float.parseFloat(campos[15])); 
+                            if(Boolean.parseBoolean(campos[5]))
+                            {
+                                Nova.setCliente_secundario(Secundario);
+                            }
+                            Nova.setUltima_Movimentacao(UltimaMovimentacao);
+                            contas.add(Nova);
+                            break;
+                        case "Salario":
+                             Nova = new Salario(Integer.parseInt(campos[1]), Integer.parseInt(campos[2]), Float.parseFloat(campos[3]), Boolean.parseBoolean(campos[5]), Primario,Integer.parseInt(campos[8]), AberturaConta, Float.parseFloat(campos[15]), Float.parseFloat(campos[16]));
+                        if(Boolean.parseBoolean(campos[5]))
+                            {
+                                Nova.setCliente_secundario(Secundario);
+                            }
+                            Nova.setUltima_Movimentacao(UltimaMovimentacao);
+                            contas.add(Nova);
+                            break;
+                        default:
+                            break;
+                        
+                    }
                 }   
                 br. close ();
             }
@@ -332,7 +416,7 @@ public class GerenArquivos {
             }
         }
     
-        public static void CadastrarConta (int Num_Conta, int Senha_Conta, float saldo, 
+        public static void CadastrarConta (String TipoConta, int Num_Conta, int Senha_Conta, float saldo, 
         boolean conjunta, Clientes Cliente_primario,
        Agencia Agencia, Data Abertura_de_Conta, float rendimento) 
         {
@@ -350,7 +434,7 @@ public class GerenArquivos {
                 catch(NullPointerException e)
                 {
                 }
-                String linha = Num_Conta + ";" + Senha_Conta + ";"  + saldo + ";" + conjunta+ ";" + Cliente_primario.getNome() + ";"+ Cliente_primario.getCPF() + ";" + 
+                String linha =TipoConta + ";" + Num_Conta + ";" + Senha_Conta + ";"  + saldo + ";" + conjunta+ ";" + Cliente_primario.getNome() + ";"+ Cliente_primario.getCPF() + ";" + 
                                 Agencia.getNome_Agencia() + ";" + Agencia.getNum_Agencia() + ";" +  Abertura_de_Conta.getDia() + ";" + Abertura_de_Conta.getMes()+ ";" + 
                                 Abertura_de_Conta.getAno() + ";" + rendimento;
                 System.out.println("Conta cadastrada: "+ Num_Conta);
@@ -412,12 +496,12 @@ public class GerenArquivos {
                     {
                         Datas[2] = new Data(Integer.parseInt(campos[24]), Integer.parseInt(campos[25]), Integer.parseInt(campos[26]));
 
-                        Funcionario Novo = new Gerente(campos[0], Integer.parseInt(campos[1]), Datas[0], End, campos[13], campos[14], Integer.parseInt(campos[15]), Float.parseFloat(campos[17]),  Datas[1], Integer.parseInt(campos[21]), campos[22], Boolean.parseBoolean(campos[23]),  Datas[2]);
+                        Funcionario Novo = new Gerente(campos[0], campos[1], Datas[0], End, campos[13], campos[14], Integer.parseInt(campos[15]), Float.parseFloat(campos[17]),  Datas[1], Integer.parseInt(campos[21]), campos[22], Boolean.parseBoolean(campos[23]),  Datas[2]);
                         Funcionarios.add(Novo);
                     }
                     else 
                     {
-                        Funcionario Novo = new Funcionario(campos[0], Integer.parseInt(campos[1]), Datas[0], End, campos[13], campos[14], Integer.parseInt(campos[15]),campos[16], Float.parseFloat(campos[17]),  Datas[1], Integer.parseInt(campos[21]), campos[22]);
+                        Funcionario Novo = new Funcionario(campos[0], campos[1], Datas[0], End, campos[13], campos[14], Integer.parseInt(campos[15]),campos[16], Float.parseFloat(campos[17]),  Datas[1], Integer.parseInt(campos[21]), campos[22]);
                         Funcionarios.add(Novo);
                     }   
                 }
