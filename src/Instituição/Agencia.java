@@ -149,7 +149,6 @@ public class Agencia {
         this.Funcionarios=GerenArquivos.Carregar_Funcioanrios(this.Num_Agencia);
     }
 
-    
 
     
 }

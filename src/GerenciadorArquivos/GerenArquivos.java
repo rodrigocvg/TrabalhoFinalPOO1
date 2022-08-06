@@ -33,7 +33,7 @@ public class GerenArquivos {
     public static void SalvarArquivoClientes (LinkedList<Clientes> clientes) 
     {
         try {
-            FileWriter arq = new FileWriter ( BaseDados+"clientes.csv" );
+            FileWriter arq = new FileWriter ( BaseDados+"Clientes.csv" );
             PrintWriter out = new PrintWriter (arq);
             try{
                 for (int i = 0; i < clientes.size() ; i++) {
@@ -48,7 +48,7 @@ public class GerenArquivos {
         } 
         catch ( IOException erro )
         {
-        System .out. println (" Erro na escrita dos dados ");
+        System .out. println (" Erro na escrita dos dados Clientes");
         }
     }
 
@@ -57,7 +57,7 @@ public class GerenArquivos {
         LinkedList<Clientes> Clientes = new LinkedList<>();
         try {
     
-            FileReader ent = new FileReader ( BaseDados+"Agencia.csv" );
+            FileReader ent = new FileReader ( BaseDados+"Clientes.csv" );
             BufferedReader br = new BufferedReader (ent);
             String linha ;
             String [] campos = null ;
@@ -74,7 +74,7 @@ public class GerenArquivos {
         } 
         catch ( IOException erro )
         {
-        System .out. println (" Erro na escrita dos dados ");
+        System .out. println (" Erro na escrita dos dados Clintes");
         }
 
         return Clientes;
@@ -162,7 +162,7 @@ public class GerenArquivos {
             }
             catch ( IOException erro ) 
             {
-                System .out. println (" Erro na leitura dos dados ");
+                System .out. println (" Arquivo nao encontrado ou corrompido: Contas.csv");
             }
             return contas;
         }
@@ -187,7 +187,7 @@ public class GerenArquivos {
             } 
             catch ( IOException erro )
             {
-            System .out. println (" Erro na escrita dos dados ");
+            System .out. println (" Erro na escrita dos dados Contas");
             }
         }
 
@@ -202,7 +202,7 @@ public class GerenArquivos {
             LinkedList<Agencia> Agencia = new LinkedList<>();
             try {
     
-                FileReader ent = new FileReader ( BaseDados+"Agencia.csv" );
+                FileReader ent = new FileReader ( BaseDados+"Agencias.csv" );
                 BufferedReader br = new BufferedReader (ent);
                 String linha ;
                 String [] campos = null ;
@@ -218,7 +218,7 @@ public class GerenArquivos {
             }
             catch ( IOException erro ) 
             {
-                System .out. println (" Erro na leitura dos dados ");
+                System .out. println ("Arquivo nao encontrado ou corrompido: Agencias.csv");
             }
             return Agencia;
         }
@@ -243,7 +243,7 @@ public class GerenArquivos {
             } 
             catch ( IOException erro )
             {
-            System .out. println (" Erro na escrita dos dados ");
+            System .out. println (" Erro na escrita dos dados Agencias");
             }
         }
     
@@ -287,7 +287,7 @@ public class GerenArquivos {
             }
             catch ( IOException erro ) 
             {
-                System .out. println (" Erro na leitura dos dados ");
+                System .out. println (" Arquivo nao encontrado ou corrompido: Funcionarios.csv");
             }
             return Funcionarios;
         }
@@ -317,7 +317,7 @@ public class GerenArquivos {
             } 
             catch ( IOException erro )
             {
-            System .out. println (" Erro na escrita dos dados ");
+            System .out. println (" Erro na escrita dos dados Funcioanrios ");
             }
         }
 
