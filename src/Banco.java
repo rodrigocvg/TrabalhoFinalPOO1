@@ -127,6 +127,7 @@ public class Banco {
             Agencia Temp = Agencias.get(i);
             int NumAgencia = Temp.getNum_Agencia();
             LinkedList<Funcionario> Percorre = Temp.getFuncionarios();
+            Temp.ImprimeNome_e_Localizacao();
             for(int j =0 ; i<Percorre.size();i++)
             {
                 System.out.printf("%d -> %d ",h,NumAgencia);
@@ -137,17 +138,23 @@ public class Banco {
 
     }
 
-    private void Cadastrar_funcionario(Scanner scan)
+    private void Cadastrar_funcionario(Scanner scan) // Funcionando e Testada.
     {
         Encontrar_Agencias_Proximas();
 
-        int index = scan.nextInt();
+        int index = scan.nextInt()-1;
+        scan.nextLine();
 
         System.out.printf("Nome Funcionairo: ");
         String Nome= scan.nextLine();
         
         System.out.printf("CPF: ");
         String CPF =scan.nextLine();
+
+        if(!ValidaCPF.isCPF(CPF))
+        {
+            throw new IllegalArgumentException("CPF não e valido");
+        }
         
         System.out.printf("Genero: ");
         String Sexo = scan.nextLine();
@@ -175,17 +182,16 @@ public class Banco {
 
         System.out.printf("Complamento: ");
         String End_Complemento = scan.nextLine();
-        scan.nextInt();
         
         System.out.printf("Numero: ");        
         int End_Num = scan.nextInt();
 
         System.out.printf("CEP: ");
         int End_Cep = scan.nextInt();
+        scan.nextLine();
 
-        System.out.printf("RG UF: ");
+        System.out.printf("RG UF Letras: ");
         String RG_UF = scan.nextLine();
-        scan.nextInt();
         
         System.out.printf("RG Numeros: ");
         int RG_Num = scan.nextInt(); 
@@ -222,6 +228,8 @@ public class Banco {
         Funcionario Novo = new Funcionario(Nome, CPF, Data_de_Nascimento, endereco, Sexo, Estado_Civil, Numero_Carteira_de_trabalho, Cargo_na_empresa, salario, Data_de_Ingresso, RG_Num, RG_UF);
         
         Agencias.get(index).getFuncionarios().add(Novo);
+        
+        GerenArquivos.SalvarArquivoFuncionarios(Agencias.get(index));
     }
 
     private void Promover_A_Gerente(Scanner scan)
@@ -229,7 +237,7 @@ public class Banco {
         System.out.printf("Escolha um funcionario");
         Encontrar_Funcionario();
 
-        int index = scan.nextInt();
+        int index = scan.nextInt()-1;
         
         System.out.printf("Possui Formacao Basica em Gerencia? \n01 -> Sim \n02 -> Nao");
         int conversao = scan.nextInt();
@@ -334,12 +342,12 @@ public class Banco {
     {
         for(int i =0 ;i<Agencias.size();i++)
         {
-            System.out.printf((i+1) + " -> ");
+            System.out.print((i+1) + " -> ");
             Agencias.get(i).ImprimeNome_e_Localizacao();
         }
     }
 
-    private void Cadastrar_Agencia(Scanner scan)
+    private void Cadastrar_Agencia(Scanner scan) // Funcionando e Testada
     {
         System.out.println("Permitido Acesso apenas a Administradores");
         System.out.print("Usuario: ");
@@ -377,7 +385,9 @@ public class Banco {
         Nova.setEndereco_agencia(new Endereco(Rua, Num, Bairro, Cidade, Estado, Pais, Complemento,cep));
 
         System.out.println("Nova Agencia dos Cria Cadastrada, Mandem seus curriculos! ");
+        Agencias.add(Nova);
 
+        GerenArquivos.SalvarArquivoAgencia(Agencias);
     }
 
  //////////////////////////////////////////////////////////////////////////////
@@ -634,7 +644,7 @@ public class Banco {
     public void CarregarBanco()
     {
         this.Agencias=GerenArquivos.Carregar_Agencias();
-        //this.Clientes=GerenArquivos.clien
+        this.Clientes=GerenArquivos.CarregarClientes();
         for(int i =0; i<Agencias.size();i++)
         {
             Agencias.get(i).CarregarArquivos(Clientes);
