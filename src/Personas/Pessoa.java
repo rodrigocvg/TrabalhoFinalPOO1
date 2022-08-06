@@ -2,14 +2,14 @@ package Personas;
 
 public abstract class Pessoa {
     private String Nome;
-    private int CPF;
+    private String CPF;
     private Data Data_de_Nascimento;
     private Endereco Endereco;
     private String Sexo;
     private String Estado_Civil;
 
 
-    public Pessoa(String Nome, int CPF, Data Data_de_Nascimento, Endereco Endereco, String Sexo, String Estado_Civil) {
+    public Pessoa(String Nome, String CPF, Data Data_de_Nascimento, Endereco Endereco, String Sexo, String Estado_Civil) {
         this.Nome = Nome;
         this.CPF = CPF;
         this.Data_de_Nascimento = Data_de_Nascimento;
@@ -27,11 +27,11 @@ public abstract class Pessoa {
         this.Nome = Nome;
     }
 
-    public int getCPF() {
+    public String getCPF() {
         return this.CPF;
     }
 
-    public void setCPF(int CPF) {
+    public void setCPF(String CPF) {
         this.CPF = CPF;
     }
 
@@ -69,7 +69,6 @@ public abstract class Pessoa {
 
 
 
-    
     public String DadosPessoa() {
         String Data = this.Nome + ";" +
                 this.CPF + ";" +

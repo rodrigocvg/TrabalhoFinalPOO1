@@ -1,6 +1,7 @@
 package Instituição.Contas;
 
 import Personas.Data;
+import Personas.Clientes.Clientes;
 
 public class Poupanca extends Conta {
    
@@ -11,9 +12,9 @@ public class Poupanca extends Conta {
     
     
     public Poupanca(int Num_Conta, int Senha_Conta, float saldo,
-    boolean conjunta, Personas.Clientes.Clientes Cliente_primario,
-    Instituição.Agencia Agencia, Data Abertura_de_Conta,float rendimento) {
-    super(Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Agencia,
+    boolean conjunta, Clientes Cliente_primario,
+    int Num_Agencia, Data Abertura_de_Conta,float rendimento) {
+    super(Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Num_Agencia,
         Abertura_de_Conta);
     this.rendimento = saldo * 0.5f;
 
@@ -22,7 +23,7 @@ public class Poupanca extends Conta {
 
 @Override
     public String SaidaArquivo() {
-        return super.SaidaArquivo() + ";" + this.rendimento;
+        return " Poupanca;"+ super.SaidaArquivo() + ";" + this.rendimento ;
     }
     @Override
     public void depositar(float valor,int senha){
