@@ -80,7 +80,7 @@ public class Agencia {
         this.endereco_agencia = endereco_agencia;
     }
     
-    private void ImprimeNome_e_Localizacao()
+    public void ImprimeNome_e_Localizacao()
     {
         System.out.println(Nome_Agencia + ": " + endereco_agencia.getEnd_Rua() + ", " + endereco_agencia.getEnd_Num()+ ", " +endereco_agencia.getEnd_Cidade()+ ", " + endereco_agencia.getEnd_Estado()+ ", " + endereco_agencia.getEnd_Pais()+ ", " + endereco_agencia.getEnd_Cep());
     }

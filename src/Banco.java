@@ -11,13 +11,14 @@ import Personas.Data;
 import Personas.Endereco;
 import Personas.Pessoa;
 import Personas.Clientes.Clientes;
+import Personas.Funcionarios.Funcionario;
 
 public class Banco {
 
     private LinkedList<Agencia> Agencias; 
     private LinkedList<Clientes> Clientes;
     private LinkedList<Conta> Contas;
-    private String[] Adim = {"Admin","admin"}; //Usuario e Senha Administrador
+    private String[] Admin = {"Admin","admin"}; //Usuario e Senha Administrador
     
 
     public Banco() {
@@ -44,6 +45,12 @@ public class Banco {
         this.Clientes = Clientes;
     }
 
+    public boolean LoginAdministrador(String Usuario, String Senha)
+    {
+        if(this.Admin[0].equals(Usuario) && this.Admin[1].equals(Senha))
+            return true;
+        else return false;
+    }
 
 /***************Fim Getters e Setters********************************************************
  * ******************************************************************************************/
@@ -132,6 +139,15 @@ public class Banco {
         }
     }
     
+    public  void Encontrar_Agencias_Proximas()
+    {
+        for(int i =0 ;i<Agencias.size();i++)
+        {
+            System.out.printf((i+1) + " -> ");
+            Agencias.get(i).ImprimeNome_e_Localizacao();
+        }
+    }
+
     public void Acessar_Conta(Scanner scan)
     {
         int opcao =1;
@@ -217,6 +233,7 @@ public class Banco {
             System.out.println("01 Entrar no sistema");
             System.out.println("02 Cadastrar Funcionario ");
             System.out.println("03 Promover a Gerente ");
+            System.out.println("04 Cadastrar uma Nova Agencia");
             System.out.println("00 Voltar ao menu anterior ");
 
             try{
@@ -246,6 +263,9 @@ public class Banco {
                     break;
                 case 4:
                     Cadastrar_Agencia(scan);
+                    System.out.println("A nova Agencia Precisa de um Gerente");
+                    GerenArquivos.SalvarArquivoAgencia(Agencias);
+                    Agencias=GerenArquivos.Carregar_Agencias();
                     opcao=0;
                     break;
                 default:
@@ -257,18 +277,35 @@ public class Banco {
 
     private void Acesso_Funcionario(Scanner scan)
     {
-
+       
     }
 
+    public void Encontrar_Funcionario()
+    {
+        int h = 1;
+        System.out.println("N -> Numero Agencia, Nome, CPF");
+        for(int i =0 ; i<Agencias.size(); i++)
+        {
+            Agencia Temp = Agencias.get(i);
+            int NumAgencia = Temp.getNum_Agencia();
+            LinkedList<Funcionario> Percorre = Temp.getFuncionarios();
+            for(int j =0 ; i<Percorre.size();i++)
+            {
+                System.out.printf("%d -> %d ",h,NumAgencia);
+                Percorre.get(j).ImprimeDadosFuncionario();
+                System.out.println();
+            }
+        }
+
+    }
+   
     public void Cadastrar_Conta(Scanner scan)
     {
         //digtar cpf
-<<<<<<< HEAD
         Cadastrar_Cliente(scan);
         //apenas teste
-=======
         System.out.println("Digite seu CPF");
-        int CPF = scan.nextInt();
+        String CPF = scan.nextLine();
         for(int i =0;i<Clientes.size();i++){
             if(CPF == Clientes.get(i).getCPF()){
                 System.out.println("Cliente já cadastrado!");
@@ -315,8 +352,8 @@ public class Banco {
                 System.out.printf("1-Poupança\n2-Corrente\n3-Salario");
                 int op3 = scan.nextInt();
                 switch(op1){
-                    case 1:
-                    Contas.add(new Poupanca(numConta,senha,0,conjunta,Clientes.get(i),new Agencia(ag, Num_Agencia),new Data(30, 2, 2022),0));
+                    case 1: //Teve Alteracoes nos construtores
+                    //Contas.add(new Poupanca(numConta,senha,0,conjunta,Clientes.get(i),new Agencia(ag, Num_Agencia),new Data(30, 2, 2022),0));
                     case 2:
                     //Contas.add new Corrente
                     case 3:
@@ -325,7 +362,6 @@ public class Banco {
                 
             }
         }
->>>>>>> 93cf5d8bbea0ac5d7aacefb74163f7207c6aea31
         
     }
     
@@ -417,21 +453,147 @@ public class Banco {
         
         GerenArquivos.SalvarArquivoClientes(Clientes);
     }
-    
-    
+        
     private void Cadastrar_Agencia(Scanner scan)
     {
-        //somente Administrador pode cadatrar Agencia. Esta declarado nos atributos dessa classe.
+        System.out.println("Permitido Acesso apenas a Administradores");
+        System.out.print("Usuario: ");
+        String Usuario = scan.nextLine();
+        System.out.print("Senha: ");
+        String Senha = scan.nextLine();
+        
+        boolean AcessoAdmim = LoginAdministrador(Usuario, Senha);
+
+        if(!AcessoAdmim)
+            return;
+        
+        System.out.print("Nome da Agencia: ");
+        String NomeAgencia = scan.nextLine();
+
+        Agencia Nova = new Agencia(NomeAgencia, (Agencias.size()+100));
+        System.out.print("Fica em qual Pais: ");
+        String Pais = scan.nextLine();
+        System.out.print("Estado: ");
+        String Estado = scan.nextLine();
+        System.out.printf("Cidade: ");
+        String Cidade = scan.nextLine();
+        System.out.printf("Bairro: ");
+        String Bairro = scan.nextLine();
+        System.out.printf("Rua: ");
+        String Rua = scan.nextLine();
+        System.out.printf("Complemento: ");
+        String Complemento = scan.nextLine();
+        System.out.printf("Numero: ");
+        int Num = scan.nextInt();
+        System.out.printf("CEP: ");
+        int cep = scan.nextInt();
+        scan.nextLine();
+
+        Nova.setEndereco_agencia(new Endereco(Rua, Num, Bairro, Cidade, Estado, Pais, Complemento,cep));
+
+        System.out.println("Nova Agencia dos Cria Cadastrada, Mandem seus curriculos! ");
+
     }
     
     private void Cadastrar_funcionario(Scanner scan)
     {
+        Encontrar_Agencias_Proximas();
 
+        int index = scan.nextInt();
+
+        System.out.printf("Nome Funcionairo: ");
+        String Nome= scan.nextLine();
+        
+        System.out.printf("CPF: ");
+        String CPF =scan.nextLine();
+        
+        System.out.printf("Genero: ");
+        String Sexo = scan.nextLine();
+        
+        System.out.printf("Estado Civil: ");
+        String Estado_Civil = scan.nextLine();
+
+        System.out.printf("Cargo: ");
+        String Cargo_na_empresa = scan.nextLine(); 
+
+        System.out.printf("Endereco\nPais: ");
+        String End_Pais = scan.nextLine();
+
+        System.out.printf("Estado: ");
+        String End_Estado = scan.nextLine();
+
+        System.out.printf("Cidade: ");
+        String End_Cidade = scan.nextLine();
+
+        System.out.printf("Bairro: ");
+        String End_Bairro = scan.nextLine();
+
+        System.out.printf("Rua: ");
+        String End_Rua = scan.nextLine();
+
+        System.out.printf("Complamento: ");
+        String End_Complemento = scan.nextLine();
+        scan.nextInt();
+        
+        System.out.printf("Numero: ");        
+        int End_Num = scan.nextInt();
+
+        System.out.printf("CEP: ");
+        int End_Cep = scan.nextInt();
+
+        System.out.printf("RG UF: ");
+        String RG_UF = scan.nextLine();
+        scan.nextInt();
+        
+        System.out.printf("RG Numeros: ");
+        int RG_Num = scan.nextInt(); 
+
+        System.out.printf("Data de Ingresso\nDia: ");
+        int dia = scan.nextInt();
+
+        System.out.printf("Mes: ");
+        int mes = scan.nextInt();
+
+        System.out.printf("Ano: ");
+        int ano = scan.nextInt();
+
+        Data Data_de_Ingresso = new Data(dia, mes, ano);
+        
+        System.out.printf("Data Nascimento\nDia: ");
+        dia = scan.nextInt();
+
+        System.out.printf("Mes: ");
+        mes = scan.nextInt();
+
+        System.out.printf("Ano: ");
+        ano = scan.nextInt();
+
+        Data Data_de_Nascimento = new Data(dia, mes, ano); 
+
+        System.out.printf("Salario: ");
+        float salario = scan.nextFloat();
+
+        System.out.printf("Numero da Carteira: ");
+        int Numero_Carteira_de_trabalho = scan.nextInt();
+        Endereco endereco = new Endereco(End_Rua, End_Num, End_Bairro, End_Cidade, End_Estado, End_Pais, End_Complemento, End_Cep);
+
+        Funcionario Novo = new Funcionario(Nome, CPF, Data_de_Nascimento, endereco, Sexo, Estado_Civil, Numero_Carteira_de_trabalho, Cargo_na_empresa, salario, Data_de_Ingresso, RG_Num, RG_UF);
+        
+        Agencias.get(index).getFuncionarios().add(Novo);
     }
   
     private void Promover_A_Gerente(Scanner scan)
     {
+        System.out.printf("Escolha um funcionario");
+        Encontrar_Funcionario();
 
+        int index = scan.nextInt();
+        
+        System.out.printf("Possui Formacao Basica em Gerencia? \n01 -> Sim \n02 -> Nao");
+        int conversao = scan.nextInt();
+
+        //pegar os dados do funcionario e reinstanciar ele como gerente e adicionar o novo no mesmo index
+        boolean Formacao_Basica_EmGerencia;
     }
 
     public void CarregarBanco()
