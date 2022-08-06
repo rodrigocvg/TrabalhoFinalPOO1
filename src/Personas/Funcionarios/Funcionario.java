@@ -89,6 +89,11 @@ public class Funcionario extends Pessoa {
         return Data;
     }
 
+    public void ImprimeDadosFuncionario()
+    {
+        System.out.println(this.getNome() + " - " + this.getCPF());
+    }
+
     public String DadosGerente()
     {
         throw new IllegalAccessError("Acesso Negado");

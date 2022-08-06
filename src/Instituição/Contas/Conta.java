@@ -1,21 +1,20 @@
 package Instituição.Contas;
 import java.util.LinkedList;
+
 import Instituição.Movimentcaoes.Movimentacoes;
 import Personas.Data;
 import Personas.Clientes.Clientes;
 
 
-//
+
 public abstract class Conta
 {
-    //protected String Nome;
-    //protected int CPF;
     protected int Num_Conta;
     protected int Senha_Conta;
     protected float saldo;
     protected boolean StatusDaConta;
     protected boolean conjunta;
-    protected Clientes Cliente_primario; //?
+    protected Clientes Cliente_primario; 
     protected Clientes Cliente_secundario;
     protected int Num_Agencia;
     protected Data Abertura_de_Conta;
@@ -25,8 +24,6 @@ public abstract class Conta
 
     //Construtor Conta Unica
     public Conta(int Num_Conta, int Senha_Conta, float saldo, boolean conjunta, Clientes Cliente_primario, int Num_Agencia, Data Abertura_de_Conta) {
-        //this.Nome = Nome;
-        //this.CPF = CPF;
         this.Num_Conta = Num_Conta;
         this.Senha_Conta = Senha_Conta;
         this.saldo = saldo;
@@ -40,94 +37,11 @@ public abstract class Conta
         this.Movimentacoes = new LinkedList<>();
     }
 
-    public String SaidaArquivo(){
-        String CPF_SegundoTitular = "";
-        if(conjunta)
-            CPF_SegundoTitular=Cliente_secundario.getCPF();
-        
-        return   
-                Num_Conta + ";" +
-                Senha_Conta + ";" +
-                saldo + ";" +
-                StatusDaConta + ";" +
-                conjunta + ";" +
-                Cliente_primario.getCPF() + ";" + 
-                CPF_SegundoTitular + ";" +
-                Num_Agencia + ";" +
-                Abertura_de_Conta.DadosData() + ";" +
-                Ultima_Movimentacao.DadosData();
-    }
-
-    public void verifica(){
-        if(this.conjunta){
-
-        }
-    }
-
-    public boolean verificaSenha(int senha){         //fiz e não vi que Israel ja tinha feito 
-        if(this.Senha_Conta == senha){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public void desativarConta(int senha){
-        if(this.verificaSenha(senha) && this.StatusDaConta == true){
-            this.setStatusDaConta(false);
-            System.out.println("Conta desativada com sucesso");
-        }
-    }
-
-    public void depositar(float valor, int senha){
-        if(this.verificaSenha(senha)){
-            this.saldo += valor;
-        }
-        else{ //TRATAR ERRO DEPOIS
-            System.out.println("Senha incorreta");
-        }
-    }
-
-    public void sacar(float valor,int senha){
-        if(this.verificaSenha(senha)){
-        this.saldo -= valor;
-        }
-        else{ //TRATAR ERRO DEPOIS
-            System.out.println("Senha incorreta");
-        }
-
-    }
-
-    public void transferir(Conta c,float valor,int senha){
-        if(this.verificaSenha(senha)){
-        c.setSaldo(c.getSaldo()+valor);
-        this.saldo -= valor;
-        }
-        else{ //TRATAR ERRO DEPOIS
-            System.out.println("Senha incorreta");
-        }
-
-    }
-
-    public void consultaSaldo(int senha){
-        if(this.verificaSenha(senha)){
-            System.out.println("O saldo atual é de:" + this.getSaldo());
-            }
-            else{ //TRATAR ERRO DEPOIS
-                System.out.println("Senha incorreta");
-            }
-        
-    }
-
-    public void realizarPag(float valor,int senha){
-        if(this.verificaSenha(senha)){
-        this.saldo -= valor;
-        }
-        throw new IllegalArgumentException("Senha incorreta");
-
-    }
-
+    ////////////////////////////////////
+    ////
+    ////    Getters e Setters       ///
+    ////
+    ///////////////////////////////////
 
     public int getNum_Conta() {
         return this.Num_Conta;
@@ -181,7 +95,6 @@ public abstract class Conta
         this.Cliente_primario = Cliente_primario;
     }
 
-
     public int getNum_Agencia() {
         return this.Num_Agencia;
     }
@@ -189,7 +102,6 @@ public abstract class Conta
     public void setNum_Agencia(int Num_Agencia) {
         this.Num_Agencia = Num_Agencia;
     }
-
 
     public boolean isStatusDaConta() {
         return this.StatusDaConta;
@@ -227,7 +139,126 @@ public abstract class Conta
         this.Movimentacoes = Movimentacoes;
     }
 
-    
+    ////////////////////////////////////
+    ////
+    ////    Transacoes Bancarias    ///
+    ////
+    ///////////////////////////////////
 
+    public void depositar(float valor, int senha){
+        if(this.verificaSenha(senha)){
+            this.saldo += valor;
+        }
+        else{ //TRATAR ERRO DEPOIS
+            System.out.println("Senha incorreta");
+        }
+    }
+
+    public void sacar(float valor,int senha){
+        if(this.verificaSenha(senha)){
+        this.saldo -= valor;
+        }
+        else{ //TRATAR ERRO DEPOIS
+            System.out.println("Senha incorreta");
+        }
+
+    }
+
+    public void transferir(Conta c,float valor,int senha){
+        if(this.verificaSenha(senha)){
+        c.setSaldo(c.getSaldo()+valor);
+        this.saldo -= valor;
+        }
+        else{ //TRATAR ERRO DEPOIS
+            System.out.println("Senha incorreta");
+        }
+
+    }
+
+    public void consultaSaldo(int senha){
+        if(this.verificaSenha(senha)){
+            System.out.println("O saldo atual é de:" + this.getSaldo());
+            }
+            else{ //TRATAR ERRO DEPOIS
+                System.out.println("Senha incorreta");
+            }
+        
+    }
+
+    public void realizarPag(float valor,int senha){
+        if(this.verificaSenha(senha)){
+        this.saldo -= valor;
+        }
+        throw new IllegalArgumentException("Senha incorreta");
+
+    }
+
+    //////////////////////////////////
+    ////       Avaliar Acesso
+    ////                           ///
+    ////        Validar Conta
+    //////////////////////////////////
+
+    public boolean verificaSenha(int senha){         
+        if(this.Senha_Conta == senha){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public void verifica(){
+        if(this.conjunta){
+
+        }
+    }
+
+    public void desativarConta(int senha){
+        if(this.verificaSenha(senha) && this.StatusDaConta == true){
+            this.setStatusDaConta(false);
+            System.out.println("Conta desativada com sucesso");
+        }
+    }
+
+    /////////////////////////////////
+    ////
+    ////    Saida de Dados       ///
+    ////
+    ////////////////////////////////
+ 
+    public String SaidaArquivo(){
+        String CPF_SegundoTitular = "";
+        if(conjunta)
+            CPF_SegundoTitular=Cliente_secundario.getCPF();
+        
+        return   
+                Num_Conta + ";" +
+                Senha_Conta + ";" +
+                saldo + ";" +
+                StatusDaConta + ";" +
+                conjunta + ";" +
+                Cliente_primario.getCPF() + ";" + 
+                CPF_SegundoTitular + ";" +
+                Num_Agencia + ";" +
+                Abertura_de_Conta.DadosData() + ";" +
+                Ultima_Movimentacao.DadosData();
+    } 
+ 
+    /////////////////////////////////
+    ////                          
+    ////    Salvar e Carregar    ////
+    ////
+    ////////////////////////////////
+
+    public void CarregarMovimentacoes()
+    {
+        
+    }
+
+    public void SalvarMovimentacoes()
+    {
+
+    }
 
 }

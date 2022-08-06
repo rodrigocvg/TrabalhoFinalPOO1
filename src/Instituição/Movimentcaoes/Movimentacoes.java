@@ -14,11 +14,12 @@ public class Movimentacoes {
         this.tipo_transacao = tipo_transacao;
     }
 
-    public String DadosMovimentacao()
-    {
-        return Data_transacao.DadosData() + ";" + valor + ";" + tipo_transacao;
-    }
-
+    //////////////////////////////////////////////////////////////
+    ///
+    ///            GETTERS E SETTERS                            //
+    ///
+    //////////////////////////////////////////////////////////////
+    
     public Data getData_transacao() {
         return this.Data_transacao;
     }
@@ -43,6 +44,15 @@ public class Movimentacoes {
         this.tipo_transacao = tipo_transacao;
     }
 
-    
+    //////////////////////////////////////////////////////////////
+    ///
+    ///            Saida de dados                               //
+    ///
+    //////////////////////////////////////////////////////////////
+
+    public String DadosMovimentacao()
+    {
+        return Data_transacao.DadosData() + ";" + valor + ";" + tipo_transacao;
+    }   
     
 }

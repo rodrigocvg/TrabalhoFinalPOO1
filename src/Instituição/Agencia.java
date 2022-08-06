@@ -11,10 +11,9 @@ public class Agencia {
     private String Nome_Agencia;
     private Gerente Gerente;
     private Endereco endereco_agencia;
-    private LinkedList<Conta> contas; //lista de clientes dessa Agencias criando os metodos de acesso
+    private LinkedList<Conta> contas; 
     private LinkedList<Funcionario> Funcionarios;
     
-    //testeeeee
 
     
     public Agencia(String nome_Agencia,int num_Agencia) {
@@ -34,6 +33,12 @@ public class Agencia {
         contas = new LinkedList<>();
         Funcionarios = new LinkedList<>();
     }
+
+    /////////////////////////////////////////////////
+    ///
+    ///             Getters e Setters             ///
+    ///
+    /////////////////////////////////////////////////
 
     public int getNum_Agencia() {
         return this.Num_Agencia;
@@ -63,7 +68,6 @@ public class Agencia {
         this.Funcionarios = Funcionarios;
     }
 
-
     public void setGerente(Gerente Gerente) {
         this.Gerente.setAgencia(0);
         this.Gerente.setEsta_Em_uma_Agencia(false);
@@ -80,7 +84,22 @@ public class Agencia {
         this.endereco_agencia = endereco_agencia;
     }
     
-    private void ImprimeNome_e_Localizacao()
+    public LinkedList<Conta> getContas() {
+        return this.contas;
+    }
+
+    public void setContas(LinkedList<Conta> contas) {
+        this.contas = contas;
+    }
+    
+    ///////////////////////////////////////////////////
+    ////
+    ////       Saida de Dados                      ////
+    ////
+    ///////////////////////////////////////////////////
+
+
+    public void ImprimeNome_e_Localizacao()
     {
         System.out.println(Nome_Agencia + ": " + endereco_agencia.getEnd_Rua() + ", " + endereco_agencia.getEnd_Num()+ ", " +endereco_agencia.getEnd_Cidade()+ ", " + endereco_agencia.getEnd_Estado()+ ", " + endereco_agencia.getEnd_Pais()+ ", " + endereco_agencia.getEnd_Cep());
     }
@@ -109,15 +128,6 @@ public class Agencia {
         }
     }
 
-
-    public LinkedList<Conta> getContas() {
-        return this.contas;
-    }
-
-    public void setContas(LinkedList<Conta> contas) {
-        this.contas = contas;
-    }
-
     public String DadosAgencia()
     {
         String Data = this.Nome_Agencia +";"+
@@ -125,6 +135,13 @@ public class Agencia {
                         endereco_agencia.DadosEndereco();
         return Data;
     }
+
+
+    ////////////////////////////////////////////////////
+    ////
+    ////          Salvar e Carregar Dados           ////
+    ////
+    ////////////////////////////////////////////////////
 
     public void CarregarArquivos(LinkedList<Clientes> Clientes)
     {
