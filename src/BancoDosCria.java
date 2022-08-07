@@ -1,8 +1,4 @@
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Scanner;
-
-// ATENÇÃO MUDEI TODOS NEXTLINE PARA NEXT INT - POIS N TAVA RODANDO, PARA LER UMA LINHA INTEIRA TEM QUE SER O BUFFERED READ, DPS NOIS COLOCA 
 
 public class BancoDosCria {
     public static void main(String[] args) {

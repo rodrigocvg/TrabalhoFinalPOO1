@@ -1,10 +1,8 @@
-import java.util.Calendar;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
-import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
 import GerenciadorArquivos.GerenArquivos;
 import Instituição.Agencia;
@@ -52,6 +50,15 @@ public class Banco {
 
     public void setClientes(LinkedList<Clientes> Clientes) {
         this.Clientes = Clientes;
+    }
+
+
+    public LinkedList<Conta> getContas() {
+        return this.Contas;
+    }
+
+    public void setContas(LinkedList<Conta> Contas) {
+        this.Contas = Contas;
     }
 
     public boolean LoginAdministrador(String Usuario, String Senha)
@@ -247,11 +254,22 @@ public class Banco {
 
         int index = scan.nextInt()-1;
         
-        System.out.printf("Possui Formacao Basica em Gerencia? \n01 -> Sim \n02 -> Nao\n");
-        int conversao = scan.nextInt();
+        System.out.printf("Possui Formacao Basica em Gerencia? \n01 -> Sim \n02 ou Numero maior -> Nao\n");
+        int temp = scan.nextInt();
+
+        boolean Formacao_Basica_EmGerencia;
+        if(temp == 1 )
+            Formacao_Basica_EmGerencia = true;
+        else Formacao_Basica_EmGerencia = false;
+
+        Data Data_Ingresso_Como_Gerente = Data.DataAtual();
+
+        
+        
+
+
 
         //pegar os dados do funcionario e reinstanciar ele como gerente e adicionar o novo no mesmo index
-        boolean Formacao_Basica_EmGerencia;
     }
     
  //////////////////////////////////////////////////////////////////////////////
@@ -679,8 +697,7 @@ public class Banco {
                 conjunta = false;
             else conjunta = true;
 
-            int DiaMesAnoAtual[] = Data.DataAtual();
-            Data Inc = new Data(DiaMesAnoAtual[0],DiaMesAnoAtual[1],DiaMesAnoAtual[2]);
+            Data Inc = Data.DataAtual();
             
             System.out.println("Digite o tipo da conta: ");
             System.out.printf("1-Poupança\n2-Corrente\n3-Salario");

@@ -46,12 +46,9 @@ public class Data {
         return Data;
     }
 
-    public static int[] DataAtual()
+    public static Data DataAtual()
     {
-        int [] DiaMesAno = new int[3];
-        DiaMesAno[0] = LocalDateTime.now().getDayOfMonth();
-        DiaMesAno[1] = LocalDateTime.now().getMonthValue();
-        DiaMesAno[2] = LocalDateTime.now().getYear();
+        Data DiaMesAno = new Data(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getYear());
         return DiaMesAno;
     }
     
