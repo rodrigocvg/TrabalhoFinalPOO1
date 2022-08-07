@@ -30,7 +30,7 @@ public class GerenArquivos {
     // ------------------------------------------------------   //
     // ------------------------------------------------------   //
 
-    public static void SalvarArquivoClientes (LinkedList<Clientes> clientes) 
+    public static void SalvarArquivoClientes (LinkedList<Clientes> clientes)
     {
         try {
             FileWriter arq = new FileWriter ( BaseDados+"Clientes.csv" );
@@ -43,6 +43,7 @@ public class GerenArquivos {
             }
             catch(NullPointerException e)
             {
+                System.out.println("Não possui nenhum registro");
             }
             out.close ();
         } 
@@ -76,7 +77,6 @@ public class GerenArquivos {
         {
         System .out. println (" Erro na escrita dos dados Clintes");
         }
-
         return Clientes;
     } 
 
@@ -257,7 +257,8 @@ public class GerenArquivos {
         {
             LinkedList<Funcionario> Funcionarios = new LinkedList<>();
             String NumeroAgencia = String.valueOf(NumAgencia);
-            try {
+            try
+            {
     
                 FileReader ent = new FileReader ( BaseDados+NumeroAgencia+"Funcionarios.csv" );
                 BufferedReader br = new BufferedReader (ent);
@@ -292,7 +293,7 @@ public class GerenArquivos {
             return Funcionarios;
         }
 
-        public static void SalvarArquivoFuncionarios (Agencia Agencia) 
+    public static void SalvarArquivoFuncionarios (Agencia Agencia) 
         {
             String NumAgencia = String.valueOf(Agencia.getNum_Agencia());
             LinkedList <Funcionario> funcionarios = Agencia.getFuncionarios();
@@ -326,6 +327,5 @@ public class GerenArquivos {
     ///            ARQUIIVO DE MOVIMENTACOES                    //
     ///
     //////////////////////////////////////////////////////////////   
-
-    
+  
 }

@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Scanner;
 
 // ATENÇÃO MUDEI TODOS NEXTLINE PARA NEXT INT - POIS N TAVA RODANDO, PARA LER UMA LINHA INTEIRA TEM QUE SER O BUFFERED READ, DPS NOIS COLOCA 
@@ -8,7 +10,8 @@ public class BancoDosCria {
         Scanner scan = new Scanner(System.in);
         String NomeBanco = "Banco Dos Crias";
         Banco BancoDosCria = new Banco();
-
+        
+        
         System.out.println("Seja Bem ao "+ NomeBanco);
         //menu
         while(opcao!=0)
@@ -39,6 +42,7 @@ public class BancoDosCria {
                     break;
                 case 4:
                     BancoDosCria.Encontrar_Agencias_Proximas(scan);
+
                     break;
                 case 5: 
                     BancoDosCria.Cadastrar_Cliente(scan);
