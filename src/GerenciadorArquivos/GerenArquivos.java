@@ -13,6 +13,7 @@ import Instituição.Contas.Poupanca;
 import Instituição.Contas.Salario;
 import Personas.Data;
 import Personas.Endereco;
+import Personas.Pessoa;
 import Personas.Clientes.Clientes;
 import Personas.Funcionarios.Funcionario;
 import Personas.Funcionarios.Gerente;
@@ -92,7 +93,7 @@ public class GerenArquivos {
             LinkedList<Conta> contas = new LinkedList<>();
             try {
     
-                FileReader ent = new FileReader ( BaseDados+NumeroAgencia+"Contas.csv" );
+                FileReader ent = new FileReader ( BaseDados+"\\"+NumeroAgencia+"\\Contas.csv" );
                 BufferedReader br = new BufferedReader (ent);
                 String linha ;
                 String [] campos = null ;
@@ -167,12 +168,11 @@ public class GerenArquivos {
             return contas;
         }
 
-    public static void SalvarArquivoContas (Agencia Agencia) 
+    public static void SalvarArquivoContas (int Num_Agencia, LinkedList<Conta> contas) 
         {
-            String NumAgencia = String.valueOf(Agencia.getNum_Agencia());
-            LinkedList <Conta> contas = Agencia.getContas();
+            String NumAgencia = String.valueOf(Num_Agencia);
             try {
-                FileWriter arq = new FileWriter ( BaseDados+NumAgencia+"Contas.csv" );
+                FileWriter arq = new FileWriter ( BaseDados+"\\"+NumAgencia+"\\Contas.csv" );
                 PrintWriter out = new PrintWriter (arq);
                 try{
                     for (int i = 0; i < contas.size() ; i++) {
@@ -182,6 +182,7 @@ public class GerenArquivos {
                 }
                 catch(NullPointerException e)
                 {
+                    System.out.println("  Null Point");
                 }
                 out.close ();
             } 
@@ -245,6 +246,7 @@ public class GerenArquivos {
             {
             System .out. println (" Erro na escrita dos dados Agencias");
             }
+            
         }
     
     //////////////////////////////////////////////////////////////
@@ -253,14 +255,14 @@ public class GerenArquivos {
     ///
     //////////////////////////////////////////////////////////////
 
-    public static LinkedList<Funcionario> Carregar_Funcioanrios(int NumAgencia)
+    public static LinkedList<Pessoa> Carregar_Funcioanrios(int NumAgencia)
         {
-            LinkedList<Funcionario> Funcionarios = new LinkedList<>();
+            LinkedList<Pessoa> Funcionarios = new LinkedList<>();
             String NumeroAgencia = String.valueOf(NumAgencia);
             try
             {
     
-                FileReader ent = new FileReader ( BaseDados+NumeroAgencia+"Funcionarios.csv" );
+                FileReader ent = new FileReader ( BaseDados+"\\"+NumeroAgencia+"\\Funcionarios.csv" );
                 BufferedReader br = new BufferedReader (ent);
                 String linha ;
                 String [] campos = null ;
@@ -273,7 +275,7 @@ public class GerenArquivos {
                     Endereco End = new Endereco(campos[5], Integer.parseInt(campos[6]), campos[7], campos[8], campos[9], campos[10], campos[11], Integer.parseInt(campos[12]));
                     if(campos[16].equals("Gerente"))
                     {
-                        Datas[2] = new Data(Integer.parseInt(campos[24]), Integer.parseInt(campos[25]), Integer.parseInt(campos[26]));
+                        Datas[2] = new Data(Integer.parseInt(campos[26]), Integer.parseInt(campos[27]), Integer.parseInt(campos[28]));
 
                         Funcionario Novo = new Gerente(campos[0], campos[1], Datas[0], End, campos[13], campos[14], Integer.parseInt(campos[15]), Float.parseFloat(campos[17]),  Datas[1], Integer.parseInt(campos[21]), campos[22], Boolean.parseBoolean(campos[23]),  Datas[2]);
                         Funcionarios.add(Novo);
@@ -293,20 +295,19 @@ public class GerenArquivos {
             return Funcionarios;
         }
 
-    public static void SalvarArquivoFuncionarios (Agencia Agencia) 
+    public static void SalvarArquivoFuncionarios (int Num_Agencia, LinkedList<Pessoa> funcionarios) 
         {
-            String NumAgencia = String.valueOf(Agencia.getNum_Agencia());
-            LinkedList <Funcionario> funcionarios = Agencia.getFuncionarios();
+            String NumAgencia = String.valueOf(Num_Agencia);
             try {
-                FileWriter arq = new FileWriter ( BaseDados+NumAgencia+"Funcionarios.csv" );
+                FileWriter arq = new FileWriter ( BaseDados+"\\"+NumAgencia+"\\Funcionarios.csv" );
                 PrintWriter out = new PrintWriter (arq);
                 try{
                     for (int i = 0; i < funcionarios.size() ; i++) {
-                    Funcionario Percorre = funcionarios.get(i);
+                    Funcionario Percorre = (Funcionario) funcionarios.get(i);
                     String linha;
 
                     if(Percorre.getCargo_na_empresa().equals("Gerente"))
-                         linha = Percorre.DadosGerente();
+                        linha = Percorre.DadosGerente();
                     else linha = Percorre.DadosFuncionario();
                     out.println( linha );
                     }

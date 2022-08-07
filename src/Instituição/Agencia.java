@@ -2,6 +2,7 @@ package Instituição;
 import java.util.LinkedList;
 import Instituição.Contas.Conta;
 import Personas.Endereco;
+import Personas.Pessoa;
 import Personas.Clientes.Clientes;
 import Personas.Funcionarios.*;
 import GerenciadorArquivos.GerenArquivos;
@@ -12,7 +13,7 @@ public class Agencia {
     private Gerente Gerente;
     private Endereco endereco_agencia;
     private LinkedList<Conta> contas; 
-    private LinkedList<Funcionario> Funcionarios;
+    private LinkedList<Pessoa> Funcionarios;
     
 
     
@@ -60,20 +61,20 @@ public class Agencia {
         return this.Gerente;
     }
 
-    public LinkedList<Funcionario> getFuncionarios() {
+    public LinkedList<Pessoa> getFuncionarios() {
         return this.Funcionarios;
     }
 
-    public void setFuncionarios(LinkedList<Funcionario> Funcionarios) {
+    public void setFuncionarios(LinkedList<Pessoa> Funcionarios) {
         this.Funcionarios = Funcionarios;
     }
 
-    public void setGerente(Gerente Gerente) {
-        this.Gerente.setAgencia(0);
-        this.Gerente.setEsta_Em_uma_Agencia(false);
-        Gerente.setAgencia(this.Num_Agencia);
-        Gerente.setEsta_Em_uma_Agencia(true);       
-        this.Gerente = Gerente;
+    public void setGerente(Gerente Novo, Funcionario AntigoCargo) 
+    {
+        RemoverGerenteAtual();
+
+        AdicionarNovoGerente(Novo, AntigoCargo);
+        
     }
 
     public Endereco getEndereco_agencia() {
@@ -147,8 +148,125 @@ public class Agencia {
     {
         this.contas=GerenArquivos.Carregar_contas(this.Num_Agencia, Clientes);
         this.Funcionarios=GerenArquivos.Carregar_Funcioanrios(this.Num_Agencia);
+        for(int i = 0 ; i < Funcionarios.size(); i++)
+        {
+            try{
+                Gerente Encontra = (Gerente) Funcionarios.get(i);
+            if(Encontra.getCargo_na_empresa().equals("Gerente"))
+                {      
+                this.Gerente = Encontra;
+                }
+            }catch(ClassCastException e)
+            {
+                continue;
+            }
+        }
     }
 
+    public void SalvarArquivo()
+    {
+        GerenArquivos.SalvarArquivoContas(Num_Agencia,contas);
+        GerenArquivos.SalvarArquivoFuncionarios(Num_Agencia,Funcionarios);
+    }
 
-    
+    ///////////////////////////////////////////////////
+    ///
+    ///         Funcionarios                    //////
+    ///
+    //////////////////////////////////////////////////
+
+    public void RemoverGerenteAtual()
+    {
+        if(this.Gerente!=null)
+        {
+            for(int i =0 ; i< Funcionarios.size(); i++)
+            {
+                try{
+                    Gerente Percorre = (Gerente) Funcionarios.get(i);
+                    if(Percorre.getCPF().equals(this.Gerente.getCPF()))
+                    {
+                        Percorre.setAgencia(0);
+                        Percorre.setEsta_Em_uma_Agencia(false);
+                        Percorre.setCargo_na_empresa("Antigo Gerente");
+                        Funcionarios.remove(i);
+                        Funcionarios.add(i, Percorre);
+                    }
+                }catch(ClassCastException e)
+                {
+                    continue;
+                }
+            }
+            GerenArquivos.SalvarArquivoFuncionarios(Num_Agencia,Funcionarios);
+        }
+    }
+
+    public void AdicionarNovoGerente(Gerente Novo,Funcionario AntigoCargo)
+    {
+        for(int j = 0 ; j < Funcionarios.size();j++)
+        {
+            Funcionario TempFunc = (Funcionario) Funcionarios.get(j);
+            if(TempFunc.equals(AntigoCargo))
+            {
+                Funcionarios.remove(j);
+                Funcionarios.add(j,Novo);
+                Novo.setAgencia(this.Num_Agencia);
+                Novo.setEsta_Em_uma_Agencia(true);       
+                this.Gerente = Novo;
+                break;
+            }
+
+        }
+        GerenArquivos.SalvarArquivoFuncionarios(Num_Agencia,Funcionarios);
+    }
+
+    public boolean isFuncionario_dessa_Agencia(Funcionario Procurado)
+    {
+        for(int i = 0 ;i < Funcionarios.size() ; i ++)
+        {
+            if(Funcionarios.get(i).equals(Procurado))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int Encontra_Funcioanrio(int pos)
+    {
+        for(int j =0 ; j<Funcionarios.size();j++)
+            {
+                Funcionario Atual = (Funcionario) Funcionarios.get(j);
+                System.out.print(pos+" - ");
+                Atual.ImprimeDadosFuncionario();
+                pos++;
+             
+            }
+        return pos;
+    }
+
+    /////////////////////////////////////////////////
+    ///
+    ///         Contas                          /////
+    ///
+    ////////////////////////////////////////////////
+
+    public Conta EncontraConta(int NumConta, int Senha) throws IllegalArgumentException
+    {
+        for(int i = 0 ; i< contas.size() ; i++)
+        {
+            if(contas.get(i).getNum_Conta()==NumConta && contas.get(i).verificaSenha(Senha))
+            {
+                return contas.get(i);
+            }
+        }
+        throw new IllegalArgumentException("Conta Nao Encontrada");
+    }
+
+    public void ListaContas()
+    {
+        for(int i =0;i<contas.size();i++)
+        {
+            contas.get(i).Imprime();
+        }
+    }
 }

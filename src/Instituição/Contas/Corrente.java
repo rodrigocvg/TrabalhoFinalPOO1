@@ -23,7 +23,8 @@ public class Corrente extends Conta{
 
         @Override
         public String SaidaArquivo() {
-            return  "Corrente;"+super.SaidaArquivo() + ";" + this.limCheque + ";" + this.taxAdmin ;
+            String Data = "Corrente;" + super.SaidaArquivo() + ";" + this.limCheque + ";" + this.taxAdmin;
+            return  Data ;
         }
        
         

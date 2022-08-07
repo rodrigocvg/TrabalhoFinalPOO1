@@ -23,7 +23,7 @@ public class Poupanca extends Conta {
 
 @Override
     public String SaidaArquivo() {
-        return " Poupanca;"+ super.SaidaArquivo() + ";" + this.rendimento ;
+        return "Poupanca;"+ super.SaidaArquivo() + ";" + this.rendimento ;
     }
     @Override
     public void depositar(float valor,int senha){
