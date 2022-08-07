@@ -1,5 +1,8 @@
 package Personas;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Data {
     private int Dia;
     private int Mes;
@@ -38,11 +41,19 @@ public class Data {
 
 
     public String DadosData() {
-        String Data = Dia+ ";" + Mes + ";"+Ano+";";
+        String Data = Dia+ ";" + Mes + ";"+Ano;
         
         return Data;
     }
 
+    public static int[] DataAtual()
+    {
+        int [] DiaMesAno = new int[3];
+        DiaMesAno[0] = LocalDateTime.now().getDayOfMonth();
+        DiaMesAno[1] = LocalDateTime.now().getMonthValue();
+        DiaMesAno[2] = LocalDateTime.now().getYear();
+        return DiaMesAno;
+    }
     
 
     

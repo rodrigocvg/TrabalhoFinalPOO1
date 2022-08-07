@@ -1,12 +1,17 @@
+import java.util.Calendar;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
+
 import GerenciadorArquivos.GerenArquivos;
 import Instituição.Agencia;
 import Instituição.Contas.Conta;
+import Instituição.Contas.Corrente;
 import Instituição.Contas.Poupanca;
+import Instituição.Contas.Salario;
 import Personas.Data;
 import Personas.Endereco;
 import Personas.Pessoa;
@@ -128,11 +133,14 @@ public class Banco {
             int NumAgencia = Temp.getNum_Agencia();
             LinkedList<Funcionario> Percorre = Temp.getFuncionarios();
             Temp.ImprimeNome_e_Localizacao();
-            for(int j =0 ; i<Percorre.size();i++)
+            for(int j =0 ; i<Percorre.size();j++)
             {
+                if(j==Percorre.size())
+                    break;
                 System.out.printf("%d -> %d ",h,NumAgencia);
                 Percorre.get(j).ImprimeDadosFuncionario();
-                System.out.println();
+                h++;
+                
             }
         }
 
@@ -234,12 +242,12 @@ public class Banco {
 
     private void Promover_A_Gerente(Scanner scan)
     {
-        System.out.printf("Escolha um funcionario");
+        System.out.println("Escolha um funcionario");
         Encontrar_Funcionario();
 
         int index = scan.nextInt()-1;
         
-        System.out.printf("Possui Formacao Basica em Gerencia? \n01 -> Sim \n02 -> Nao");
+        System.out.printf("Possui Formacao Basica em Gerencia? \n01 -> Sim \n02 -> Nao\n");
         int conversao = scan.nextInt();
 
         //pegar os dados do funcionario e reinstanciar ele como gerente e adicionar o novo no mesmo index
@@ -262,9 +270,10 @@ public class Banco {
         while(opcao!=0)
         {
             System.out.println("Deseja buscar por: ");
-            System.out.println("01 - Estado");
+            System.out.println("01 Estado");
             System.out.println("02 Cidade e Estado");
             System.out.println("03 Bairro, Cidade e Estado");
+            System.out.println("04 Mostrar todas");
             System.out.println("00 Voltar ao menu anterior");
             try
             {
@@ -302,6 +311,10 @@ public class Banco {
                     System.out.println("Qual Bairro?");
                     Bairro=Scan.nextLine();
                     Encontrar_Agencias_Proximas(Bairro,Cidade,Estado);
+                    opcao=0;
+                    break;
+                case 4:
+                    Encontrar_Agencias_Proximas();
                     opcao=0;
                     break;
                 default:
@@ -390,6 +403,32 @@ public class Banco {
         GerenArquivos.SalvarArquivoAgencia(Agencias);
     }
 
+    public int indiceAgencia(Scanner scan) // informa as agencias disponiveis e retorna a escolhar;
+    {
+        int NumAgencia =0;
+        
+            while(true) // Encontrar o indice da Agencia;
+            {
+                System.out.println("Digite a agência que deseja: ");
+                Encontrar_Agencias_Proximas();
+                
+                NumAgencia = scan.nextInt()-1;
+                if(NumAgencia>0 && NumAgencia < Agencias.size())
+                {        
+                    break;   
+                } 
+                else
+                    System.out.println("Opção indisponivel, tente novamente");          
+            }
+        return NumAgencia;
+    }
+
+    public int EncontraNumAgencia(Scanner scan)
+    {
+        int NumAgencia = indiceAgencia(scan) +99;
+        return NumAgencia;
+    }
+
  //////////////////////////////////////////////////////////////////////////////
  ///
  ///                Clientes                                                ///
@@ -415,23 +454,19 @@ public class Banco {
                         System.out.println("Cpf invalido, voce tem mais " + opcao + " Tentativas");
                         break;
                     }
-                
-                else
+
+                Pessoa Cliente_Novo = new Clientes();
+                //buscar nos clientes se possui algum ja cadastrado com esse cpf
+                for(int i = 0; i<Clientes.size();i++)
                 {
-
-                    Pessoa Cliente_Novo = new Clientes();
-                    //buscar nos clientes se possui algum ja cadastrado com esse cpf
-                    for(int i = 0; i<Clientes.size();i++)
+                    if(Clientes.get(i).getCPF().equals(cpf))
                     {
-                        if(Clientes.get(i).getCPF().equals(cpf))
-                        {
-                            throw new IllegalArgumentException("CPF ja cadastrado! ");
-                        }
+                        throw new IllegalArgumentException("CPF ja cadastrado! ");
                     }
+                }
 
-                    // caso cpf ainda não cadastrado
-                    
-                    
+                // caso cpf ainda não cadastrado
+
                     System.out.print("Digite seu nome completo: ");
                     Cliente_Novo.setNome(scan.nextLine());
                     System.out.print("Voce e de qual Genero? ");
@@ -466,7 +501,6 @@ public class Banco {
                     Endereco End_Novo_Cliente = new Endereco(Rua, numero, Bairro,Cidade, Estado, Pais, End_Complemento, CEP);
                     Cliente_Novo.setEndereco(End_Novo_Cliente);               
                     this.Clientes.add((Clientes) Cliente_Novo);
-                }
                 
             }catch(NumberFormatException e)
             {
@@ -482,10 +516,21 @@ public class Banco {
             opcao=0;
         }
         
+        
         GerenArquivos.SalvarArquivoClientes(Clientes);
     }
 
-    
+    public int Encontra_Cliente(String CPF)
+    {
+        for(int i =0;i<Clientes.size();i++)
+        {
+            if(CPF == Clientes.get(i).getCPF())
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///
@@ -569,72 +614,113 @@ public class Banco {
             }
         }
 
-    public void Cadastrar_Conta(Scanner scan)
+    public int indiceCliente(Scanner scan) // Encontra o cliente, caso nao esteja cadastrado realiza o cadastro;
     {
-        //digtar cpf
-        Cadastrar_Cliente(scan);
-        //apenas teste
         System.out.println("Digite seu CPF");
         String CPF = scan.nextLine();
-        for(int i =0;i<Clientes.size();i++){
-            if(CPF == Clientes.get(i).getCPF()){
-                System.out.println("Cliente já cadastrado!");
-                System.out.println("Vamos cadastrar sua conta:");
-                int op;
-                String ag;
-                while(true){
-                System.out.println("Digite a agência que deseja: ");
-                System.out.println("1- Agência de Uberlândia");
-                System.out.println("2- Agência de Uberaba");
-                op = scan.nextInt();
-                
-                if(op == 1){
-                    ag = "Uberlandia";
-                    break;
-                }
-                else if (op == 2){
-                    ag = "Uberaba";
-                    break;
-                }
-                else{
-                    System.out.println("Opção não disponível, digite novamente");
-                }
-            }
-                int Num_Agencia;
-                if(ag == "Uberlandia") Num_Agencia = 1;
-                else{
-                    Num_Agencia = 2;
-                }
-                Random gerador = new Random();
-                int numConta = gerador.nextInt(200000);
-                System.out.println("Digite a senha: ");
-                int senha = scan.nextInt();
-                System.out.println("Escolha uma opção: ");
-                System.out.println("1-Conta normal");
-                System.out.println("2-Conta conjunta");
-                boolean conjunta;
-                int op1 = scan.nextInt();
-                if(op1 == 1) conjunta = false;
-                else conjunta = true;
-                
-
-                System.out.println("Digite o tipo da conta: ");
-                System.out.printf("1-Poupança\n2-Corrente\n3-Salario");
-                int op3 = scan.nextInt();
-                switch(op1){
-                    case 1: //Teve Alteracoes nos construtores
-                    //Contas.add(new Poupanca(numConta,senha,0,conjunta,Clientes.get(i),new Agencia(ag, Num_Agencia),new Data(30, 2, 2022),0));
-                    case 2:
-                    //Contas.add new Corrente
-                    case 3:
-                    //Contas.add Salario
-                }
-                
-            }
-        }
         
+        if(!ValidaCPF.isCPF(CPF))
+            throw new IllegalArgumentException("CPF invalido!");
+                
+        int indiceCliente = Encontra_Cliente(CPF);
+        
+        while(indiceCliente == -1) // Cadastra o cliente e procura ele, se encontrar sair segue o codigo
+        {
+            Cadastrar_Cliente(scan);
+            indiceCliente = Encontra_Cliente(CPF);
+        }
+        return indiceCliente;
     }
-    
+
+    public void Cadastrar_Conta(Scanner scan)
+    {
+        ////// Cadastra e ou Encontra Cliente///////
+        int indiceCliente = indiceCliente(scan);
+
+        ///// Exibe Agencias Cadastradas e Retorna indice Da Escolhida ////
+        int NumAgencia = indiceAgencia(scan);
+        
+        Random gerador = new Random();
+           
+        boolean teste = true;
+        int numConta =0;
+            
+        while(teste)    
+        {
+            numConta = gerador.nextInt(200000);  
+            try
+                {  
+                    ////// pega a lista de conta da Agencia no indice NumAgencia
+                    LinkedList<Conta> Percorre = Agencias.get(NumAgencia).getContas();
+                    for( int i =0 ; i< Percorre.size();i++)   // verifica se existe outra conta com mesmo numero
+                    {
+                        if(Percorre.get(i).getNum_Conta() == numConta)
+                        {
+                            teste=false;
+                            break;
+                        }
+                    }  
+                }catch(IndexOutOfBoundsException e)
+                {
+
+                }
+            }
+                
+            System.out.println("Digite a Senha Numerica: ");
+            int senha = scan.nextInt(); 
+            
+            System.out.println("Escolha uma opção: ");  
+            System.out.println("1-Conta normal");
+            System.out.println("2-Conta conjunta");              
+            int op1 = scan.nextInt();
+            
+            boolean conjunta;             
+            if(op1 == 1) 
+                conjunta = false;
+            else conjunta = true;
+
+            int DiaMesAnoAtual[] = Data.DataAtual();
+            Data Inc = new Data(DiaMesAnoAtual[0],DiaMesAnoAtual[1],DiaMesAnoAtual[2]);
+            
+            System.out.println("Digite o tipo da conta: ");
+            System.out.printf("1-Poupança\n2-Corrente\n3-Salario");
+            op1 = scan.nextInt(); //op1 == Tipo Conta
+
+            /////// Transforma NumAgenia que esta com o Indice da Agencia no Numero da Agencia /////
+            NumAgencia = Agencias.get(NumAgencia).getNum_Agencia();
+
+            Conta Nova = null;
+            switch(op1)
+            {
+                    case 1:
+                        Nova = new Poupanca(numConta, senha, 0, conjunta, Clientes.get(indiceCliente), NumAgencia, Inc, 0);
+                        break;
+                    case 2:
+                        Nova = new Corrente(numConta, senha, 0, conjunta, Clientes.get(indiceCliente), NumAgencia, Inc, 0, 25);
+                        break;
+                    case 3:
+                        Nova = new Salario(numConta, senha, 0, conjunta, Clientes.get(indiceCliente), NumAgencia, Inc, 1000, 1000);
+                        break;
+            }
+            if(conjunta)
+            {
+                try{
+                    Nova.setCliente_secundario(CadastrarSegundoTitular(scan));
+                }catch(NullPointerException e)
+                {
+                    System.out.println(e);
+                }
+            }
+                
+    }
+
+    public Clientes CadastrarSegundoTitular(Scanner scan)
+    {
+        int indiceCliente = indiceCliente(scan);
+        return Clientes.get(indiceCliente);
+    }
+
+
  //////////////////////////////////////////////////////////////////////////////
  ///
  ///                Salvar e Carregar Arquivos                              ///
