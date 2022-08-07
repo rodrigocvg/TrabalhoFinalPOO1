@@ -33,6 +33,7 @@ public abstract class Conta
         this.Cliente_secundario = null;
         this.Num_Agencia = Num_Agencia;
         this.Abertura_de_Conta = Abertura_de_Conta;
+        Ultima_Movimentacao = new Data(0, 0, 0);
 
         this.Movimentacoes = new LinkedList<>();
     }
@@ -229,22 +230,30 @@ public abstract class Conta
  
     public String SaidaArquivo(){
         String CPF_SegundoTitular = "";
+
         if(conjunta)
             CPF_SegundoTitular=Cliente_secundario.getCPF();
         
-        return   
-                Num_Conta + ";" +
-                Senha_Conta + ";" +
-                saldo + ";" +
-                StatusDaConta + ";" +
-                conjunta + ";" +
-                Cliente_primario.getCPF() + ";" + 
-                CPF_SegundoTitular + ";" +
-                Num_Agencia + ";" +
-                Abertura_de_Conta.DadosData() + ";" +
-                Ultima_Movimentacao.DadosData();
+        String Data = Num_Conta + ";" +
+                    Senha_Conta + ";" +
+                    saldo + ";" +
+                    StatusDaConta + ";" +
+                    conjunta + ";" +
+                    Cliente_primario.getCPF() + ";" + 
+                    CPF_SegundoTitular + ";" +
+                    Num_Agencia + ";" +
+                    Abertura_de_Conta.DadosData() + ";" +
+                    Ultima_Movimentacao.DadosData() ;
+        
+        return  Data; 
+                
     } 
  
+    public void Imprime()
+    {
+        System.out.println("Agencia: "+this.Num_Agencia+" Conta: "+this.Num_Conta+" Senha: "+this.Senha_Conta);
+    }
+    
     /////////////////////////////////
     ////                          
     ////    Salvar e Carregar    ////

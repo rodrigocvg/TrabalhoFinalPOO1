@@ -22,7 +22,7 @@ public class BancoDosCria {
             scan = new Scanner(System.in);//Limpando o Scanner
             
             opcao = scan.nextInt(); // Escolhendo opcao
-
+            scan.nextLine();
             switch(opcao)
             {
                 case 0: // Sai do programa
@@ -31,7 +31,12 @@ public class BancoDosCria {
                     BancoDosCria.Acessar_Conta(scan);
                     break;
                 case 2: // Abrir uma conta
-                    BancoDosCria.Cadastrar_Conta(scan);
+                    try{
+                        BancoDosCria.Cadastrar_Conta(scan);
+                    }catch(IllegalArgumentException e)
+                    {
+                        System.out.println(e);
+                    }
                     break;
                 case 3: // Acesso Funcionario
                     BancoDosCria.Area_do_Funcionario(scan);
@@ -41,7 +46,7 @@ public class BancoDosCria {
 
                     break;
                 case 5: 
-                    BancoDosCria.Cadastrar_Cliente(scan);
+                    BancoDosCria.Cadastrar_Cliente(scan,"0");
                     break;
                 default:
                     System.out.println("Essa opcao nao existe meu cria! \nDa uma olhada nas opcoes disponiveis e tenta novamente");
@@ -49,8 +54,7 @@ public class BancoDosCria {
             }   
         }
         scan.close();
-
-
+        BancoDosCria.SalvarBanco();
     }
 
 
