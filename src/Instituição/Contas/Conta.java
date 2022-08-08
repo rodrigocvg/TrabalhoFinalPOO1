@@ -1,6 +1,7 @@
 package Instituição.Contas;
 import java.util.LinkedList;
 
+import GerenciadorArquivos.GerenArquivos;
 import Instituição.Movimentcaoes.Movimentacoes;
 import Personas.Data;
 import Personas.Clientes.Clientes;
@@ -190,7 +191,7 @@ public abstract class Conta
         if(this.verificaSenha(senha)){
         this.saldo -= valor;
         }
-        throw new IllegalArgumentException("Senha incorreta");
+        else throw new IllegalArgumentException("Senha incorreta");
 
     }
 
@@ -262,12 +263,13 @@ public abstract class Conta
 
     public void CarregarMovimentacoes()
     {
-        
+        this.Movimentacoes=GerenArquivos.carregar_Movimentacoes(Num_Conta, Num_Agencia);
     }
 
     public void SalvarMovimentacoes()
     {
-
+        GerenArquivos.SalvarArquivoMovimentacoes(Num_Agencia, Num_Conta, Movimentacoes);
     }
+
 
 }

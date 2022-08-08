@@ -146,7 +146,12 @@ public class Agencia {
 
     public void CarregarArquivos(LinkedList<Clientes> Clientes)
     {
-        this.contas=GerenArquivos.Carregar_contas(this.Num_Agencia, Clientes);
+        carregar_Contas(Clientes);
+        carregar_Funcionario();
+    }
+
+    public void carregar_Funcionario()
+    {
         this.Funcionarios=GerenArquivos.Carregar_Funcioanrios(this.Num_Agencia);
         for(int i = 0 ; i < Funcionarios.size(); i++)
         {
@@ -163,9 +168,22 @@ public class Agencia {
         }
     }
 
+    public void carregar_Contas(LinkedList<Clientes> Clientes)
+    {
+        this.contas=GerenArquivos.Carregar_contas(this.Num_Agencia, Clientes);
+        for(int i = 0 ; i < contas.size(); i++)
+        {
+            contas.get(i).CarregarMovimentacoes();
+        }
+    }
+
     public void SalvarArquivo()
     {
         GerenArquivos.SalvarArquivoContas(Num_Agencia,contas);
+        for(int i = 0 ; i< contas.size();i++)
+        {
+            contas.get(i).SalvarMovimentacoes();
+        }
         GerenArquivos.SalvarArquivoFuncionarios(Num_Agencia,Funcionarios);
     }
 

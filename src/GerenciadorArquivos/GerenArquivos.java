@@ -11,6 +11,7 @@ import Instituição.Contas.Conta;
 import Instituição.Contas.Corrente;
 import Instituição.Contas.Poupanca;
 import Instituição.Contas.Salario;
+import Instituição.Movimentcaoes.Movimentacoes;
 import Personas.Data;
 import Personas.Endereco;
 import Personas.Pessoa;
@@ -329,4 +330,57 @@ public class GerenArquivos {
     ///
     //////////////////////////////////////////////////////////////   
   
+    public static LinkedList<Movimentacoes> carregar_Movimentacoes(int Num_Conta, int Num_Agencia)
+        {
+            String NumAgencia = String.valueOf(Num_Agencia);
+            String NumConta = String.valueOf(Num_Conta);
+            LinkedList<Movimentacoes> Movimentacoes = new LinkedList<>();
+            try {
+    
+                FileReader ent = new FileReader ( BaseDados+"\\Contas\\Movimentacoes\\"+NumAgencia+NumConta+"Movimentacoes.csv");
+                BufferedReader br = new BufferedReader (ent);
+                String linha ;
+                String [] campos = null ;
+                while (( linha = br. readLine ()) != null ) 
+                {
+                    campos = linha.split(";");
+                    Data Nova = new Data(Integer.parseInt(campos[0]), Integer.parseInt(campos[1]),Integer.parseInt(campos[2]));
+                    Movimentacoes Mov = new Movimentacoes(Nova, Float.parseFloat(campos[3]), campos[4], Integer.parseInt(campos[5]), Integer.parseInt(campos[6]), Integer.parseInt(campos[7]), campos[8]);
+                    Movimentacoes.add(Mov);
+                }   
+                br. close ();
+            }
+            catch ( IOException erro ) 
+            {
+                System .out. println ("Arquivo nao encontrado ou corrompido: Movimentacoes.csv");
+            }
+            return Movimentacoes;
+        }
+
+    public static void SalvarArquivoMovimentacoes(int Num_Agencia,int Num_Conta, LinkedList<Movimentacoes> movimentacoes) 
+    {
+        String NumAgencia = String.valueOf(Num_Agencia);
+        String NumConta = String.valueOf(Num_Conta);
+        try {
+            FileWriter arq = new FileWriter ( BaseDados+"\\Contas\\Movimentacoes\\"+NumAgencia+NumConta+"Movimentacoes.csv" );
+            PrintWriter out = new PrintWriter (arq);
+            try{
+                for (int i = 0; i < movimentacoes.size() ; i++) {
+                Movimentacoes Percorre =  movimentacoes.get(i);
+                String linha;
+                linha = Percorre.DadosMovimentacao();
+                out.println( linha );
+                }
+            }
+            catch(NullPointerException e)
+            {
+            }
+            out.close ();
+        } 
+        catch ( IOException erro )
+        {
+        System .out. println (" Erro na escrita dos dados Movimentacoes ");
+        }
+    }
+
 }
