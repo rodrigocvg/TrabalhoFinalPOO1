@@ -93,7 +93,7 @@ public class GerenArquivos {
             LinkedList<Conta> contas = new LinkedList<>();
             try {
     
-                FileReader ent = new FileReader ( BaseDados+"\\"+NumeroAgencia+"\\Contas.csv" );
+                FileReader ent = new FileReader ( BaseDados+"\\Contas\\"+NumeroAgencia+"Contas.csv" );
                 BufferedReader br = new BufferedReader (ent);
                 String linha ;
                 String [] campos = null ;
@@ -172,7 +172,7 @@ public class GerenArquivos {
         {
             String NumAgencia = String.valueOf(Num_Agencia);
             try {
-                FileWriter arq = new FileWriter ( BaseDados+"\\"+NumAgencia+"\\Contas.csv" );
+                FileWriter arq = new FileWriter ( BaseDados+"\\Contas\\"+NumAgencia+"Contas.csv" );
                 PrintWriter out = new PrintWriter (arq);
                 try{
                     for (int i = 0; i < contas.size() ; i++) {
@@ -262,7 +262,7 @@ public class GerenArquivos {
             try
             {
     
-                FileReader ent = new FileReader ( BaseDados+"\\"+NumeroAgencia+"\\Funcionarios.csv" );
+                FileReader ent = new FileReader ( BaseDados+"\\Funcionarios\\"+NumeroAgencia+"Funcionarios.csv" );
                 BufferedReader br = new BufferedReader (ent);
                 String linha ;
                 String [] campos = null ;
@@ -299,7 +299,7 @@ public class GerenArquivos {
         {
             String NumAgencia = String.valueOf(Num_Agencia);
             try {
-                FileWriter arq = new FileWriter ( BaseDados+"\\"+NumAgencia+"\\Funcionarios.csv" );
+                FileWriter arq = new FileWriter ( BaseDados+"\\Funcionarios\\"+NumAgencia+"Funcionarios.csv" );
                 PrintWriter out = new PrintWriter (arq);
                 try{
                     for (int i = 0; i < funcionarios.size() ; i++) {
