@@ -228,7 +228,10 @@ public class Banco {
         System.out.printf("RG Numeros: ");
         int RG_Num = scan.nextInt(); 
 
-        System.out.printf("Data de Ingresso\nDia: ");
+        Data Data_de_Ingresso = Data.DataAtual();
+
+        
+        System.out.printf("Data Nascimento\nDia: ");
         int dia = scan.nextInt();
 
         System.out.printf("Mes: ");
@@ -236,17 +239,6 @@ public class Banco {
 
         System.out.printf("Ano: ");
         int ano = scan.nextInt();
-
-        Data Data_de_Ingresso = new Data(dia, mes, ano);
-        
-        System.out.printf("Data Nascimento\nDia: ");
-        dia = scan.nextInt();
-
-        System.out.printf("Mes: ");
-        mes = scan.nextInt();
-
-        System.out.printf("Ano: ");
-        ano = scan.nextInt();
 
         Data Data_de_Nascimento = new Data(dia, mes, ano); 
 
@@ -792,15 +784,12 @@ public class Banco {
             {
                     case 1:
                         Nova = new Poupanca(numConta, senha, 0, conjunta, Clientes.get(indiceCliente), NumAgencia, Inc, 0);
-                        System.out.println("Poupanca");
                         break;
                     case 2:
                         Nova = new Corrente(numConta, senha, 0, conjunta, Clientes.get(indiceCliente), NumAgencia, Inc, 0, 25);
-                        System.out.println("Corrente");
                         break;
                     case 3:
                         Nova = new Salario(numConta, senha, 0, conjunta, Clientes.get(indiceCliente), NumAgencia, Inc, 1000, 1000);
-                        System.out.println("Salario");
                         break;
             }
             if(conjunta)
@@ -812,7 +801,6 @@ public class Banco {
                     System.out.println(e);
                 }
             }
-            System.out.println(Nova.SaidaArquivo());
             LinkedList<Conta> AtualizaContas = Agencias.get(indiceAgencia).getContas();
             AtualizaContas.add(Nova);
             GerenArquivos.SalvarArquivoContas(NumAgencia, AtualizaContas);
