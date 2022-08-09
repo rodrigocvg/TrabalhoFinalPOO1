@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import Banco.Banco;
+
 public class BancoDosCria {
     public static void main(String[] args) {
         int opcao = 999;
@@ -12,6 +14,7 @@ public class BancoDosCria {
         //menu
         while(opcao!=0)
         {
+            BancoDosCria.CarregarBanco(); 
             System.out.println("Primeiro me diz voce quer: ");
             System.out.println("01 -> Acessar Minha Conta");
             System.out.println("02 -> Abrir uma Conta");
@@ -51,10 +54,10 @@ public class BancoDosCria {
                 default:
                     System.out.println("Essa opcao nao existe meu cria! \nDa uma olhada nas opcoes disponiveis e tenta novamente");
                     break;
-            }   
+            } 
+            BancoDosCria.SalvarBanco();
         }
         scan.close();
-        BancoDosCria.SalvarBanco();
     }
 
 
