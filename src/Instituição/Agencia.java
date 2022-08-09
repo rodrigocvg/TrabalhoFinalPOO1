@@ -280,11 +280,33 @@ public class Agencia {
         throw new IllegalArgumentException("Conta Nao Encontrada");
     }
 
+    public boolean EnviarTransferencia(int numConta, float valor, int NumBancoOrigem,int NumAgenciaOrigem,int NumContaOrigem)
+    {
+        for(int i = 0 ;i<contas.size();i++)
+        {
+            if(contas.get(i).getNum_Conta()==numConta)
+            {
+                contas.get(i).ReceberTransferencia(NumBancoOrigem, NumAgenciaOrigem, NumContaOrigem, valor);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void ListaContas()
     {
         for(int i =0;i<contas.size();i++)
         {
             contas.get(i).Imprime();
+        }
+    }
+
+    public void alteraConta(Conta Nova)
+    {
+        for(int i =0 ;i<contas.size();i++)
+        {
+            if(contas.get(i).getNum_Conta()==Nova.getNum_Conta())
+                contas.set(i, Nova);
         }
     }
 }
