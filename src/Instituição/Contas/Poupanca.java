@@ -1,5 +1,6 @@
 package Instituição.Contas;
 
+import Instituição.Movimentcaoes.Movimentacoes;
 import Personas.Data;
 import Personas.Clientes.Clientes;
 
@@ -16,7 +17,7 @@ public class Poupanca extends Conta {
     int Num_Agencia, Data Abertura_de_Conta,float rendimento) {
     super(Num_Conta, Senha_Conta, saldo, conjunta, Cliente_primario, Num_Agencia,
         Abertura_de_Conta);
-    this.rendimento = saldo * 0.5f;
+    this.rendimento = 0.5f;
 
 }
 
@@ -41,12 +42,6 @@ public class Poupanca extends Conta {
         }
 
     }
-    @Override
-    public void transferir(Conta c, float valor, int senha) {
-        super.transferir(c, valor, senha);
-        this.rendimento = saldo*0.5f;
-    }
-
 
     public float getRendimento() {
         return rendimento;
@@ -54,6 +49,15 @@ public class Poupanca extends Conta {
 
     public void setRendimento(float rendimento) {
         this.rendimento = rendimento;
+    }
+
+    public void AplicarRendimento()
+    {
+        Float valor =this.saldo*rendimento;
+        this.saldo += valor;
+        Movimentacoes Nova = new Movimentacoes();
+        Nova.Rendimento(valor);
+        Movimentacoes.add(Nova);
     }
     
 }

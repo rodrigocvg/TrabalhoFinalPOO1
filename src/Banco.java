@@ -637,7 +637,113 @@ public class Banco {
     public void Acessar_Conta(Scanner scan)
         {
             int opcao =1;
+            Conta Solicitada = loginConta(scan);
+            
+            if(Solicitada.equals(null))
+                return;
+
             while(opcao!=0)
+            {
+                    System.out.println("Seja Bem vindo ");
+                    System.out.println("Oque você deseja fazer?");
+                    System.out.println("01 -> Consultar Saldo");
+                    System.out.println("02 -> Realizar Transferencia");
+                    System.out.println("03 -> Depositar");
+                    System.out.println("04 -> Sacar");
+                    System.out.println("05 -> Realizar Pagamento");
+                    System.out.println("00 -> Sair da Conta");
+                    
+                    opcao = scan.nextInt();
+                    scan.nextLine();
+                    boolean acesso = true;
+                    switch(opcao)
+                    {
+                        case 0:
+                            break;
+                        case 1: 
+                            System.out.println("Saldo: " + Solicitada.getSaldo());
+                            break;
+                        case 2: 
+                            int Numbanco =0;
+                            int NumAgencia=0;
+                            int NumConta = 0;
+                            float valor = 0f;
+                            int senha = 0;
+                            while(acesso)
+                            {
+                                acesso=false;
+                                try{
+                                    //System.out.println("Numero do Banco de Destino: ");//nao sera necessario aqui
+                                    //Numbanco = scan.nextInt();
+                                    System.out.println("Numero do Agencia de Destino: ");
+                                    NumAgencia = scan.nextInt();
+                                    System.out.println("Numero do Conta de Destino: ");
+                                    NumConta = scan.nextInt();
+                                    System.out.println("Valor a ser transferido: ");
+                                    valor = scan.nextFloat();
+                                    System.out.println("Sua Senha: ");
+                                    senha = scan.nextInt();
+                                }catch(IllegalArgumentException e)
+                                {
+                                    System.out.println(e);
+                                    acesso=true;
+                                }
+                                
+                            }
+                            acesso=EnviarTransferencia(Numbanco, NumAgencia, NumConta, valor, 0, Solicitada.getNum_Agencia(), Solicitada.getNum_Conta());
+                            if (acesso)
+                            {
+                                Solicitada.transferir(Numbanco,NumAgencia,NumConta, valor, senha);
+                                Agencias.get(Solicitada.getNum_Agencia()-100).alteraConta(Solicitada);
+                            }
+                            else System.out.println("Conta de Destino Não encontrada");
+                            break;
+                        case 3: 
+                            System.out.println("Valor a ser depositado: ");
+                            valor = scan.nextFloat();
+                            System.out.println("Sua Senha: ");
+                            senha = scan.nextInt(); 
+                            Solicitada.depositar(valor, senha);
+                            Agencias.get(Solicitada.getNum_Agencia()-100).alteraConta(Solicitada);
+                            break;
+                        case 4: 
+                            System.out.println("Valor a ser sacado: ");
+                            valor = scan.nextFloat();
+                            System.out.println("Sua Senha: ");
+                            senha = scan.nextInt(); 
+                            Solicitada.sacar(valor, senha);
+                            Agencias.get(Solicitada.getNum_Agencia()-100).alteraConta(Solicitada);
+                            break;
+                        case 5:
+                            System.out.println("Descreva o pagamento: ");
+                            String TipoPagamento = scan.nextLine();
+                            System.out.println("Valor a ser sacado: ");
+                            valor = scan.nextFloat();
+                            System.out.println("Sua Senha: ");
+                            senha = scan.nextInt(); 
+                            Solicitada.realizarPag(valor, senha, TipoPagamento);
+                            Agencias.get(Solicitada.getNum_Agencia()-100).alteraConta(Solicitada);
+                            break;
+                        default:
+                            System.out.println("Essa opcao nao existe meu cria! \nDa uma olhada nas opcoes disponiveis e tenta novamente");
+                            opcao=999;
+                    }
+                }
+                
+                if(opcao==0)
+                {
+                    return;
+                }
+                System.out.println("0 para Não ou Qualquer outro numero para Sim");
+                opcao = scan.nextInt();
+            
+        }
+
+    public Conta loginConta(Scanner scan)
+    {
+        Conta Solicitada = null;
+        boolean Acesso = true;
+        while(Acesso)
             {
                 System.out.println("Fala Cria vou precisar dos seguintes daddos");
                 System.out.printf("Agencia: ");
@@ -651,62 +757,21 @@ public class Banco {
                 if(indiceAgencia==-10)
                     {
                         System.out.println("Conta não Encontrada");
+                        Acesso = false;
                         break;
                     }
-                Conta Solicitada = null;
                 try{
                     Solicitada = Agencias.get(indiceAgencia).EncontraConta(Num_Conta, Senha);
                 }catch(IllegalArgumentException e)
                 {
                     System.out.println(e);
+                    Acesso=false;
                     break;
                 }
-                           
-                while(opcao!=0)
-                {
-                    System.out.println("Seja Bem vindo ");
-                    System.out.println("Oque você deseja fazer?");
-                    System.out.println("01 -> Consultar Saldo");
-                    System.out.println("02 -> Realizar PIX");
-                    System.out.println("03 -> Depositar");
-                    System.out.println("04 -> Sacar");
-                    System.out.println("05 -> ");
-                    System.out.println("00 -> Sair da Conta");
-                    
-                    opcao = scan.nextInt();
-                    
-                    switch(opcao)
-                    {
-                        case 0:
-                            System.out.println("Deseja entrar em outra conta?");
-                            break;
-                        case 1: 
-                            System.out.println("Saldo: " + Solicitada.getSaldo());
-                            break;
-                        case 2: 
-                            //Fazer um pix/transferencia
-                            break;
-                        case 3: 
-                            //Depositar valor
-                            break;
-                        case 4: 
-                            //sacar
-                            break;
-                        default:
-                            System.out.println("Essa opcao nao existe meu cria! \nDa uma olhada nas opcoes disponiveis e tenta novamente");
-                            opcao=999;
-                    }
-                }
-                
-                if(opcao==0)
-                {
-                    break;
-                }
-                System.out.println("0 para Não ou Qualquer outro numero para Sim");
-                opcao = scan.nextInt();
             }
-        }
-
+            return Solicitada;
+    }
+    
     public void Cadastrar_Conta(Scanner scan)
     {
         ////// Cadastra e ou Encontra Cliente///////
@@ -820,6 +885,18 @@ public class Banco {
         {
             Agencias.get(i).ListaContas();
         }
+    }
+
+    public boolean EnviarTransferencia(int numBancoDestino, int numAgenciaDestino,int numContaDestino,Float valor,int NumBancoOrigem,int NumAgenciaOrigem,int NumContaOrigem)
+    {
+        for(int i = 0;i<Agencias.size();i++)
+        {
+            if(Agencias.get(i).getNum_Agencia()==numAgenciaDestino)
+            {
+                return Agencias.get(i).EnviarTransferencia(numContaDestino, valor, NumBancoOrigem, NumAgenciaOrigem, NumContaOrigem);
+            }
+        }
+        return false;
     }
 
  //////////////////////////////////////////////////////////////////////////////

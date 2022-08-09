@@ -145,4 +145,20 @@ public class Movimentacoes {
         this.Data_transacao = Data.DataAtual();
         this.valor=valor;
     }
+
+    public void Rendimento(Float valor)
+    {
+        mov(valor);
+        this.tipo_transacao="Rendimento";
+    }
+
+    public void ReceberTransferencia(Float valor, int NumBancoOrigem, int NUmAgenciaOrigem, int NumContaOrigem)
+    {
+        mov(valor);
+        this.tipo_transacao="Receber Transferencia";
+        this.Num_Banco_Destinario = NumBancoOrigem;
+        this.Num_Agencia_Destinario = NUmAgenciaOrigem;
+        this.Num_Conta_Destinatario = NumContaOrigem;
+
+    }
 }

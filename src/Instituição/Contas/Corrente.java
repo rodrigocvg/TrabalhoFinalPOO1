@@ -30,28 +30,10 @@ public class Corrente extends Conta{
         
 
     @Override
-    public void sacar(float valor, int senha) {
-        super.sacar(valor, senha);
-    }
-
-    @Override
-    public void depositar(float valor, int senha) {
-        super.depositar(valor, senha);
-    }
-
-
-
-    @Override
     public void desativarConta(int senha) {
         super.desativarConta(senha);
     }
-
-    @Override
-    public void transferir(Conta c, float valor, int senha) {
-        super.transferir(c, valor, senha);
-    }
-
-    
+  
         
     public float getLimCheque() {
         return limCheque;
