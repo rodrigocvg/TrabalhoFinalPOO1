@@ -275,9 +275,15 @@ public class Agencia {
     {
         for(int i = 0 ; i< contas.size() ; i++)
         {
-            if(contas.get(i).getNum_Conta()==NumConta && contas.get(i).verificaSenha(Senha))
+            if(contas.get(i).getNum_Conta()==NumConta)
             {
-                return contas.get(i);
+                if(contas.get(i).verificaSenha(Senha))
+                {
+                    if(!contas.get(i).isStatusDaConta())
+                        throw new IllegalArgumentException("Conta Desativada");
+                    return contas.get(i);
+                }
+                else throw new IllegalArgumentException("Senha Incorreta");
             }
         }
         throw new IllegalArgumentException("Conta Nao Encontrada");

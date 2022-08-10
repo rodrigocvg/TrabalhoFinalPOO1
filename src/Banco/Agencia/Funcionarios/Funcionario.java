@@ -91,7 +91,7 @@ public class Funcionario extends Pessoa {
 
     public void ImprimeDadosFuncionario()
     {
-        System.out.println(this.getNome() + " - " + this.getCPF());
+        System.out.println(this.getNome() + " - " + this.getCPF() + "- " + this.Cargo_na_empresa);
     }
 
     public String DadosGerente()

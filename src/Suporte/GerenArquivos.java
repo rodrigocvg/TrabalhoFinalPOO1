@@ -93,76 +93,79 @@ public class GerenArquivos {
             try {
     
                 FileReader ent = new FileReader ( BaseDados+"\\Contas\\"+NumeroAgencia+"Contas.csv" );
-                BufferedReader br = new BufferedReader (ent);
-                String linha ;
-                String [] campos = null ;
-                while (( linha = br. readLine ()) != null ) 
-                {
-                    campos = linha.split(";");
-                    Data AberturaConta = new Data(Integer.parseInt(campos[9]),Integer.parseInt(campos[10]),Integer.parseInt(campos[11]));
-                    Data UltimaMovimentacao = new Data(Integer.parseInt(campos[12]),Integer.parseInt(campos[13]),Integer.parseInt(campos[14]));
-                    Clientes Primario = new Clientes();
-                    Clientes Secundario = new Clientes();
-                    boolean CPF_Encontrado = false;
-
-                    for(int i =0 ; i < Clientes.size(); i++)
+                try (BufferedReader br = new BufferedReader (ent)) {
+                    String linha ;
+                    String [] campos = null ;
+                    while (( linha = br. readLine ()) != null ) 
                     {
-                        Clientes Percorre  = Clientes.get(i);
-                        if(Percorre.getCPF().equals(campos[6]))
-                        {   
-                            Primario = Percorre;
-                            CPF_Encontrado = true;
-                        }
-                        else if(Percorre.getCPF().equals(campos[7]))
+                        campos = linha.split(";");
+                        Data AberturaConta = new Data(Integer.parseInt(campos[9]),Integer.parseInt(campos[10]),Integer.parseInt(campos[11]));
+                        Data UltimaMovimentacao = new Data(Integer.parseInt(campos[12]),Integer.parseInt(campos[13]),Integer.parseInt(campos[14]));
+                        Clientes Primario = new Clientes();
+                        Clientes Secundario = new Clientes();
+                        boolean CPF_Encontrado = false;
+
+                        for(int i =0 ; i < Clientes.size(); i++)
                         {
-                            Secundario = Percorre;
+                            Clientes Percorre  = Clientes.get(i);
+                            if(Percorre.getCPF().equals(campos[6]))
+                            {   
+                                Primario = Percorre;
+                                CPF_Encontrado = true;
+                            }
+                            else if(Percorre.getCPF().equals(campos[7]))
+                            {
+                                Secundario = Percorre;
+                            }
+                            
                         }
-                        
-                    }
 
-                    if (!CPF_Encontrado)
-                            throw new IllegalArgumentException("Cliente não encontrado");
+                        if (!CPF_Encontrado)
+                                throw new IllegalArgumentException("Cliente não encontrado");
 
-                    Conta Nova;
-                    switch(campos[0])
-                    {
-                        case "Corrente":
-                             Nova = new Corrente(Integer.parseInt(campos[1]), Integer.parseInt(campos[2]), Float.parseFloat(campos[3]), Boolean.parseBoolean(campos[5]), Primario,Integer.parseInt(campos[8]), AberturaConta, Float.parseFloat(campos[15]), Float.parseFloat(campos[16]));
+                        Conta Nova;
+                        switch(campos[0])
+                        {
+                            case "Corrente":
+                                 Nova = new Corrente(Integer.parseInt(campos[1]), Integer.parseInt(campos[2]), Float.parseFloat(campos[3]), Boolean.parseBoolean(campos[5]), Primario,Integer.parseInt(campos[8]), AberturaConta, Float.parseFloat(campos[15]), Float.parseFloat(campos[16]));
+                                if(Boolean.parseBoolean(campos[5]))
+                                {
+                                    Nova.setCliente_secundario(Secundario);
+                                }
+                                Nova.setUltima_Movimentacao(UltimaMovimentacao);
+                                contas.add(Nova);
+                                break;
+                            case "Poupanca":
+                                 Nova = new Poupanca(Integer.parseInt(campos[1]), Integer.parseInt(campos[2]), Float.parseFloat(campos[3]), Boolean.parseBoolean(campos[5]), Primario,Integer.parseInt(campos[8]), AberturaConta, Float.parseFloat(campos[15])); 
+                                if(Boolean.parseBoolean(campos[5]))
+                                {
+                                    Nova.setCliente_secundario(Secundario);
+                                }
+                                Nova.setUltima_Movimentacao(UltimaMovimentacao);
+                                contas.add(Nova);
+                                break;
+                            case "Salario":
+                                 Nova = new Salario(Integer.parseInt(campos[1]), Integer.parseInt(campos[2]), Float.parseFloat(campos[3]), Boolean.parseBoolean(campos[5]), Primario,Integer.parseInt(campos[8]), AberturaConta, Float.parseFloat(campos[15]), Float.parseFloat(campos[16]));
                             if(Boolean.parseBoolean(campos[5]))
-                            {
-                                Nova.setCliente_secundario(Secundario);
-                            }
-                            Nova.setUltima_Movimentacao(UltimaMovimentacao);
-                            contas.add(Nova);
-                            break;
-                        case "Poupanca":
-                             Nova = new Poupanca(Integer.parseInt(campos[1]), Integer.parseInt(campos[2]), Float.parseFloat(campos[3]), Boolean.parseBoolean(campos[5]), Primario,Integer.parseInt(campos[8]), AberturaConta, Float.parseFloat(campos[15])); 
-                            if(Boolean.parseBoolean(campos[5]))
-                            {
-                                Nova.setCliente_secundario(Secundario);
-                            }
-                            Nova.setUltima_Movimentacao(UltimaMovimentacao);
-                            contas.add(Nova);
-                            break;
-                        case "Salario":
-                             Nova = new Salario(Integer.parseInt(campos[1]), Integer.parseInt(campos[2]), Float.parseFloat(campos[3]), Boolean.parseBoolean(campos[5]), Primario,Integer.parseInt(campos[8]), AberturaConta, Float.parseFloat(campos[15]), Float.parseFloat(campos[16]));
-                        if(Boolean.parseBoolean(campos[5]))
-                            {
-                                Nova.setCliente_secundario(Secundario);
-                            }
-                            Nova.setUltima_Movimentacao(UltimaMovimentacao);
-                            contas.add(Nova);
-                            break;
-                        default:
-                            break;
-                        
-                    }
-                }   
-                br. close ();
+                                {
+                                    Nova.setCliente_secundario(Secundario);
+                                }
+                                Nova.setUltima_Movimentacao(UltimaMovimentacao);
+                                contas.add(Nova);
+                                break;
+                            default:
+                                break;
+                            
+                        }
+                    }   
+                    br. close ();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
             catch ( IOException erro ) 
             {
-                System .out. println (" Arquivo nao encontrado ou corrompido: Contas.csv");
+                System .out. println (" Arquivo nao encontrado ou corrompido:"+NumeroAgencia+"Contas.csv");
             }
             return contas;
         }
@@ -350,7 +353,7 @@ public class GerenArquivos {
             }
             catch ( IOException erro ) 
             {
-                System .out. println ("Arquivo nao encontrado ou corrompido: Movimentacoes.csv");
+                System .out. println ("Arquivo nao encontrado ou corrompido:"+NumAgencia+NumConta+"Movimentacoes.csv");
             }
             return Movimentacoes;
         }
@@ -364,9 +367,7 @@ public class GerenArquivos {
             PrintWriter out = new PrintWriter (arq);
             try{
                 for (int i = 0; i < movimentacoes.size() ; i++) {
-                Movimentacoes Percorre =  movimentacoes.get(i);
-                String linha;
-                linha = Percorre.DadosMovimentacao();
+                String linha = movimentacoes.get(i).DadosMovimentacao();
                 out.println( linha );
                 }
             }
@@ -377,7 +378,7 @@ public class GerenArquivos {
         } 
         catch ( IOException erro )
         {
-        System .out. println (" Erro na escrita dos dados Movimentacoes ");
+        System .out. println (" Erro na escrita dos dados"+NumAgencia+NumConta+"Movimentacoes.csv");
         }
     }
 

@@ -147,68 +147,79 @@ public abstract class Conta
     ////
     ///////////////////////////////////
 
-    public void depositar(float valor, int senha){
+    public void depositar(float valor, int senha) throws IllegalArgumentException
+    {
         if(this.verificaSenha(senha)){
+            if (valor<=0) throw new IllegalArgumentException("Valor de deposito incorreto");
+            
             this.saldo += valor;
-            Ultima_Movimentacao=Data.DataAtual();
+            this.Ultima_Movimentacao=Data.DataAtual();
 
             Movimentacoes Nova = new Movimentacoes();
             Nova.depositar(valor);
-            Movimentacoes.add(Nova);
+            this.Movimentacoes.add(Nova);
         }
         else{ //TRATAR ERRO DEPOIS
-            System.out.println("Senha incorreta");
-        }
+            throw new IllegalArgumentException("Senha incorreta");        }
     }
 
-    public void sacar(float valor,int senha){
+    public void sacar(float valor,int senha) throws IllegalArgumentException
+    {
         if(this.verificaSenha(senha)){
+            if(saldo<valor) throw new IllegalArgumentException("Saldo insuficiente");
+            if(valor<0) throw new IllegalArgumentException("Valor incorreto");
             this.saldo -= valor;
-            Ultima_Movimentacao=Data.DataAtual();
-
+            this.Ultima_Movimentacao=Data.DataAtual();
             Movimentacoes Nova = new Movimentacoes();
             Nova.sacar(valor);
-            Movimentacoes.add(Nova);
+            this.Movimentacoes.add(Nova);
         }
         else{ //TRATAR ERRO DEPOIS
-            System.out.println("Senha incorreta");
+            throw new IllegalArgumentException("Senha Incorreta");
         }
 
     }
 
-    public void transferir(int Numbanco,int numAgencia, int NumConta,float valor,int senha){
-        if(this.verificaSenha(senha)){
+    public void transferir(int Numbanco,int numAgencia, int NumConta,float valor,int senha)throws IllegalArgumentException
+    {
+        if(this.verificaSenha(senha))
+        {
+            if (valor<=0) throw new IllegalArgumentException("Valor de transferencia incorreto");
             this.saldo -= valor;
-            Ultima_Movimentacao=Data.DataAtual();
+            this.Ultima_Movimentacao=Data.DataAtual();
 
             Movimentacoes Nova = new Movimentacoes();
             Nova.tranferir(valor, Numbanco, numAgencia, NumConta);
-            Movimentacoes.add(Nova);
+            this.Movimentacoes.add(Nova);
         }
         else{ //TRATAR ERRO DEPOIS
-            System.out.println("Senha incorreta");
+            throw new IllegalArgumentException("Senha Incorreta");
         }
 
     }
 
-    public void consultaSaldo(int senha){
+    public void consultaSaldo(int senha)throws IllegalArgumentException
+    {
         if(this.verificaSenha(senha)){
             System.out.println("O saldo atual é de:" + this.getSaldo());
             }
             else{ //TRATAR ERRO DEPOIS
-                System.out.println("Senha incorreta");
+                throw new IllegalArgumentException("Senha Incorreta");
             }
         
     }
 
-    public void realizarPag(float valor,int senha ,String TipoPagamento){
+    public void realizarPag(float valor,int senha ,String TipoPagamento)throws IllegalArgumentException
+    {
         if(this.verificaSenha(senha))
         {
+            if(saldo<valor) throw new IllegalArgumentException("Saldo insuficiente");
+
             this.saldo -= valor;
             Ultima_Movimentacao=Data.DataAtual();
             Movimentacoes Nova = new Movimentacoes();
             Nova.realizarPag(valor, TipoPagamento);
-            Movimentacoes.add(Nova);
+            this.Movimentacoes.add(Nova);
         }
         else throw new IllegalArgumentException("Senha incorreta");
 
@@ -220,8 +231,16 @@ public abstract class Conta
         Ultima_Movimentacao=Data.DataAtual();
         Movimentacoes Nova = new Movimentacoes();
         Nova.ReceberTransferencia(valor, Numbanco, numAgencia, NumConta);
-        Movimentacoes.add(Nova);
+        this.Movimentacoes.add(Nova);
 
+    }
+
+    public void HistoricoMovimentacoes()
+    {
+        for(int i = 0 ; i < Movimentacoes.size(); i++)
+        {
+            this.Movimentacoes.get(i).ImprimeMovimentacoes();
+        }
     }
 
 
@@ -309,27 +328,27 @@ public abstract class Conta
         for(int i =0;i<Movimentacoes.size();i++)
         {
             Movimentacoes Percorre = Movimentacoes.get(i);
-            if(Percorre.getTipo_pagamento().equals("Deposito"))
+            if(Percorre.getTipo_transacao().equals("Deposito"))
             {
                 this.saldo+=Percorre.getValor();
                 this.Ultima_Movimentacao=Percorre.getData_transacao();
             }
-            else if(Percorre.getTipo_pagamento().equals("Sacar"))
+            else if(Percorre.getTipo_transacao().equals("Sacar"))
             {
                 this.saldo-=Percorre.getValor();
                 this.Ultima_Movimentacao=Percorre.getData_transacao();
             }
-            else if(Percorre.getTipo_pagamento().equals("Tranferir"))
+            else if(Percorre.getTipo_transacao().equals("Tranferir"))
             {
                 this.saldo-=Percorre.getValor();
                 this.Ultima_Movimentacao=Percorre.getData_transacao();
             }
-            else if(Percorre.getTipo_pagamento().equals("Pagamento"))
+            else if(Percorre.getTipo_transacao().equals("Pagamento"))
             {
                 this.saldo-=Percorre.getValor();
                 this.Ultima_Movimentacao=Percorre.getData_transacao();
             }
-            else if(Percorre.getTipo_pagamento().equals("Receber Transferencia"))
+            else if(Percorre.getTipo_transacao().equals("Receber Transferencia"))
             {
                 this.saldo+=Percorre.getValor();
                 this.Ultima_Movimentacao=Percorre.getData_transacao();

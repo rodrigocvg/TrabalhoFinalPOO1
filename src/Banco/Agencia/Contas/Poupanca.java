@@ -26,22 +26,7 @@ public class Poupanca extends Conta {
     public String SaidaArquivo() {
         return "Poupanca;"+ super.SaidaArquivo() + ";" + this.rendimento ;
     }
-    @Override
-    public void depositar(float valor,int senha){
-        if(this.verificaSenha(senha)){
-        this.saldo += valor;
-        this.rendimento = saldo* 0.5f;
-        }
-    }
 
-    @Override
-    public void sacar(float valor,int senha){
-        if(this.verificaSenha(senha)){
-        this.saldo -= valor;
-        this.rendimento = saldo*0.5f;
-        }
-
-    }
 
     public float getRendimento() {
         return rendimento;

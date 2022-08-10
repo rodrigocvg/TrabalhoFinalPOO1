@@ -106,6 +106,10 @@ public class Movimentacoes {
         return Data_transacao.DadosData() + ";" + valor + ";" + tipo_transacao + ";" + Num_Conta_Destinatario + ";" + Num_Agencia_Destinario + ";" + Num_Banco_Destinario + ";" +tipo_pagamento;
     }   
     
+    public void ImprimeMovimentacoes()
+    {
+        System.out.printf("Data: %s -> Valor: %.2f -> Tipó %s\n", Data_transacao.DadosData(),valor,tipo_transacao);
+    }
     /////////////////////////////////////////////////////////////
     ///
     ///             Transacoes                              /////

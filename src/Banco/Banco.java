@@ -138,32 +138,36 @@ public class Banco {
  
     private void Acesso_Funcionario(Scanner scan)
     {
-       
+       System.out.println("Area em Manutencao voltei mais tarde");
     }
 
-    public Pessoa Encontrar_Funcionario(Scanner scan)
+    public Pessoa Encontrar_Funcionario(Scanner scan) throws  IllegalArgumentException
     {
-        int h = 1;
-        System.out.println("N -> Numero Agencia, Nome, CPF");
-        for(int i =0 ; i<Agencias.size(); i++)
-        {
-
-            Agencias.get(i).ImprimeNome_e_Localizacao();
-            Agencias.get(i).Encontra_Funcioanrio(h);
-        }
-
-        System.out.println("Qual deles voce procura? ");
-        int h2= scan.nextInt()-1;
-        
-        for(int i =0 ; i<Agencias.size(); i++)
-        {
-            LinkedList<Pessoa> Percorre = Agencias.get(i).getFuncionarios();
-            for(int j =0 ; i<Percorre.size();j++)
+        try{
+            int h = 1;
+            for(int i =0 ; i<Agencias.size(); i++)
             {
-                if(j+i==h2)
-                    return Percorre.get(j);
-                    
+            System.out.print((i+1)+" - ");
+            Agencias.get(i).ImprimeNome_e_Localizacao();
             }
+            
+            System.out.println("Qual Agencia");
+            int h2= scan.nextInt()-1;
+            
+            Agencias.get(h2).Encontra_Funcioanrio(1);
+            System.out.println("Qual Funcionario");
+            h = scan.nextInt()-1;
+            
+            if(h<=Agencias.get(h2).getFuncionarios().size() && h2<=Agencias.size())
+            {
+                return Agencias.get(h2).getFuncionarios().get(h);
+            }
+        }catch(IndexOutOfBoundsException e)
+        {
+            System.out.println("Opcao Invalida!");
+        }catch(InputMismatchException e)
+        {
+            System.out.println("Valor invalido, digite um numeral");
         }
         throw new IllegalArgumentException("Funcionario não encontrado");
 
@@ -259,58 +263,65 @@ public class Banco {
     private void Promover_A_Gerente(Scanner scan)
     {
         System.out.println("Escolha um funcionario");
-        Funcionario FuncionarioAtual = (Funcionario) Encontrar_Funcionario(scan);
-        
-        System.out.printf("Possui Formacao Basica em Gerencia? \n01 -> Sim \n02 ou Numero maior -> Nao\n");
-        int temp = scan.nextInt();
-
-        boolean Formacao_Basica_EmGerencia;
-        if(temp == 1 )
+        try{
+            Funcionario FuncionarioAtual = (Funcionario) Encontrar_Funcionario(scan);
+            System.out.printf("Possui Formacao Basica em Gerencia? \n01 -> Sim \n02 ou Numero maior -> Nao\n");
+            int temp = scan.nextInt();
+            
+            boolean Formacao_Basica_EmGerencia;
+            if(temp == 1 )
             Formacao_Basica_EmGerencia = true;
-        else Formacao_Basica_EmGerencia = false;
-
-        Data Data_Ingresso_Como_Gerente = Data.DataAtual();
-        
-        String linha = FuncionarioAtual.DadosFuncionario() ;
-        String [] campos = linha.split(";");
-
-        Data DataNascimento = new Data(Integer.parseInt(campos[2]),Integer.parseInt(campos[3]), Integer.parseInt(campos[4]));
-        
-        Data Ingresso = new Data(Integer.parseInt(campos[18]), Integer.parseInt(campos[19]), Integer.parseInt(campos[20]));
-        
-        Endereco End = new Endereco(campos[5], Integer.parseInt(campos[6]), campos[7], campos[8], campos[9], campos[10], campos[11], Integer.parseInt(campos[12]));
-        
-        Gerente Novo = new Gerente(campos[0],
-         campos[1],
-          DataNascimento, 
-          End, campos[13],
-          campos[14], Integer.parseInt(campos[15]),Float.parseFloat(campos[17]),
-           Ingresso, Integer.parseInt(campos[21]), campos[22], Formacao_Basica_EmGerencia, Data_Ingresso_Como_Gerente);
-
-        
-        for(int i = 0 ; i< Agencias.size();i++)
-        {
-            if(Agencias.get(i).isFuncionario_dessa_Agencia(FuncionarioAtual))
+            else Formacao_Basica_EmGerencia = false;
+            
+            Data Data_Ingresso_Como_Gerente = Data.DataAtual();
+            
+            String linha = FuncionarioAtual.DadosFuncionario() ;
+            String [] campos = linha.split(";");
+            
+            Data DataNascimento = new Data(Integer.parseInt(campos[2]),Integer.parseInt(campos[3]), Integer.parseInt(campos[4]));
+            
+            Data Ingresso = new Data(Integer.parseInt(campos[18]), Integer.parseInt(campos[19]), Integer.parseInt(campos[20]));
+            
+            Endereco End = new Endereco(campos[5], Integer.parseInt(campos[6]), campos[7], campos[8], campos[9], campos[10], campos[11], Integer.parseInt(campos[12]));
+            
+            Gerente Novo = new Gerente(campos[0],
+            campos[1],
+            
+            DataNascimento, 
+            End, campos[13],
+            campos[14], Integer.parseInt(campos[15]),Float.parseFloat(campos[17]),
+            Ingresso, Integer.parseInt(campos[21]), campos[22], Formacao_Basica_EmGerencia, Data_Ingresso_Como_Gerente);
+            
+            for(int i = 0 ; i< Agencias.size();i++)
             {
-                Agencias.get(i).setGerente(Novo, FuncionarioAtual);
+                if(Agencias.get(i).isFuncionario_dessa_Agencia(FuncionarioAtual))
+                {
+                    Agencias.get(i).setGerente(Novo, FuncionarioAtual);
+                }
             }
-        }
+        }catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }catch(InputMismatchException e)
+        {
+            System.out.println(e.getSuppressed());
+        }       
     }
+    
     
     public void Encontrar_Funcionario(int pos)
     {
-        System.out.println("N -> Numero Agencia, Nome, CPF");
+        System.out.println("N -> Nome, CPF");
         for(int i =0 ; i<Agencias.size(); i++)
         {
             Agencias.get(i).ImprimeNome_e_Localizacao();
             pos = Agencias.get(i).Encontra_Funcioanrio(pos);
         } 
     }
-
+    
     public void Encontrar_Funcionario()
     {
         
-        System.out.println("N -> Numero Agencia, Nome, CPF");
+        System.out.println("N -> Nome, CPF");
         for(int i =0 ; i<Agencias.size(); i++)
         {
             int pos =1;
@@ -318,7 +329,7 @@ public class Banco {
             pos = Agencias.get(i).Encontra_Funcioanrio(pos);
         } 
     }
-
+    
  //////////////////////////////////////////////////////////////////////////////
  ///
  ///                Agencias                                                ///
@@ -653,23 +664,26 @@ public class Banco {
             int opcao =1;
             Conta Solicitada = loginConta(scan);
             
-            if(Solicitada.equals(null))
+            if(Solicitada==null)
                 return;
 
             while(opcao!=0)
             {
-                    System.out.println("Seja Bem vindo ");
-                    System.out.println("Oque você deseja fazer?");
-                    System.out.println("01 -> Consultar Saldo");
-                    System.out.println("02 -> Realizar Transferencia");
-                    System.out.println("03 -> Depositar");
-                    System.out.println("04 -> Sacar");
-                    System.out.println("05 -> Realizar Pagamento");
-                    System.out.println("00 -> Sair da Conta");
-                    
-                    opcao = scan.nextInt();
-                    scan.nextLine();
-                    boolean acesso = true;
+                System.out.println("Oque você deseja fazer?");
+                System.out.println("01 -> Consultar Saldo");
+                System.out.println("02 -> Realizar Transferencia");
+                System.out.println("03 -> Depositar");
+                System.out.println("04 -> Sacar");
+                System.out.println("05 -> Realizar Pagamento");
+                System.out.println("06 -> Em Breve (Atualizar Cadastro) ");
+                System.out.println("07 -> Historico Bancario");
+                System.out.println("00 -> Sair da Conta");
+                
+                opcao = scan.nextInt();
+                scan.nextLine();
+                boolean acesso = true;
+                try
+                {
                     switch(opcao)
                     {
                         case 0:
@@ -704,7 +718,7 @@ public class Banco {
                                 }
                                 
                             }
-                            acesso=EnviarTransferencia(Numbanco, NumAgencia, NumConta, valor, 0, Solicitada.getNum_Agencia(), Solicitada.getNum_Conta());
+                            acesso=EnviarTransferencia(0, NumAgencia, NumConta, valor, 0, Solicitada.getNum_Agencia(), Solicitada.getNum_Conta());
                             if (acesso)
                             {
                                 Solicitada.transferir(Numbanco,NumAgencia,NumConta, valor, senha);
@@ -731,18 +745,32 @@ public class Banco {
                         case 5:
                             System.out.println("Descreva o pagamento: ");
                             String TipoPagamento = scan.nextLine();
-                            System.out.println("Valor a ser sacado: ");
+                            System.out.println("Valor a ser pago: ");
                             valor = scan.nextFloat();
                             System.out.println("Sua Senha: ");
                             senha = scan.nextInt(); 
                             Solicitada.realizarPag(valor, senha, TipoPagamento);
                             Agencias.get(Solicitada.getNum_Agencia()-100).alteraConta(Solicitada);
                             break;
+                        case 6:
+                            System.out.println("Em Desenvolvimento");
+                            break;
+                        case 7: 
+                            System.out.println("Historico Completo");
+                            Solicitada.HistoricoMovimentacoes();
+                            break;
                         default:
                             System.out.println("Essa opcao nao existe meu cria! \nDa uma olhada nas opcoes disponiveis e tenta novamente");
                             opcao=999;
-                    }
+                        }    
+                }catch(IllegalArgumentException e)
+                {
+                    System.err.println(e.getMessage());
+                }catch(InputMismatchException e)
+                {
+                    System.err.println("Digite valores validos");
                 }
+            }
                 
                 if(opcao==0)
                 {
@@ -759,29 +787,36 @@ public class Banco {
         boolean Acesso = true;
         while(Acesso)
             {
-                System.out.println("Fala Cria vou precisar dos seguintes daddos");
-                System.out.printf("Agencia: ");
-                int Num_Agencia = scan.nextInt();
-                System.out.printf("Conta: ");
-                int Num_Conta = scan.nextInt();
-                System.out.printf("Senha: ");
-                int Senha = scan.nextInt();
-
-                int indiceAgencia = IndiceAgencia(Num_Agencia);
-                if(indiceAgencia==-10)
+                Acesso=false;
+                try
+                {
+                    System.out.println("Fala Cria vou precisar dos seguintes daddos");
+                    System.out.printf("Agencia: ");
+                    int Num_Agencia = scan.nextInt();
+                    System.out.printf("Conta: ");
+                    int Num_Conta = scan.nextInt();
+                    System.out.printf("Senha: ");
+                    int Senha = scan.nextInt();
+                    
+                    int indiceAgencia = IndiceAgencia(Num_Agencia);
+                    if(indiceAgencia==-10)
                     {
-                        System.out.println("Conta não Encontrada");
-                        Acesso = false;
+                        System.out.println("Agencia não Encontrada");
                         break;
                     }
-                try{
-                    Solicitada = Agencias.get(indiceAgencia).EncontraConta(Num_Conta, Senha);
-                }catch(IllegalArgumentException e)
+                    try{
+                        Solicitada = Agencias.get(indiceAgencia).EncontraConta(Num_Conta, Senha);
+                    }catch(IllegalArgumentException e)
+                    {
+                        System.out.println(e.getMessage());
+                        break;
+                    }
+                }catch(InputMismatchException e)
                 {
-                    System.out.println(e);
-                    Acesso=false;
-                    break;
-                }
+                    System.out.println("Digite apenas Numeros");
+                    scan.nextLine();
+                    Acesso=true;
+                }    
             }
             return Solicitada;
     }
@@ -852,7 +887,7 @@ public class Banco {
             System.out.println("Digite o tipo da conta: ");
             System.out.printf("1-Poupança\n2-Corrente\n3-Salario\n");
             op1 = scan.nextInt(); //op1 == Tipo Conta
-
+            scan.nextLine();
             /////// Transforma NumAgenia que esta com o Indice da Agencia no Numero da Agencia /////
             int NumAgencia = Agencias.get(indiceAgencia).getNum_Agencia();
             
@@ -874,6 +909,7 @@ public class Banco {
             if(conjunta)
             {
                 try{
+                    
                     Nova.setCliente_secundario(CadastrarSegundoTitular(scan));
                 }catch(NullPointerException e)
                 {
