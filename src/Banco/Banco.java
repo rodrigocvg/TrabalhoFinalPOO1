@@ -99,7 +99,15 @@ public class Banco {
                     opcao=0;
                     break;
                 case 2: 
-                    Cadastrar_funcionario(scan);
+                    try{
+                        Cadastrar_funcionario(scan);
+                    }catch(IllegalArgumentException e)
+                    {
+                        System.out.println(e.getMessage());
+                    }catch(InputMismatchException e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
                     opcao=0;
                     break;
                 case 3:
@@ -107,7 +115,12 @@ public class Banco {
                     opcao=0;
                     break;
                 case 4:
-                    Cadastrar_Agencia(scan);
+                    try{
+                        Cadastrar_Agencia(scan);
+                    }catch(IllegalAccessException e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("A nova Agencia Precisa de um Gerente");
                     GerenArquivos.SalvarArquivoAgencia(Agencias);
                     Agencias=GerenArquivos.Carregar_Agencias();
@@ -306,8 +319,7 @@ public class Banco {
             System.out.println(e.getSuppressed());
         }       
     }
-    
-    
+      
     public void Encontrar_Funcionario(int pos)
     {
         System.out.println("N -> Nome, CPF");
@@ -436,8 +448,9 @@ public class Banco {
         }
     }
 
-    private void Cadastrar_Agencia(Scanner scan) // Funcionando e Testada
+    private void Cadastrar_Agencia(Scanner scan) throws IllegalAccessException // Funcionando e Testada
     {
+
         System.out.println("Permitido Acesso apenas a Administradores");
         System.out.print("Usuario: ");
         String Usuario = scan.nextLine();
@@ -447,7 +460,7 @@ public class Banco {
         boolean AcessoAdmim = LoginAdministrador(Usuario, Senha);
 
         if(!AcessoAdmim)
-            return;
+            throw new IllegalAccessException("Acesso Negado!");
         
         System.out.print("Nome da Agencia: ");
         String NomeAgencia = scan.nextLine();
@@ -697,26 +710,24 @@ public class Banco {
                             int NumConta = 0;
                             float valor = 0f;
                             int senha = 0;
+                            try{
                             while(acesso)
                             {
                                 acesso=false;
-                                try{
                                     //System.out.println("Numero do Banco de Destino: ");//nao sera necessario aqui
                                     //Numbanco = scan.nextInt();
+                                    System.out.println("Valor a ser transferido: ");
+                                    valor = scan.nextFloat();
+                                    if(Solicitada.getSaldo()<valor || valor<=0){
+                                        throw new IllegalArgumentException("Saldo insuficiente ou valor invalido");
+                                    }
                                     System.out.println("Numero do Agencia de Destino: ");
                                     NumAgencia = scan.nextInt();
                                     System.out.println("Numero do Conta de Destino: ");
                                     NumConta = scan.nextInt();
-                                    System.out.println("Valor a ser transferido: ");
-                                    valor = scan.nextFloat();
                                     System.out.println("Sua Senha: ");
                                     senha = scan.nextInt();
-                                }catch(IllegalArgumentException e)
-                                {
-                                    System.out.println(e);
-                                    acesso=true;
-                                }
-                                
+                               
                             }
                             acesso=EnviarTransferencia(0, NumAgencia, NumConta, valor, 0, Solicitada.getNum_Agencia(), Solicitada.getNum_Conta());
                             if (acesso)
@@ -725,6 +736,15 @@ public class Banco {
                                 Agencias.get(Solicitada.getNum_Agencia()-100).alteraConta(Solicitada);
                             }
                             else System.out.println("Conta de Destino Não encontrada");
+                        }catch(IllegalArgumentException e)
+                        {
+                            System.out.println(e.getMessage());
+                            acesso=true;
+                        }catch(InputMismatchException e)
+                        {
+                            System.err.println("DIgite valores validos");
+                        }
+                    
                             break;
                         case 3: 
                             System.out.println("Valor a ser depositado: ");
@@ -790,7 +810,7 @@ public class Banco {
                 Acesso=false;
                 try
                 {
-                    System.out.println("Fala Cria vou precisar dos seguintes daddos");
+                    System.out.println("Fala Cria vou precisar dos seguintes dados");
                     System.out.printf("Agencia: ");
                     int Num_Agencia = scan.nextInt();
                     System.out.printf("Conta: ");
@@ -835,7 +855,7 @@ public class Banco {
                 indiceCliente = indiceCliente(scan);
             }catch(IllegalArgumentException e)
             {
-                System.out.println(e);
+                System.out.println(e.getMessage());
                 teste= true;
             }
         }

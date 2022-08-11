@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import Banco.Banco;
@@ -16,15 +17,20 @@ public class BancoDosCria {
         {
             BancoDosCria.CarregarBanco(); 
             System.out.println("Primeiro me diz voce quer: ");
-            System.out.println("01 -> Acessar Minha Conta");
+            System.out.println("01 -> Acessar Conta");
             System.out.println("02 -> Abrir uma Conta");
-            System.out.println("03 -> Area do Funcionario (Acesso Funcionario, Cadastrar Funcionario, Promover a Gerente, Cadastrar Agencia");
+            System.out.println("03 -> Area do Funcionario");
             System.out.println("04 -> Encontrar Agencia mais proxima");
             System.out.println("00 -> Sair do Sistema");    
             
             scan = new Scanner(System.in);//Limpando o Scanner
             
-            opcao = scan.nextInt(); // Escolhendo opcao
+            try{
+                opcao = scan.nextInt(); // Escolhendo opcao
+            }catch(InputMismatchException e)
+            {
+                System.err.println("Digite um valor numerico");
+            }
             scan.nextLine();
             switch(opcao)
             {
